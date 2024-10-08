@@ -72,7 +72,7 @@
       <?php else: ?>
         <?php foreach($anunciosRecentes as $anuncio): ?>
         <div class="col pb-3">
-          <a href="anuncio.php?id=<?= $anuncio['produtoID'] ?>" class="text-decoration-none">
+          <a href="detalheProduto?id=<?= $anuncio['produtoID'] ?>" class="text-decoration-none">
             <div class="card h-80 bg-white text-dark">
               <img src="<?= $anuncio['locImagem'] ?>" alt="Anúncio" class="card-img-top">
               <div class="card-body">
@@ -115,7 +115,7 @@
       <?php else: ?>
         <?php foreach($maisPesquisados as $anuncio): ?>
         <div class="col pb-3">
-          <a href="anuncio.php?id=<?= $anuncio['produtoID'] ?>" class="text-decoration-none">
+          <a href="detalheProduto?id=<?= $anuncio['produtoID'] ?>" class="text-decoration-none">
             <div class="card h-80 bg-white text-dark">
               <img src="<?= $anuncio['locImagem'] ?>" alt="Anúncio" class="card-img-top">
               <div class="card-body">
