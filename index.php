@@ -6,26 +6,21 @@ require_once('routes.php');
 $url = isset($_SERVER['REQUEST_URI']) ? parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) : '/';
 
 // Verifica se a rota existe
-if (array_key_exists($url, $routes)) {
-    // Separa o nome do controlador e o metodo
+if (array_key_exists($url, $routes)) { 
+    // Separa o nome do controlador e o método
     $route = explode('@', $routes[$url]);
+    
     $controllerName = $route[0];
     $methodName = $route[1];
 
     // Carrega o controlador
     require_once('app/controllers/' . $controllerName . '.php');
 
-    // Instancia o controlador e chama o metodo
+    // Instancia o controlador e chama o método
     $controller = new $controllerName();
-    if ($url === '/forgot-password' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-        $controller->handleForm();
-    } else {
-        $controller->$methodName();
-    }
+    $controller->$methodName();
 } else {
-    // Pagina nao encontrada
+    // Página não encontrada
     http_response_code(404);
-    require_once('app/views/header.php');
     require_once('app/views/error.php');
-    require_once('app/views/footer.php');
 }

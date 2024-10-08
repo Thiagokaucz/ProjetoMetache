@@ -58,7 +58,7 @@
                             <a class="nav-link" href="/usuario"><span class="bi bi-person"></span> <?php echo htmlspecialchars($_SESSION['user_name']); ?></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/login" style="color: orange;">Anunciar</a>
+                            <a class="nav-link" href="/anunciar" style="color: orange;">Anunciar</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/logout" style="color: red;"><span class="bi bi-box-arrow-right"></span> Sair</a>

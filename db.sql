@@ -221,3 +221,10 @@ FOREIGN KEY (categoriaID) REFERENCES Categoria(categoriaID);
 
 ALTER TABLE Usuario 
 MODIFY COLUMN userID INT AUTO_INCREMENT;
+-- Alterar a tabela Tipo para definir tipoID como AUTO_INCREMENT
+ALTER TABLE Tipo 
+MODIFY COLUMN tipoID INT AUTO_INCREMENT;
+
+-- Alterar a tabela Categoria para definir categoriaID como AUTO_INCREMENT
+ALTER TABLE Categoria 
+MODIFY COLUMN categoriaID INT AUTO_INCREMENT;
