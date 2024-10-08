@@ -22,5 +22,6 @@ if (array_key_exists($url, $routes)) {
 } else {
     // Página não encontrada
     http_response_code(404);
+    require_once 'app/views/header.php';
     require_once('app/views/error.php');
 }
