@@ -28,5 +28,6 @@ class HomeController {
         include 'app/views/home.php';
         require_once 'app/views/footer.php';
     }
+    
 }
 ?>

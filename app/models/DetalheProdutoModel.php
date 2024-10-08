@@ -33,12 +33,19 @@ class Produto {
 
     // Método para buscar o produto pelo id
     public function getProdutoById($id) {
-        $stmt = $this->db->prepare("SELECT * FROM produto WHERE produtoID = :id");
+        // Consulta SQL para buscar produto e informações do anunciante (nome e data de entrada)
+        $query = "
+            SELECT p.produtoID, p.titulo, p.condicao, p.descricao, p.valor, p.locImagem, p.dataHoraPub, p.localizacao, 
+                   u.nome AS nomeAnunciante, u.dataHoraRegistro AS dataEntradaAnunciante
+            FROM produto p
+            INNER JOIN usuario u ON p.userID = u.userID
+            WHERE p.produtoID = :id";
+
+        $stmt = $this->db->prepare($query);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         
-        // Retorna os dados do produto
+        // Retorna os dados do produto junto com os dados do anunciante
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }
-?>

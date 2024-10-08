@@ -12,7 +12,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/">
                 <img src="public/img/Metache.png" alt="Logo" height="25" width="auto">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,23 +26,13 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/sobre">Sobre</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="comprasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Minhas Compras
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="comprasDropdown">
-                            <li><a class="dropdown-item" href="/compras">Minhas Compras 1</a></li>
-                            <li><a class="dropdown-item" href="/compras">Minhas Compras 2</a></li>
-                        </ul>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="anunciosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Meus Anúncios
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="anunciosDropdown">
-                            <li><a class="dropdown-item" href="/meusAnuncios">Meus Anúncios 1</a></li>
-                            <li><a class="dropdown-item" href="/meusAnuncios">Meus Anúncios 2</a></li>
-                        </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/minhasCompras">Minhas compras</a>
+                    </li>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/meusAnuncios">Meus anuncios</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/chat">Chat</a>

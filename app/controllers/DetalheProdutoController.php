@@ -10,30 +10,31 @@ class DetalheProdutoController {
         $this->produtoModel = new Produto($database); // Passa a instância de Database para o Produto
     }
 
-    // Método para mostrar os detalhes do produto
-    public function mostrarDetalhes() {
-        // Pega o id da URL
-        $id = isset($_GET['id']) ? $_GET['id'] : null;
+// Método para mostrar os detalhes do produto
+public function mostrarDetalhes() {
+    // Pega o id da URL
+    $id = isset($_GET['id']) ? $_GET['id'] : null;
 
-        if ($id) {
-            // Busca o produto pelo id
-            $produto = $this->produtoModel->getProdutoById($id);
+    if ($id) {
+        // Busca o produto pelo id
+        $produto = $this->produtoModel->getProdutoById($id);
 
-            if ($produto) {
-                // Passa os dados para a view (exemplo)
-                require_once 'app/views/header.php';
-                require_once('app/views/detalheProduto.php');
-                require_once 'app/views/footer.php';
-            } else {
-                // Se o produto não for encontrado
-                http_response_code(404);
-                require_once('app/views/error.php');
-            }
+        if ($produto) {
+            // Passa os dados para a view (exemplo)
+            require_once 'app/views/header.php';
+            require_once('app/views/detalheProduto.php'); // Passa os dados para a view
+            require_once 'app/views/footer.php';
         } else {
-            // Se o id não for fornecido na URL
-            http_response_code(400); // Erro de solicitação inválida
-            echo "ID do produto não fornecido.";
+            // Se o produto não for encontrado
+            http_response_code(404);
+            require_once('app/views/error.php');
         }
+    } else {
+        // Se o id não for fornecido na URL
+        http_response_code(400); // Erro de solicitação inválida
+        echo "ID do produto não fornecido.";
     }
+}
+
 }
 ?>

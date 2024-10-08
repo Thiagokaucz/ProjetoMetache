@@ -17,7 +17,7 @@ class LoginController {
             if ($user) {
                 $_SESSION['user_id'] = $user['userID'];
                 $_SESSION['user_name'] = $user['nome']; // Armazena o nome na sessão
-                header('Location: /home'); // Redireciona após login
+                header('Location: /'); // Redireciona após login
                 exit(); // Adiciona exit após redirecionamento
             } else {
                 $errorMessage = 'Usuário ou senha inválidos.'; // Armazena mensagem de erro
