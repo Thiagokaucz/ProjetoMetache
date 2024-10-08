@@ -1,10 +1,9 @@
 <?php
 $routes = [
-    '/' => 'HomeController@index',              // Página inicial
+    '/' => 'HomeController@index',          // Home após login
     '/login' => 'LoginController@login',        // Página de login
     '/logout' => 'LoginController@logout',   // Usamos para deslogar
     '/cadastroUsuario' => 'CadastroController@cadastrar', // Página de cadastro
-    '/home' => 'HomeController@index',          // Home após login
 
     '/anunciar' => 'AnunciarProdutoController@index',          // Tela para anunciar um produto
     '/chat' => 'ChatController@index',          // Chat

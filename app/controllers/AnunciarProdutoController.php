@@ -1,7 +1,6 @@
 <?php
 
 require_once 'app/models/ProdutoModel.php';
-require_once 'app/models/CategoriaModel.php';
 
 
 session_start();
