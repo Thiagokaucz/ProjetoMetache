@@ -35,7 +35,7 @@
                         <a class="nav-link" href="/meusAnuncios">Meus anuncios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/chat">Chat</a>
+                        <a class="nav-link" href="/chatLista">Chat</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/notificacoes">Notificações</a>

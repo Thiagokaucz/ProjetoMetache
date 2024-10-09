@@ -1,9 +1,9 @@
 <?php
 class Database {
     private $host = 'localhost';
-    private $db_name = 'metache'; // Substitua pelo nome do seu banco
-    private $username = 'root'; // Usuário padrão
-    private $password = ''; // Senha padrão
+    private $db_name = 'metache';
+    private $username = 'root';
+    private $password = '';
     public $conn;
 
     public function getConnection() {

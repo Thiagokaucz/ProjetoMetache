@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -45,7 +49,7 @@
             <!-- Valor do Produto -->
             <h4>Valor sugerido:</h4>
             <h3 class="text-danger"><?php echo 'R$ ' . number_format($produto['valor'], 2, ',', '.'); ?></h3>
-            <button class="btn negociar-btn btn-block mt-2" onclick="window.location.href='/chat'">💬 Negociar<?php echo $produto['nomeAnunciante']; ?></button>
+            <button class="btn negociar-btn btn-block mt-2" onclick="window.location.href='/chat?user=<?php echo $_SESSION['user_id'];?>'">💬 Negociar</button> 
             </div>
           
           <!-- Exibição das Informações do Anunciante -->
