@@ -45,8 +45,8 @@
             <!-- Valor do Produto -->
             <h4>Valor sugerido:</h4>
             <h3 class="text-danger"><?php echo 'R$ ' . number_format($produto['valor'], 2, ',', '.'); ?></h3>
-            <button class="btn negociar-btn btn-block mt-2">💬 Negociar</button>
-          </div>
+            <button class="btn negociar-btn btn-block mt-2" onclick="window.location.href='/chat'">💬 Negociar<?php echo $produto['nomeAnunciante']; ?></button>
+            </div>
           
           <!-- Exibição das Informações do Anunciante -->
           <div class="border p-3 mb-4">

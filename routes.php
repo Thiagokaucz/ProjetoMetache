@@ -11,4 +11,7 @@ $routes = [
     '/criar-produto' => 'AnunciarProdutoController@criarProduto', // Rota para processar o envio do anúncio
 
     '/detalheProduto' => 'DetalheProdutoController@mostrarDetalhes', // Alterado para o método correto
+
+    '/opa' => 'ProdutoControllerTeste@mostrarProdutos', // Alterado para o método correto
+
 ];
