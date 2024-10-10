@@ -11,4 +11,10 @@ $rotas = [
     '/chatLista' => 'ChatController@verificarUsuarioNoChat',
     '/detalheProduto' => 'DetalheProdutoController@mostrarDetalhes', // Alterado para o método correto
 
+    '/chat' => 'ChatController@chat', // Adicione esta linha
+    '/sendMessage' => 'ChatController@sendMessage', // Nova rota para enviar mensagens
+
+    '/getMessagesAjax' => 'ChatController@getMessagesAjax', // Rota para buscar mensagens via AJAX
+
+
 ];

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Chats</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
     <style>
         .chat-item {
             padding: 10px;
@@ -36,8 +35,8 @@
             <h2>Chats de Vendedores</h2>
             <?php if (!empty($vendedorChats)): ?>
                 <?php foreach ($vendedorChats as $chat): ?>
-                    <div class="chat-item" onclick="window.location.href='chat.php?chatID=<?= $chat['chatID'] ?>'">
-                        <strong>Vendedor ID: <?= htmlspecialchars($chat['userID']) ?></strong> <!-- Exibindo o ID do vendedor -->
+                    <div class="chat-item" onclick="window.location.href='chat?id=<?= $chat['chatID'] ?>'">
+                        <strong>Chat ID: <?= htmlspecialchars($chat['chatID']) ?></strong> <!-- Exibindo o ID do vendedor -->
                         <span class="text-muted"> - Última mensagem: <?= htmlspecialchars($chat['ultimamendagem']) ?></span>
                     </div>
                 <?php endforeach; ?>
