@@ -16,5 +16,8 @@ $rotas = [
 
     '/getMessagesAjax' => 'ChatController@getMessagesAjax', // Rota para buscar mensagens via AJAX
 
+    '/notificacao' => 'NotificacaoController@mostrarNotificacoes',
+    '/excluir' => 'NotificacaoController@excluirNotificacao',
+
 
 ];

@@ -8,15 +8,15 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-sm-4">
-                <h3>Escolher o Produto</h3>
+                <h3>1° Escolher o Produto</h3>
                 <p>Navegue e selecione o item desejado.</p>
             </div>
             <div class="col-sm-4">
-                <h3>Ver Detalhes</h3>
+                <h3>2° Ver Detalhes</h3>
                 <p>Confira as especificações e avaliações do produto.</p>
             </div>
             <div class="col-sm-4">
-                <h3>Negociar</h3>
+                <h3>3° Negociar</h3>
                 <p>Converse com o vendedor sobre preço e condições.</p>
             </div>
         </div>

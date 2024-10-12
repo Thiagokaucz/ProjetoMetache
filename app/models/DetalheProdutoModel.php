@@ -35,7 +35,7 @@ class Produto {
     public function getProdutoById($id) {
         // Consulta SQL para buscar produto e informações do anunciante (nome e data de entrada)
         $query = "
-            SELECT p.produtoID, p.titulo, p.condicao, p.descricao, p.valor, p.locImagem, p.dataHoraPub, p.localizacao, 
+            SELECT p.produtoID, p.titulo, p.condicao, p.descricao, p.valor, p.locImagem, p.dataHoraPub, p.localizacao, chatID, 
                    u.nome AS nomeAnunciante, u.dataHoraRegistro AS dataEntradaAnunciante
             FROM produto p
             INNER JOIN usuario u ON p.userID = u.userID

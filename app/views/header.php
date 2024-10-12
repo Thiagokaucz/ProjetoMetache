@@ -24,10 +24,6 @@
                         <a class="nav-link" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/sobre">Sobre</a>
-                    </li>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="/minhasCompras">Minhas compras</a>
                     </li>
                     </li>
@@ -38,7 +34,7 @@
                         <a class="nav-link" href="/chatLista">Chat</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/notificacoes">Notificações</a>
+                        <a class="nav-link" href="/notificacao">Notificações</a>
                     </li>
                 </ul>
 

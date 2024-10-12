@@ -49,7 +49,11 @@ session_start();
             <!-- Valor do Produto -->
             <h4>Valor sugerido:</h4>
             <h3 class="text-danger"><?php echo 'R$ ' . number_format($produto['valor'], 2, ',', '.'); ?></h3>
-            <button class="btn negociar-btn btn-block mt-2" onclick="window.location.href='/chatLista?user=<?php echo $_SESSION['user_id'];?>'">💬 Negociar</button> 
+            <button class="btn negociar-btn btn-block mt-2" 
+                onclick="window.location.href='/chat?id=<?php echo ($produto['chatID']);?>'">
+                💬 Negociar <?php echo ($produto['chatID']);?>
+            </button>
+
             </div>
           
           <!-- Exibição das Informações do Anunciante -->
