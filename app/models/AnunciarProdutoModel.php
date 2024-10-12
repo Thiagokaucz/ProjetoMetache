@@ -1,7 +1,8 @@
 <?php
-require_once 'app/models/UserModel.php';
 
-class ProdutoModel {
+require_once 'config/Database.php';
+
+class AnunciarProdutoModel {
     private $conn;
 
     public function __construct() {
@@ -13,26 +14,6 @@ class ProdutoModel {
         return strtoupper(bin2hex(random_bytes(16)));
     }
 
-    private function uploadFotos($files, $userID) {
-        $targetDir = "uploads/";
-        $userDir = $targetDir . $userID . '/';
-        if (!file_exists($userDir)) {
-            mkdir($userDir, 0777, true);
-        }
-
-        $fileNames = [];
-        foreach ($files['name'] as $key => $name) {
-            $uniqueName = $this->generateUUID() . '.' . pathinfo($name, PATHINFO_EXTENSION);
-            $targetFile = $userDir . $uniqueName;
-
-            if (move_uploaded_file($files['tmp_name'][$key], $targetFile)) {
-                $fileNames[] = $targetFile;
-            }
-        }
-
-        return implode(',', $fileNames);
-    }
-
     public function criarProduto($postData, $files, $userID) {
         $categoriaID = $postData['categoria'];
         $titulo = $postData['titulo'];
@@ -41,7 +22,7 @@ class ProdutoModel {
         $valor = $postData['valor'];
         $localizacao = $postData['localizacao'];
         $dataHoraPub = date('Y-m-d H:i:s');
-        $uploadedFotos = $this->uploadFotos($files['foto'], $userID);
+        $uploadedFotos = $this->uploadFotos($files['foto'], $userID); // Chame o upload de fotos
 
         $query = "INSERT INTO produto 
                   (userID, categoriaID, titulo, condicao, descricao, valor, locImagem, dataHoraPub, localizacao) 
@@ -77,14 +58,25 @@ class ProdutoModel {
         $stmt->execute();
         return $stmt->fetchColumn() > 0;
     }
-}
 
-class CategoriaModel {
-    private $conn;
+    private function uploadFotos($files, $userID) {
+        $targetDir = "uploads/";
+        $userDir = $targetDir . $userID . '/';
+        if (!file_exists($userDir)) {
+            mkdir($userDir, 0777, true);
+        }
 
-    public function __construct() {
-        $database = new Database();
-        $this->conn = $database->getConnection();
+        $fileNames = [];
+        foreach ($files['name'] as $key => $name) {
+            $uniqueName = $this->generateUUID() . '.' . pathinfo($name, PATHINFO_EXTENSION);
+            $targetFile = $userDir . $uniqueName;
+
+            if (move_uploaded_file($files['tmp_name'][$key], $targetFile)) {
+                $fileNames[] = $targetFile;
+            }
+        }
+
+        return implode(',', $fileNames);
     }
 
     public function getCategorias() {
@@ -93,7 +85,5 @@ class CategoriaModel {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);  // Retorna um array de categorias
     }
-    
 }
-
 ?>

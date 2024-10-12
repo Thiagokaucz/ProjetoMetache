@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once 'app/models/UserModel.php';
+require_once 'app/models/LoginModel.php';
 
 class LoginController {
     public function login() {
@@ -11,7 +11,7 @@ class LoginController {
             $email = $_POST['email'];
             $senha = $_POST['senha'];
 
-            $userModel = new UserModel();
+            $userModel = new LoginModel();
             $user = $userModel->login($email, $senha);
 
             if ($user) {

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once 'app/models/AnunciosModel.php';
+require_once 'app/models/HomeModel.php';
 require_once 'config/Database.php';
 
 class HomeController {
@@ -10,8 +10,12 @@ class HomeController {
 
     // Construtor para inicializar o modelo
     public function __construct() {
-        // Aqui estamos criando uma instância do HomeModel
-        $this->model = new HomeModel();
+        // Instancia a classe Database e obtém a conexão
+        $database = new Database(); // Aqui você pode passar parâmetros se desejar
+        $conn = $database->getConnection();
+        
+        // Passa a conexão para o HomeModel
+        $this->model = new HomeModel($conn);
     }
 
     // Função que carrega os dados e a view
@@ -28,6 +32,5 @@ class HomeController {
         include 'app/views/home.php';
         require_once 'app/views/footer.php';
     }
-    
 }
 ?>

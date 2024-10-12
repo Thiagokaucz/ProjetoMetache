@@ -47,9 +47,19 @@
 <body>
     <h1>Mensagens do Chat ID: <?= htmlspecialchars($chatId) ?></h1>
 
-    <!-- Elemento onde as mensagens serão carregadas via AJAX -->
+    <!-- Exibe as mensagens iniciais -->
     <ul id="messages">
-        <!-- As mensagens serão injetadas aqui -->
+        <?php if (!empty($messages)): ?>
+            <?php foreach ($messages as $message): ?>
+                <li>
+                    <strong>Usuário ID <?= htmlspecialchars($message['userID']) ?>:</strong>
+                    <?= htmlspecialchars($message['conteudo']) ?><br>
+                    <small><?= htmlspecialchars($message['dataHora']) ?></small>
+                </li>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>Nenhuma mensagem encontrada para este chat.</p>
+        <?php endif; ?>
     </ul>
 
     <!-- Formulário para enviar nova mensagem -->

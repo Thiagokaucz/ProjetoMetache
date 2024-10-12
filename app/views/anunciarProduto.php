@@ -62,16 +62,16 @@
     </div>
 
     <div class="mb-3">
-      <label for="localizacao" class="form-label">Localização do anúncio*</label>
-      <input type="text" class="form-control" id="localizacao" name="localizacao" required placeholder="CEP">
+      <label for="localizacao" class="form-label">Localização*</label>
+      <input type="text" class="form-control" id="localizacao" name="localizacao" required>
     </div>
 
     <div class="mb-3">
-      <label for="foto" class="form-label">Fotos do Produto</label>
-      <input type="file" class="form-control" id="foto" name="foto[]" multiple required>
+      <label for="foto" class="form-label">Fotos do Produto*</label>
+      <input type="file" class="form-control" id="foto" name="foto[]" accept="image/*" multiple required>
     </div>
 
-    <button type="submit" class="btn btn-orange">Criar anúncio</button>
+    <button type="submit" class="btn btn-orange">Criar Anúncio</button>
   </form>
 </div>
 

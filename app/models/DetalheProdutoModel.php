@@ -2,11 +2,11 @@
 require_once 'config/Database.php'; // Inclua o caminho correto para o seu arquivo Database.php
 
 class ProductModel {
-    private $db;
+    private $conn;
 
     // Construtor que recebe uma instância de Database
     public function __construct($database) {
-        $this->db = $database->getConnection();
+        $this->conn = $database->getConnection();
     }
 
     // Método para buscar os detalhes do produto
@@ -16,19 +16,10 @@ class ProductModel {
                   INNER JOIN usuarios u ON p.userID = u.userID
                   WHERE p.produtoID = :productId";
                   
-        $stmt = $this->db->prepare($query);
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':productId', $productId, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-}
-
-class Produto {
-    private $db;
-
-    // Construtor que recebe uma instância de Database
-    public function __construct($database) {
-        $this->db = $database->getConnection();
     }
 
     // Método para buscar o produto pelo id
@@ -41,7 +32,7 @@ class Produto {
             INNER JOIN usuario u ON p.userID = u.userID
             WHERE p.produtoID = :id";
 
-        $stmt = $this->db->prepare($query);
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         
@@ -49,3 +40,4 @@ class Produto {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }
+?>

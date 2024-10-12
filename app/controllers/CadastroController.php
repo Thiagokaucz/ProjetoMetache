@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'app/models/UserModel.php';
+require_once 'app/models/CadastroModel.php';
 
 class CadastroController {
     public function cadastrar() {
@@ -22,7 +22,7 @@ class CadastroController {
                 $errorMessage = 'Endereço de e-mail inválido.';
             } else {
                 // Verifica se o e-mail já está registrado
-                $userModel = new UserModel();
+                $userModel = new CadastroModel();
                 if ($userModel->emailExists($email)) {
                     $errorMessage = 'Este e-mail já está registrado.';
                 } else {

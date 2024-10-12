@@ -1,19 +1,16 @@
 <?php
-
 class HomeModel {
     
-    private $db;
+    private $conn;
 
-    // Construtor para inicializar a conexão com o banco de dados
-    public function __construct() {
-        // Instancia a classe Database e armazena a conexão no atributo $db
-        $dbInstance = new Database();
-        $this->db = $dbInstance->getConnection();
+    // Construtor que aceita uma conexão PDO
+    public function __construct($conn) {
+        $this->conn = $conn;
     }
     
     // Função para buscar os anúncios recentes com limite
     public function getAnunciosRecentes($limit) {
-        $query = $this->db->prepare("SELECT * FROM produto ORDER BY dataHoraPub DESC LIMIT :limit");
+        $query = $this->conn->prepare("SELECT * FROM produto ORDER BY dataHoraPub DESC LIMIT :limit");
         $query->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);
@@ -21,7 +18,7 @@ class HomeModel {
     
     // Função para buscar os anúncios mais pesquisados com limite
     public function getMaisPesquisados($limit) {
-        $query = $this->db->prepare("SELECT * FROM produto ORDER BY visualizacao DESC LIMIT :limit");
+        $query = $this->conn->prepare("SELECT * FROM produto ORDER BY visualizacao DESC LIMIT :limit");
         $query->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);

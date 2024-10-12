@@ -53,7 +53,6 @@ session_start();
                 onclick="window.location.href='/chat?id=<?php echo ($produto['chatID']);?>'">
                 💬 Negociar <?php echo ($produto['chatID']);?>
             </button>
-
             </div>
           
           <!-- Exibição das Informações do Anunciante -->

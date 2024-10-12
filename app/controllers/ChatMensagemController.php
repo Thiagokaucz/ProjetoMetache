@@ -1,46 +1,27 @@
 <?php
 session_start();
 
-require_once 'app/models/ChatModel.php'; // Inclua o arquivo do model
+require_once 'app/models/ChatMensagemModel.php'; // Inclua o arquivo do model
 
-class ChatController {
-    private $chatModel;
+class ChatMensagemController {
+    
+    private $ChatMensagemModel;
 
     public function __construct() {
-        $this->chatModel = new ChatModel();
+        $this->ChatMensagemModel = new ChatMensagemModel();
     }
-
-    public function verificarUsuarioNoChat() {
-        if (isset($_SESSION['user_id'])) { // Verifica se o usuário está logado
-            $userChatId = $_SESSION['user_id']; // Obtém o ID do usuário da sessão
-
-            // Obtém chats do vendedor e do comprador
-            $vendedorChats = $this->chatModel->getChatsByUserID($userChatId);
-            $compradorChats = $this->chatModel->getChatsByCompradorID($userChatId);
-
-            require_once 'app/views/header.php';
-            require_once 'app/views/ChatLista.php'; // Uma única view para listar todos os chats
-            require_once 'app/views/footer.php';
-        } else {
-            header('Location: /login'); // Redireciona para a página de login se não estiver logado
-            exit();
-        }
-    }
-    
-    //--------------------------------
 
     public function chat() {
         // Verifica se o ID do chat foi passado na URL
         if (isset($_GET['id'])) {
             $chatId = $_GET['id']; // Obtém o ID do chat
 
-            // Cria uma nova instância do modelo de mensagens
-            $messageModel = new Message();
-            $messages = $messageModel->getMessagesByChatId($chatId); // Busca as mensagens desse chat
+            // Busca as mensagens desse chat
+            $messages = $this->ChatMensagemModel->getMessagesByChatId($chatId); 
 
             // Passa as mensagens para a visualização
             require_once 'app/views/header.php';
-            require_once 'app/views/chatInterface.php'; // Chama a tela passando as mensagens
+            require_once 'app/views/chatMensagem.php'; // Chama a tela passando as mensagens
             require_once 'app/views/footer.php';
         } else {
             echo "ID do chat não fornecido.";
@@ -53,13 +34,13 @@ class ChatController {
             // Obtém o ID do chat e a mensagem do formulário
             $chatId = $_POST['chatId'];
             $messageContent = $_POST['message'];
-    
+
             // Obtém o ID do usuário da sessão
             $userId = $_SESSION['user_id'];
-    
+
             // Insere a mensagem na tabela
             $this->saveMessage($chatId, $messageContent, $userId);
-    
+
             // Redireciona de volta para a página do chat
             header("Location: /chat?id=$chatId");
             exit(); // Sempre chame exit após redirecionar
@@ -87,9 +68,8 @@ class ChatController {
         if (isset($_GET['id'])) {
             $chatId = $_GET['id'];
 
-            // Cria uma nova instância do modelo de mensagens
-            $messageModel = new Message();
-            $messages = $messageModel->getMessagesByChatId($chatId);
+            // Busca as mensagens desse chat
+            $messages = $this->ChatMensagemModel->getMessagesByChatId($chatId);
 
             // Retorna as mensagens como JSON
             header('Content-Type: application/json');
