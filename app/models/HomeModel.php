@@ -1,4 +1,7 @@
 <?php
+
+require_once 'config/Database.php';
+
 class HomeModel {
     
     private $conn;

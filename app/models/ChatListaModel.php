@@ -20,7 +20,7 @@ class ChatListaModel {
 
     // Método para verificar se o usuário está na coluna compradorID
     public function userExistsInCompradorID($userID) {
-        $query = 'SELECT COUNT(*) FROM chat WHERE compradorID = :userID';
+        $query = 'SELECT COUNT(*) FROM chat WHERE destinatarioID = :userID';
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':userID', $userID);
         $stmt->execute();
@@ -38,7 +38,7 @@ class ChatListaModel {
 
     // Método para obter chats de comprador
     public function getChatsByCompradorID($userID) {
-        $query = 'SELECT * FROM chat WHERE compradorID = :userID';
+        $query = 'SELECT * FROM chat WHERE destinatarioID = :userID';
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':userID', $userID);
         $stmt->execute();

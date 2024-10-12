@@ -2,7 +2,6 @@
 session_start();
 
 require_once 'app/models/HomeModel.php';
-require_once 'config/Database.php';
 
 class HomeController {
     

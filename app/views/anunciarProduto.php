@@ -62,7 +62,7 @@
     </div>
 
     <div class="mb-3">
-      <label for="localizacao" class="form-label">Localização*</label>
+      <label for="localizacao" class="form-label">Cidade do anuncio*</label>
       <input type="text" class="form-control" id="localizacao" name="localizacao" required>
     </div>
 

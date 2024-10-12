@@ -51,7 +51,7 @@
             <?php if (!empty($compradorChats)): ?>
                 <?php foreach ($compradorChats as $chat): ?>
                     <div class="chat-item" onclick="window.location.href='chat.php?chatID=<?= $chat['chatID'] ?>'">
-                        <strong>Comprador ID: <?= htmlspecialchars($chat['compradorID']) ?></strong> <!-- Exibindo o ID do comprador -->
+                        <strong>Comprador ID: <?= htmlspecialchars($chat['destinatarioID']) ?></strong> <!-- Exibindo o ID do comprador -->
                         <span class="text-muted"> - Última mensagem: <?= htmlspecialchars($chat['ultimamendagem']) ?></span>
                     </div>
                 <?php endforeach; ?>

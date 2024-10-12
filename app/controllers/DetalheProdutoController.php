@@ -1,5 +1,4 @@
 <?php
-require_once 'config/Database.php';
 require_once 'app/models/DetalheProdutoModel.php';
 
 class DetalheProdutoController {
@@ -36,5 +35,6 @@ class DetalheProdutoController {
             echo "ID do produto não fornecido.";
         }
     }
+    
 }
 ?>

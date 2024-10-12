@@ -6,27 +6,46 @@ require_once 'app/models/ChatMensagemModel.php'; // Inclua o arquivo do model
 class ChatMensagemController {
     
     private $ChatMensagemModel;
-
+    
     public function __construct() {
         $this->ChatMensagemModel = new ChatMensagemModel();
     }
 
     public function chat() {
-        // Verifica se o ID do chat foi passado na URL
+        // Verifica se o ID do produto foi passado na URL
         if (isset($_GET['id'])) {
-            $chatId = $_GET['id']; // Obtém o ID do chat
+            $produtoID = $_GET['id']; // Obtém o ID do produto
+
+            // Obtém o userID da sessão
+            $userID = $_SESSION['user_id']; // Supondo que você armazena o userID na sessão
+
+            // Busca o userID do vendedor associado ao produto
+            $vendedorID = $this->ChatMensagemModel->buscarUserIDdeProduto($produtoID);
+            if (!$vendedorID) {
+                echo "Produto não encontrado.";
+                return;
+            }
+
+            if ($userID == $vendedorID) {
+                echo "Você não pode comprar um produto que é seu.";
+                exit(); // Interrompe a execução para que o usuário não continue
+            }            
+
+            // Verifica ou cria o chat
+            $chatId = $this->ChatMensagemModel->verificarOuCriarChat($produtoID, $userID, $vendedorID);
 
             // Busca as mensagens desse chat
             $messages = $this->ChatMensagemModel->getMessagesByChatId($chatId); 
-
+            
             // Passa as mensagens para a visualização
             require_once 'app/views/header.php';
             require_once 'app/views/chatMensagem.php'; // Chama a tela passando as mensagens
             require_once 'app/views/footer.php';
         } else {
-            echo "ID do chat não fornecido.";
+            echo "ID do produto não fornecido.";
         }
     }
+    
 
     public function sendMessage() {
         // Verifica se a requisição é POST
@@ -41,8 +60,10 @@ class ChatMensagemController {
             // Insere a mensagem na tabela
             $this->saveMessage($chatId, $messageContent, $userId);
 
+            $produtoID = $this->ChatMensagemModel->buscarProdutoIDPorChatID($chatId);
+
             // Redireciona de volta para a página do chat
-            header("Location: /chat?id=$chatId");
+            header("Location: /chat?id=$produtoID");
             exit(); // Sempre chame exit após redirecionar
         } else {
             echo "Método não permitido.";
