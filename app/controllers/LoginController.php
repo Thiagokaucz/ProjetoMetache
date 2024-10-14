@@ -1,26 +1,26 @@
 <?php
 session_start();
 
-require_once 'app/models/UserModel.php';
+require_once 'app/models/LoginModel.php';
 
 class LoginController {
     public function login() {
-        $errorMessage = ''; // Variável para armazenar mensagens de erro
+        $erroMensagem = '';
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $email = $_POST['email'];
             $senha = $_POST['senha'];
 
-            $userModel = new UserModel();
+            $userModel = new LoginModel();
             $user = $userModel->login($email, $senha);
 
             if ($user) {
                 $_SESSION['user_id'] = $user['userID'];
                 $_SESSION['user_name'] = $user['nome']; // Armazena o nome na sessão
-                header('Location: /home'); // Redireciona após login
+                header('Location: /'); // Redireciona após login
                 exit(); // Adiciona exit após redirecionamento
             } else {
-                $errorMessage = 'Usuário ou senha inválidos.'; // Armazena mensagem de erro
+                $erroMensagem = 'Usuário ou senha inválidos.'; // Armazena mensagem de erro
             }
         }
 

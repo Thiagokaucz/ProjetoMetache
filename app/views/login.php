@@ -30,7 +30,7 @@
                             <div class="mb-3">
                                 <div class="mb-2 w-100">
                                     <label class="text-muted" for="senha">Senha</label>
-                                    <a href="forgot.html" class="float-end text-decoration-none" style="color: #FF6B01;">
+                                    <a href="/recuperarSenha" class="float-end text-decoration-none" style="color: #FF6B01;">
                                         Esqueceu a senha?
                                     </a>
                                 </div>
@@ -46,9 +46,9 @@
                         </form>
 
                         <!-- Mensagem de erro -->
-                        <?php if (!empty($errorMessage)): ?>
+                        <?php if (!empty($erroMensagem)): ?>
                             <div class="alert alert-danger mt-3" role="alert">
-                                <?php echo $errorMessage; ?>
+                                <?php echo $erroMensagem; ?>
                             </div>
                         <?php endif; ?>
                     </div>

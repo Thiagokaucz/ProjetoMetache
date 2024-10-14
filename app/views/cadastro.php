@@ -56,7 +56,7 @@
                     </div>
                     <div class="card-footer py-3 border-0">
                         <div class="text-center">
-                            Já tem uma conta? <a href="login.php" class="text-dark">Fazer login</a>
+                            Já tem uma conta? <a href="/login" class="text-dark">Fazer login</a>
                         </div>
                     </div>
                 </div>
