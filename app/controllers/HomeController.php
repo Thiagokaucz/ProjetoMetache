@@ -11,7 +11,7 @@ class HomeController {
     public function __construct() {
         // Instancia a classe Database e obtém a conexão
         $database = new Database(); // Aqui você pode passar parâmetros se desejar
-        $conn = $database->getConnection();
+        $conn = $database->obterConexao();
         
         // Passa a conexão para o HomeModel
         $this->model = new HomeModel($conn);

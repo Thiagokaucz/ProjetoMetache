@@ -6,10 +6,9 @@ class LoginModel {
 
     public function __construct() {
         $database = new Database();
-        $this->conn = $database->getConnection();
+        $this->conn = $database->obterConexao();
     }
 
-    // Função para login
     public function login($email, $senha) {
         $query = 'SELECT * FROM Usuario WHERE email = :email';
         $stmt = $this->conn->prepare($query);

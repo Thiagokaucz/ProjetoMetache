@@ -6,7 +6,7 @@ class CadastroModel {
 
     public function __construct() {
         $database = new Database();
-        $this->conn = $database->getConnection();
+        $this->conn = $database->obterConexao();
     }
 
     // Função para verificar se o email já existe

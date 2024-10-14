@@ -5,7 +5,7 @@ require_once 'app/models/LoginModel.php';
 
 class LoginController {
     public function login() {
-        $errorMessage = ''; // Variável para armazenar mensagens de erro
+        $erroMensagem = '';
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $email = $_POST['email'];
@@ -20,7 +20,7 @@ class LoginController {
                 header('Location: /'); // Redireciona após login
                 exit(); // Adiciona exit após redirecionamento
             } else {
-                $errorMessage = 'Usuário ou senha inválidos.'; // Armazena mensagem de erro
+                $erroMensagem = 'Usuário ou senha inválidos.'; // Armazena mensagem de erro
             }
         }
 

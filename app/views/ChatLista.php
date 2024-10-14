@@ -21,42 +21,41 @@
 <body>
 
 <div class="container mt-5">
-    <h1>Chats</h1>
     
     <!-- Botões para selecionar o tipo de chat -->
     <div class="btn-group" role="group" aria-label="Chat Type Selection">
-        <button type="button" class="btn btn-primary" onclick="showChats('vendedores')">Vendedores</button>
-        <button type="button" class="btn btn-secondary" onclick="showChats('compradores')">Compradores</button>
+        <button type="button" class="btn btn-primary" onclick="showChats('vendedores')">Minhas compras</button>
+        <button type="button" class="btn btn-secondary" onclick="showChats('compradores')">Minhas vendas</button>
     </div>
 
     <div class="tab-content">
         <!-- Seção de chats de vendedores -->
         <div id="vendedores" class="chat-list" style="display: none;">
-            <h2>Chats de Vendedores</h2>
-            <?php if (!empty($vendedorChats)): ?>
-                <?php foreach ($vendedorChats as $chat): ?>
-                    <div class="chat-item" onclick="window.location.href='chat?id=<?= $chat['chatID'] ?>'">
-                        <strong>Chat ID: <?= htmlspecialchars($chat['chatID']) ?></strong> <!-- Exibindo o ID do vendedor -->
-                        <span class="text-muted"> - Última mensagem: <?= htmlspecialchars($chat['ultimamendagem']) ?></span>
+            <h2>Compras</h2>
+            <?php if (!empty($ChatsCompras)): ?>
+                <?php foreach ($ChatsCompras as $chat): ?>
+                    <div class="chat-item" onclick="window.location.href='chatCompra?id=<?= $chat['produtoID'] ?>'">
+                        <strong>Produto: <?= htmlspecialchars($chat['produtoID']) ?></strong> <!-- Exibindo o ID do vendedor -->
+                        <!--<span class="text-muted"> - Última mensagem: <?= htmlspecialchars($chat['ultimamendagem']) ?></span>-->
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <p>Não há chats de vendedores disponíveis.</p>
+                <p>Não há chats disponíveis.</p>
             <?php endif; ?>
         </div>
 
         <!-- Seção de chats de compradores -->
         <div id="compradores" class="chat-list" style="display: none;">
-            <h2>Chats de Compradores</h2>
-            <?php if (!empty($compradorChats)): ?>
-                <?php foreach ($compradorChats as $chat): ?>
-                    <div class="chat-item" onclick="window.location.href='chat.php?chatID=<?= $chat['chatID'] ?>'">
-                        <strong>Comprador ID: <?= htmlspecialchars($chat['destinatarioID']) ?></strong> <!-- Exibindo o ID do comprador -->
-                        <span class="text-muted"> - Última mensagem: <?= htmlspecialchars($chat['ultimamendagem']) ?></span>
+            <h2>Vendas</h2>
+            <?php if (!empty($ChatsVendas)): ?>
+                <?php foreach ($ChatsVendas as $chat): ?>
+                    <div class="chat-item" onclick="window.location.href='chat?id=<?= $chat['produtoID'] ?>'">
+                        <strong>Comprador ID: <?= htmlspecialchars($chat['vendedorID']) ?></strong> <!-- Exibindo o ID do comprador -->
+                        <!--<span class="text-muted"> - Última mensagem: <?= htmlspecialchars($chat['ultimamendagem']) ?></span>-->
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <p>Não há chats de compradores disponíveis.</p>
+                <p>Não há chats disponíveis.</p>
             <?php endif; ?>
         </div>
     </div>

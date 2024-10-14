@@ -6,7 +6,7 @@ class ChatMensagemModel {
 
     public function __construct() {
         $database = new Database(); // Cria uma nova instância da classe Database
-        $this->conn = $database->getConnection(); // Obtém a conexão
+        $this->conn = $database->obterConexao(); // Obtém a conexão
     }
 
     public function getMessagesByChatId($chatId) {

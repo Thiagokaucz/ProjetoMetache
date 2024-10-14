@@ -6,7 +6,7 @@ class ProductModel {
 
     // Construtor que recebe uma instância de Database
     public function __construct($database) {
-        $this->conn = $database->getConnection();
+        $this->conn = $database->obterConexao();
     }
 
     // Método para buscar os detalhes do produto

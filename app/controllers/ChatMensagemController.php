@@ -8,6 +8,7 @@ class ChatMensagemController {
     private $ChatMensagemModel;
     
     public function __construct() {
+
         $this->ChatMensagemModel = new ChatMensagemModel();
     }
 

@@ -6,42 +6,42 @@ class ChatListaModel {
 
     public function __construct() {
         $database = new Database();
-        $this->conn = $database->getConnection();
+        $this->conn = $database->obterConexao();
     }
 
-    // Método para verificar se o usuário está na coluna userID
-    public function userExistsInUserID($userID) {
-        $query = 'SELECT COUNT(*) FROM chat WHERE userID = :userID';
+    public function obterChatsCompras($valorID) {
+        $query = 'SELECT * FROM chat WHERE compradorID = :valorID';
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':userID', $userID);
+        $stmt->bindParam(':valorID', $valorID); 
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); 
+    }
+    
+    public function obterChatsVendas($valorID) {
+        $query = 'SELECT * FROM chat WHERE vendedorID = :valorID';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':valorID', $valorID); 
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); 
+    }
+
+
+
+    // Método para verificar se o usuário está na coluna userID
+    public function userExistsInUserID($compradorID) {
+        $query = 'SELECT COUNT(*) FROM chat WHERE compradorID = :compradorID';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':compradorID', $compradorID);
         $stmt->execute();
         return $stmt->fetchColumn() > 0;
     }
 
     // Método para verificar se o usuário está na coluna compradorID
-    public function userExistsInCompradorID($userID) {
-        $query = 'SELECT COUNT(*) FROM chat WHERE destinatarioID = :userID';
+    public function userExistsInCompradorID($compradorID) {
+        $query = 'SELECT COUNT(*) FROM chat WHERE vendedorID = :compradorID';
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':userID', $userID);
+        $stmt->bindParam(':compradorID', $compradorID);
         $stmt->execute();
         return $stmt->fetchColumn() > 0;
-    }
-
-    // Método para obter chats de vendedor
-    public function getChatsByUserID($userID) {
-        $query = 'SELECT * FROM chat WHERE userID = :userID';
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':userID', $userID);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna todos os chats do vendedor
-    }
-
-    // Método para obter chats de comprador
-    public function getChatsByCompradorID($userID) {
-        $query = 'SELECT * FROM chat WHERE destinatarioID = :userID';
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':userID', $userID);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna todos os chats do comprador
     }
 }

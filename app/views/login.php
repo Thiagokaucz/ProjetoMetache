@@ -46,9 +46,9 @@
                         </form>
 
                         <!-- Mensagem de erro -->
-                        <?php if (!empty($errorMessage)): ?>
+                        <?php if (!empty($erroMensagem)): ?>
                             <div class="alert alert-danger mt-3" role="alert">
-                                <?php echo $errorMessage; ?>
+                                <?php echo $erroMensagem; ?>
                             </div>
                         <?php endif; ?>
                     </div>
