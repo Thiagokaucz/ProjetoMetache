@@ -16,68 +16,83 @@ class ChatMensagemModel {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Verifica se um chat existe para o produto e usuário fornecidos
-    public function verificarOuCriarChat($produtoID, $userID, $destinatarioID) {
-        // Verifica se já existe um chat com o produtoID, userID e destinatarioID
-        $query = "SELECT chatID FROM chat WHERE produtoID = :produtoID AND userID = :userID AND destinatarioID = :destinatarioID LIMIT 1";
+    public function verificarChatComprador($produtoID, $compradorID) {
+
+        $query = "SELECT chatID FROM chat WHERE produtoID = :produtoID AND compradorID = :compradorID LIMIT 1";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':produtoID', $produtoID);
-        $stmt->bindParam(':userID', $userID);
-        $stmt->bindParam(':destinatarioID', $destinatarioID);
+        $stmt->bindParam(':compradorID', $compradorID);
 
         $stmt->execute();
         
+        // Obtém o resultado
         $chat = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($chat) {
-            // Se o chat já existe, retorna o chatID
-            return $chat['chatID'];
-        } else {
-            // Se não existe, cria um novo chat
-            $query = "INSERT INTO chat (produtoID, userID, destinatarioID, DataInicioChat) VALUES (:produtoID, :userID, :destinatarioID, NOW())";
+        // Se encontrar um chat, retorna o chatID, caso contrário, retorna null
+        return $chat ? $chat['chatID'] : null;
+    }
+
+        public function verificarChatVendedor($produtoID, $vendedorID) {
+
+            $query = "SELECT chatID FROM chat WHERE produtoID = :produtoID AND vendedorID = :vendedorID LIMIT 1";
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':produtoID', $produtoID);
-            $stmt->bindParam(':userID', $userID);
-            $stmt->bindParam(':destinatarioID', $destinatarioID);
+            $stmt->bindParam(':vendedorID', $vendedorID);
+    
             $stmt->execute();
-
-            // Retorna o ID do novo chat
-            return $this->conn->lastInsertId();
-        }
-    }
-
-    // Função para buscar o userID a partir do produtoID
-    public function buscarUserIDdeProduto($produtoID) {
-        $query = "SELECT userID FROM produto WHERE produtoID = :produtoID LIMIT 1"; // Certifique-se de que a tabela produto e as colunas existem
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':produtoID', $produtoID, PDO::PARAM_INT);
-        $stmt->execute();
-
-        $result = $stmt->fetch(PDO::FETCH_ASSOC); // Fetch a single row
-
-        if ($result) {
-            return $result['userID']; // Retorna o userID
-        } else {
-            return null; // Retorna null se não encontrar o produto
-        }
-    }
-
-    public function buscarProdutoIDPorChatID($chatID) {
-        // Prepara a consulta para buscar o produtoID pelo chatID
-        $query = "SELECT produtoID FROM chat WHERE chatID = :chatID LIMIT 1";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':chatID', $chatID, PDO::PARAM_INT);
-        $stmt->execute();
+            
+            // Obtém o resultado
+            $chat = $stmt->fetch(PDO::FETCH_ASSOC);
     
-        // Recupera o resultado
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-        // Verifica se encontrou o produtoID e retorna
-        if ($result) {
-            return $result['produtoID'];
-        } else {
-            return null; // Retorna null se não encontrar
+            // Se encontrar um chat, retorna o chatID, caso contrário, retorna null
+            return $chat ? $chat['chatID'] : null;
         }
-    }
+
+
+        // Verifica se um chat existe para o produto e usuário fornecidos
+        public function verificarOuCriarChat($produtoID, $compradorID, $vendedorID) {
+            // Verifica se já existe um chat com o produtoID, compradorID e vendedorID
+            $query = "SELECT chatID FROM chat WHERE produtoID = :produtoID AND compradorID = :compradorID AND vendedorID = :vendedorID LIMIT 1";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':produtoID', $produtoID);
+            $stmt->bindParam(':compradorID', $compradorID);
+            $stmt->bindParam(':vendedorID', $vendedorID);
+
+            $stmt->execute();
+            
+            $chat = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($chat) {
+                // Se o chat já existe, retorna o chatID
+                return $chat['chatID'];
+            } else {
+                // Se não existe, cria um novo chat
+                $query = "INSERT INTO chat (produtoID, compradorID, vendedorID, DataInicioChat) VALUES (:produtoID, :compradorID, :vendedorID, NOW())";
+                $stmt = $this->conn->prepare($query);
+                $stmt->bindParam(':produtoID', $produtoID);
+                $stmt->bindParam(':compradorID', $compradorID);
+                $stmt->bindParam(':vendedorID', $vendedorID);
+                $stmt->execute();
+
+                // Retorna o ID do novo chat
+                return $this->conn->lastInsertId();
+            }
+        }
+
+        // Busca o userID a partir do produtoID na tabela produto
+        public function buscarUserIDPorProdutoID($produtoID) {
+            // Consulta para buscar o userID com base no produtoID
+            $query = "SELECT userID FROM produto WHERE produtoID = :produtoID LIMIT 1";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':produtoID', $produtoID);
+
+            $stmt->execute();
+            
+            // Obtém o resultado
+            $produto = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // Se encontrar o produto, retorna o userID, caso contrário, retorna null
+            return $produto ? $produto['userID'] : null;
+        }   
     
 }

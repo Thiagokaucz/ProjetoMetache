@@ -14,7 +14,7 @@ $rotas = [
 
     '/chatLista' => 'ChatListaController@verificarUsuarioNoChat',
 
-    '/chatCompra' => 'ChatMensagemController@chat', 
+    '/chat' => 'ChatMensagemController@chat', 
     '/sendMessage' => 'ChatMensagemController@sendMessage', 
     '/getMessagesAjax' => 'ChatMensagemController@getMessagesAjax', 
 
