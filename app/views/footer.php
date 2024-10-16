@@ -2,8 +2,8 @@
     <div class="container-fluid p-5 text-center" style="background-color: #2E2E2E; color: #FFFFFF;">
         <h1>Está esperando o quê?</h1>
         <p>Aqui você pode anunciar gratuitamente de forma rápida e eficiente.</p>
-        <button type="button" class="btn btn-success" style="background-color: #FF6B01; border-color: #FF6B01;">Anuncie Agora!</button>
-    </div>
+        <button type="button" class="btn btn-success" onclick="window.location.href='/anunciar';" style="background-color: #FF6B01; border-color: #FF6B01; color: white;">Anuncie Agora!</button>
+        </div>
 
     <div class="container mt-5">
         <div class="row">
@@ -33,7 +33,7 @@
             <a class="nav-link" href="#">Dicas de segurança</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Anunciar</a>
+            <a class="nav-link" href="/anunciar">Anunciar</a>
         </li>
     </ul>
     <span class="navbar-text">

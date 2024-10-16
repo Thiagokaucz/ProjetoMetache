@@ -15,6 +15,8 @@ class HomeController {
         
         // Passa a conexão para o HomeModel
         $this->model = new HomeModel($conn);
+        $this->homeModel = new HomeModel($conn);
+
     }
 
     // Função que carrega os dados e a view
@@ -25,6 +27,8 @@ class HomeController {
         // Busca os anúncios recentes e os mais pesquisados com limite de 5
         $anunciosRecentes = $this->model->getAnunciosRecentes($limit);
         $maisPesquisados = $this->model->getMaisPesquisados($limit);
+
+        $categorias = $this->homeModel->getTodasCategorias();
 
         // Passa os dados para a view
         require_once 'app/views/header.php';

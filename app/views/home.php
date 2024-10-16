@@ -18,68 +18,116 @@
 
         <div class="input-group">
 
-          <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              PR
-            </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">PR</a></li>
-              <li><a class="dropdown-item" href="#">SP</a></li>
-              <li><a class="dropdown-item" href="#">RJ</a></li>
-              <li><a class="dropdown-item" href="#">MG</a></li>
-              <li><a class="dropdown-item" href="#">RS</a></li>
-            </ul>
 
-            <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Eletrônicos
-            </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Eletrônicos</a></li>
-              <li><a class="dropdown-item" href="#">Imóveis</a></li>
-              <li><a class="dropdown-item" href="#">Veículos</a></li>
-              <li><a class="dropdown-item" href="#">Móveis</a></li>
-              <li><a class="dropdown-item" href="#">Roupas</a></li>
-            </ul>
+          <!-- ---------------------------------------------------------------------------------------- -->
 
-            <input type="text" class="form-control" placeholder="Estou procurando por..." aria-label="Campo de pesquisa">
 
-            <button class="btn btn-light" type="button">
-              <i class="bi bi-search"></i> 
-            </button>
-          </div>
+          <div class="d-flex justify-content-center" style="width: 100%; padding: 20px; background-color: #FF6B01;">
+            <!-- Componente de pesquisa centralizado e com largura maior -->
+
+                <!-- Campo de pesquisa -->
+                <input type="text" class="form-control" id="campoPesquisa" placeholder="Estou procurando por..." aria-label="Campo de pesquisa" style="border: none; padding: 15px; border-radius: 0;  background-color: #FFF;">
+
+                <!-- Dropdown Categoria -->
+                <div class="input-group-append">
+                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownCategoria" data-bs-toggle="dropdown" aria-expanded="false" style="border: none; padding: 15px; border-radius: 0; background-color: #FFF;">
+                        Todos
+                    </button>
+                    <ul class="dropdown-menu">
+                        <?php foreach ($categorias as $categoria): ?>
+                            <li><a class="dropdown-item" href="#" onclick="selecionarCategoria('<?= htmlspecialchars($categoria['categoria']) ?>')"><?= htmlspecialchars($categoria['categoria']) ?></a></li>
+                        <?php endforeach; ?>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" onclick="selecionarCategoria('Todos')">Todos</a></li>
+                    </ul>
+                </div>
+
+                <!-- Dropdown Região -->
+                <div class="input-group-append">
+                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownRegiao" data-bs-toggle="dropdown" aria-expanded="false" style="border: none; padding: 15px; border-radius: 0; background-color: #FFF;">
+                        PR
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" onclick="selecionarRegiao('PR')">PR</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="selecionarRegiao('SP')">SP</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="selecionarRegiao('RJ')">RJ</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="selecionarRegiao('MG')">MG</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="selecionarRegiao('RS')">RS</a></li>
+                    </ul>
+                </div>
+
+
+                <!-- Botão de pesquisa -->
+                <div class="input-group-append">
+                    <button class="btn btn-light" type="button" onclick="pesquisar()" style="border: none; padding: 15px; border-radius: 0; background-color: #FFF;">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+        </div>
+      </div>
+
+        <script>
+            // Variáveis para armazenar as seleções
+            let categoriaSelecionada = 'Todos';  // Valor pré-definido
+            let regiaoSelecionada = 'PR';        // Valor pré-definido
+            
+            // Funções para capturar as seleções de categoria e região
+            function selecionarCategoria(categoria) {
+                categoriaSelecionada = categoria;
+                document.getElementById('dropdownCategoria').innerText = categoria !== 'Todos' ? categoria : 'Todos'; // Atualiza o botão de categoria
+            }
+
+            function selecionarRegiao(regiao) {
+                regiaoSelecionada = regiao;
+                document.getElementById('dropdownRegiao').innerText = regiao; // Atualiza o botão de região
+            }
+
+            // Função para montar o link e redirecionar
+            function pesquisar() {
+                const pesquisa = document.getElementById('campoPesquisa').value; // Captura o valor do campo de pesquisa
+                const url = `/PesquisarProdutosPor?Categoria=${categoriaSelecionada}&Regiao=${regiaoSelecionada}&Pesquisa=${pesquisa}`;
+                window.location.href = url; // Redireciona para a URL montada
+            }
+        </script>
+
+
+
+          <!-- ---------------------------------------------------------------------------------------- -->
+
 
           <ul class="nav nav-pills mt-3">
-                <li class="nav-item dropdown">
-                <a class="nav-link  dropdown-toggle "style="color: white;" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Eletronicos usados</a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Separated link</a></li>
-                </ul>
-                </li>
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" style="color: white;" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Eletronicos Usados</a>
+              <ul class="dropdown-menu">
+                  <?php foreach ($categorias as $categoria): ?>
+                    <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=<?= htmlspecialchars($categoria['categoria'])?>&Regiao=&Pesquisa="><?= htmlspecialchars($categoria['categoria']) ?></a></li>
+                    <?php endforeach; ?>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=Todos&Regiao=&Pesquisa=">Todos</a></li>
+              </ul>
+          </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" style="color: white;" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Eletronicos com defeito</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
+                  <?php foreach ($categorias as $categoria): ?>
+                    <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=<?= htmlspecialchars($categoria['categoria'])?>&Regiao=&Pesquisa="><?= htmlspecialchars($categoria['categoria']) ?></a></li>
+                  <?php endforeach; ?>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=Todos&Regiao=&Pesquisa=">Todos</a></li>
               </ul>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" style="color: white;" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Eletronicos vintage</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
+                  <?php foreach ($categorias as $categoria): ?>
+                    <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=<?= htmlspecialchars($categoria['categoria'])?>&Regiao=&Pesquisa="><?= htmlspecialchars($categoria['categoria']) ?></a></li>
+                  <?php endforeach; ?>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=Todos&Regiao=&Pesquisa=">Todos</a></li>
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link "style="color: white;" href="#">Todos</a>
+              <a class="nav-link "style="color: white;" href="/PesquisarProdutosPor?Categoria=Todos&Regiao=&Pesquisa=">Todos</a>
             </li>
           </ul>
         </div>
@@ -126,7 +174,7 @@
 
     <ul class="nav justify-content-center">
       <li class="nav-item">
-        <a class="nav-link active text-dark" aria-current="page" href="#">Ver mais</a>
+        <a class="nav-link active text-dark" aria-current="page" href="/VerMaisProdutosPor?Tipo=UltimosAnunciosVistos">Ver mais</a>
       </li>
     </ul>
   </div>
@@ -166,6 +214,11 @@
         <?php endforeach; ?>
       <?php endif; ?>
     </div>
+    <ul class="nav justify-content-center">
+      <li class="nav-item">
+        <a class="nav-link active text-dark" aria-current="page" href="/VerMaisProdutosPor?Tipo=MaisPesquisados">Ver mais</a>
+      </li>
+    </ul>
   </div>
 </section>
 

@@ -15,85 +15,82 @@ class ChatMensagemController {
     public function chat() {
         // Verifica se os parâmetros necessários foram passados na URL
         if (isset($_GET['Produto'], $_GET['Origem'], $_GET['Tipo'])) {
+            if (isset($_SESSION['user_id'])) { // Verifica se o usuário está logado
     
-            $produtoID = $_GET['Produto'];
-            $origem = $_GET['Origem'];    
-            $tipoID = $_GET['Tipo'];     
-            $userID = $_SESSION['user_id']; 
-
-            // Armazenando as variáveis em sessão
-            $_SESSION['produtoID'] = $produtoID;
-            $_SESSION['origem'] = $origem;
-            $_SESSION['tipoID'] = $tipoID;
+                // Sanitiza os dados recebidos pela URL
+                $produtoID = filter_input(INPUT_GET, 'Produto', FILTER_SANITIZE_NUMBER_INT);
+                $origem = filter_input(INPUT_GET, 'Origem', FILTER_SANITIZE_STRING);
+                $tipoID = filter_input(INPUT_GET, 'Tipo', FILTER_SANITIZE_STRING);
+                $userID = $_SESSION['user_id'];
     
-            // Exibe informações para debug
-            //echo "ID do produto: " . $produtoID . "<br>";
-            //echo "Origem: " . $origem . "<br>";
-            //echo "Tipo: " . $tipoID . "<br>";
-            //echo "ID da sessão do usuário: " . $userID . "<br>";
+                // Armazenando as variáveis em sessão
+                $_SESSION['produtoID'] = $produtoID;
+                $_SESSION['origem'] = $origem;
+                $_SESSION['tipoID'] = $tipoID;
     
-            // Lógica para validar com base na origem
-            if ($origem == 'ListaChat') {
-                if ($tipoID == 'MinhasCompras') {
-                    echo "Chat para o comprador";
-
-                    // Verifica ou cria o chat
-                    $chatId = $this->ChatMensagemModel->verificarChatComprador($produtoID, $userID);
-
-                    // Busca as mensagens desse chat
-                    $messages = $this->ChatMensagemModel->getMessagesByChatId($chatId);
-
-                } elseif ($tipoID == 'MinhasVendas') {
-                    echo "Chat para o vendedor";
-
-                    // Verifica ou cria o chat
-                    $chatId = $this->ChatMensagemModel->verificarChatVendedor($produtoID, $userID);
-
-                    // Busca as mensagens desse chat
-                    $messages = $this->ChatMensagemModel->getMessagesByChatId($chatId);
-
-                } else {
-                    echo "Tipo desconhecido na origem ListaChat";
-                }
+                // Lógica para validar com base na origem
+                if ($origem === 'ListaChat') {
+                    if ($tipoID === 'MinhasCompras') {
+                        //echo "Chat para o comprador";
     
-            } elseif ($origem == 'DetalhesAnuncio') {
-                if ($tipoID == 'IniciarChat') {
-
-                    $vendedorID = $this->ChatMensagemModel->buscarUserIDPorProdutoID($produtoID);
-
-                    if ($userID == $vendedorID){
-                        echo "Nao pode comprar o seu proprio produto senhor!";
-                        exit();
-
-                    }else{
-                        echo "Chat que vem dos detalhes do anuncio";
-
                         // Verifica ou cria o chat
-                        $chatId = $this->ChatMensagemModel->verificarOuCriarChat($produtoID, $userID, $vendedorID);
-
+                        $chatId = $this->ChatMensagemModel->verificarChatComprador($produtoID, $userID);
+    
                         // Busca as mensagens desse chat
                         $messages = $this->ChatMensagemModel->getMessagesByChatId($chatId);
+    
+                    } elseif ($tipoID === 'MinhasVendas') {
+                        //echo "Chat para o vendedor";
+    
+                        // Verifica ou cria o chat
+                        $chatId = $this->ChatMensagemModel->verificarChatVendedor($produtoID, $userID);
+    
+                        // Busca as mensagens desse chat
+                        $messages = $this->ChatMensagemModel->getMessagesByChatId($chatId);
+    
+                    } else {
+                        //echo "Tipo desconhecido na origem ListaChat";
                     }
-
+    
+                } elseif ($origem === 'DetalhesAnuncio') {
+                    if ($tipoID === 'IniciarChat') {
+    
+                        $vendedorID = $this->ChatMensagemModel->buscarUserIDPorProdutoID($produtoID);
+    
+                        if ($userID == $vendedorID) {
+                            echo "Não pode comprar o seu próprio produto!";
+                            exit();
+                        } else {
+                            //echo "Chat que vem dos detalhes do anúncio";
+    
+                            // Verifica ou cria o chat
+                            $chatId = $this->ChatMensagemModel->verificarOuCriarChat($produtoID, $userID, $vendedorID);
+    
+                            // Busca as mensagens desse chat
+                            $messages = $this->ChatMensagemModel->getMessagesByChatId($chatId);
+                        }
+    
+                    } else {
+                        echo "Tipo desconhecido na origem DetalhesAnuncio";
+                    }
                 } else {
                     echo "Origem desconhecida";
                 }
+    
+                // Carrega as views apropriadas
+                require_once 'app/views/header.php';
+                require_once 'app/views/chatMensagem.php'; // Chama a tela passando as mensagens
+                require_once 'app/views/footer.php';
+    
             } else {
-                echo "Origem desconhecida";
+                header('Location: /login');
+                exit();
             }
         } else {
             echo "Parâmetros obrigatórios não fornecidos.";
         }
+    }    
     
-            // Carrega as views apropriadas
-             require_once 'app/views/header.php';
-             require_once 'app/views/chatMensagem.php'; // Chama a tela passando as mensagens
-             require_once 'app/views/footer.php';
-    
-    }
-    
-    
-
     public function sendMessage() {
         // Verifica se a requisição é POST
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {

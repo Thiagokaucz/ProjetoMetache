@@ -26,5 +26,14 @@ class HomeModel {
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    // Função para buscar todas as categorias
+    public function getTodasCategorias() {
+        $sql = "SELECT * FROM categoria";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>
