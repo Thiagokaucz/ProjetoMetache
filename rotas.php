@@ -21,4 +21,7 @@ $rotas = [
     '/notificacao' => 'NotificacaoController@mostrarNotificacoes',
     '/excluir' => 'NotificacaoController@excluirNotificacao',
 
+    '/PesquisarProdutosPor' => 'ProdutosPesquisaController@pesquisarProdutos',
+
+
 ];
