@@ -25,25 +25,26 @@ class ProdutosPesquisaModel {
         public function buscarProdutos($categoriaNome, $localizacao, $termo) {
             // Primeiro, busque o categoriaID usando o nome da categoria
             $categoriaID = $this->obterCategoriaID($categoriaNome);
-    
-            if ($categoriaID === null) {
-                return []; // Retorna um array vazio se a categoria não for encontrada
+            
+            // Prepare a base da consulta SQL
+            $sql = "SELECT * FROM produto WHERE localizacao = :localizacao AND (titulo LIKE :termo OR descricao LIKE :termo)";
+            
+            // Se a categoria não for "Todos", adicione o filtro
+            if ($categoriaNome !== 'Todos' && $categoriaID !== null) {
+                $sql .= " AND categoriaID = :categoriaID";
             }
-    
-            // Agora, busque os produtos com base no categoriaID
-            $sql = "SELECT * FROM produto 
-                    WHERE categoriaID = :categoriaID 
-                    AND localizacao = :localizacao 
-                    AND (titulo LIKE :termo OR descricao LIKE :termo)";
-    
+        
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindValue(':categoriaID', $categoriaID);
+            if ($categoriaNome !== 'Todos' && $categoriaID !== null) {
+                $stmt->bindValue(':categoriaID', $categoriaID);
+            }
             $stmt->bindValue(':localizacao', $localizacao);
             $stmt->bindValue(':termo', '%' . $termo . '%');
             $stmt->execute();
-    
+        
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
+        
         public function obterCategorias() {
             $sql = "SELECT categoria FROM categoria"; // Ajuste o nome da coluna se necessário
             $stmt = $this->conn->prepare($sql);

@@ -85,7 +85,7 @@
             // Função para montar o link e redirecionar
             function pesquisar() {
                 const pesquisa = document.getElementById('campoPesquisa').value; // Captura o valor do campo de pesquisa
-                const url = `/PesquisarProdutosPor?Categoria=${categoriaSelecionada}&Regiao=${regiaoSelecionada}&Pesquisa=${pesquisa}`;
+                const url = `/PesquisarProdutosPor?Categoria=${categoriaSelecionada}&Regiao=${regiaoSelecionada}&Ordem=Data&Pesquisa=${pesquisa}`;
                 window.location.href = url; // Redireciona para a URL montada
             }
         </script>
@@ -100,7 +100,7 @@
               <a class="nav-link dropdown-toggle" style="color: white;" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Eletronicos Usados</a>
               <ul class="dropdown-menu">
                   <?php foreach ($categorias as $categoria): ?>
-                    <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=<?= htmlspecialchars($categoria['categoria'])?>&Regiao=&Pesquisa="><?= htmlspecialchars($categoria['categoria']) ?></a></li>
+                    <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=<?= htmlspecialchars($categoria['categoria'])?>&Regiao=&Ordem=Data&Pesquisa=`;"><?= htmlspecialchars($categoria['categoria']) ?></a></li>
                     <?php endforeach; ?>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=Todos&Regiao=&Pesquisa=">Todos</a></li>
@@ -110,7 +110,7 @@
               <a class="nav-link dropdown-toggle" style="color: white;" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Eletronicos com defeito</a>
               <ul class="dropdown-menu">
                   <?php foreach ($categorias as $categoria): ?>
-                    <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=<?= htmlspecialchars($categoria['categoria'])?>&Regiao=&Pesquisa="><?= htmlspecialchars($categoria['categoria']) ?></a></li>
+                    <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=<?= htmlspecialchars($categoria['categoria'])?>&Regiao=&Ordem=Data&Pesquisa=`;"><?= htmlspecialchars($categoria['categoria']) ?></a></li>
                   <?php endforeach; ?>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=Todos&Regiao=&Pesquisa=">Todos</a></li>
@@ -120,14 +120,14 @@
               <a class="nav-link dropdown-toggle" style="color: white;" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Eletronicos vintage</a>
               <ul class="dropdown-menu">
                   <?php foreach ($categorias as $categoria): ?>
-                    <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=<?= htmlspecialchars($categoria['categoria'])?>&Regiao=&Pesquisa="><?= htmlspecialchars($categoria['categoria']) ?></a></li>
+                    <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=<?= htmlspecialchars($categoria['categoria'])?>&Regiao=&Ordem=Data&Pesquisa=`;"><?= htmlspecialchars($categoria['categoria']) ?></a></li>
                   <?php endforeach; ?>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=Todos&Regiao=&Pesquisa=">Todos</a></li>
+                  <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=Todos&Regiao=&Ordem=Data&Pesquisa=`;">Todos</a></li>
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link "style="color: white;" href="/PesquisarProdutosPor?Categoria=Todos&Regiao=&Pesquisa=">Todos</a>
+              <a class="nav-link "style="color: white;" href="/PesquisarProdutosPor?Categoria=Todos&Regiao=&Ordem=Data&Pesquisa=`;">Todos</a>
             </li>
           </ul>
         </div>
