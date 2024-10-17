@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pesquisa de Produtos</title>
-    <!-- Inclua Bootstrap CSS se ainda não estiver incluído -->
 </head>
 <body>
     <div class="container">
@@ -20,7 +19,7 @@
                 <div class="col">
                     <label for="categoria">Categoria:</label>
                     <select name="Categoria" id="categoria" class="form-select">
-                        <option value="Todos">Todos</option> <!-- Opção para mostrar todas as categorias -->
+                        <option value="Todos">Todos</option>
                         <?php foreach ($categorias as $cat): ?>
                             <option value="<?php echo $cat['categoria']; ?>" <?php if($cat['categoria'] == $categoria) echo 'selected'; ?>><?php echo $cat['categoria']; ?></option>
                         <?php endforeach; ?>
@@ -49,18 +48,18 @@
             <button type="submit" class="btn btn-primary">Buscar</button>
         </form>
 
-            <h2 class="pt-3 pb-3">Produtos Encontrados</h2>
-            <div class="row row-cols-2 row-cols-md-4 row-cols-lg-5">
+        <h2 class="pt-3 pb-3">Produtos Encontrados</h2>
+        <div class="row row-cols-2 row-cols-md-4 row-cols-lg-5">
 
             <?php if (empty($produtos)): ?>
                 <p>Nenhum anúncio recente encontrado.</p>
             <?php else: ?>
-                <?php foreach($produtos as $produto): ?> <!-- Corrigido para usar $produto -->
+                <?php foreach($produtos as $produto): ?>
                 <div class="col pb-3">
                     <a href="detalheProduto?id=<?= $produto['produtoID'] ?>" class="text-decoration-none">
-                        <div class="card h-80 bg-white text-dark">
-                            <img src="<?= $produto['locImagem'] ?>" alt="Anúncio" class="card-img-top">
-                            <div class="card-body">
+                        <div class="card h-100 bg-white text-dark">
+                            <img src="<?= $produto['locImagem'] ?>" alt="Anúncio" class="card-img-top" style="height: 200px; object-fit: cover;">
+                            <div class="card-body d-flex flex-column">
                                 <h4 class="card-title"><?= $produto['titulo'] ?></h4>
                                 <h6 class="card-subtitle">R$ <?= number_format($produto['valor'], 2, ',', '.'); ?></h6>
                                 <div class="row mt-4">
@@ -81,7 +80,8 @@
                 </div>
                 <?php endforeach; ?>
             <?php endif; ?>
-            </div>
-        </section>
+        </div>
+    </div>
+    
 </body>
 </html>

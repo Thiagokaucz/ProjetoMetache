@@ -41,7 +41,7 @@
                 <ul class="navbar-nav">
                     <?php if (isset($_SESSION['user_name'])): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="/usuario"><span class="bi bi-person"></span> <?php echo htmlspecialchars($_SESSION['user_name']); ?></a>
+                            <a class="nav-link" href="/perfilUsuario"><span class="bi bi-person"></span> <?php echo htmlspecialchars($_SESSION['user_name']); ?></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/anunciar" style="color: orange;">Anunciar</a>

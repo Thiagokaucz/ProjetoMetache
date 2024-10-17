@@ -76,7 +76,34 @@ class ChatMensagemModel {
 
                 // Retorna o ID do novo chat
                 return $this->conn->lastInsertId();
+
+                $conteudoNotificacao = "Usuário " . $userID . " iniciou uma negociação no chat " . $chatId;
+                $statusCriouNotificacao = $this->ChatMensagemModel->criarNotificacao($userID, $vendedorID, $chatId, $conteudoNotificacao);
             }
+        }
+   
+        public function verificarExistenciaChat($chatID) {
+            // Prepara a consulta para verificar se o chat existe
+            $sql = "SELECT COUNT(*) FROM notificacao WHERE chatID = :chatID";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':chatID', $chatID, PDO::PARAM_INT); // Certifica-se de usar o tipo correto
+            $stmt->execute();
+        
+            // Verifica o resultado e retorna true se o chat existir, false caso contrário
+            return $stmt->fetchColumn() > 0;
+        }
+        
+
+        public function criarNotificacao($userID, $destinatarioID, $chatID, $conteudo) {
+            $sql = "INSERT INTO notificacao (userID, destinatarioID, chatID, conteudo, dataHora) VALUES (:userID, :destinatarioID, :chatID, :conteudo, NOW())";
+            
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':userID', $userID);
+            $stmt->bindParam(':destinatarioID', $destinatarioID);
+            $stmt->bindParam(':chatID', $chatID);
+            $stmt->bindParam(':conteudo', $conteudo);
+    
+            return $stmt->execute();
         }
 
         // Busca o userID a partir do produtoID na tabela produto

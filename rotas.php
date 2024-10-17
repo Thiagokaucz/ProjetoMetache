@@ -23,5 +23,11 @@ $rotas = [
 
     '/PesquisarProdutosPor' => 'ProdutosPesquisaController@pesquisarProdutos',
 
+    '/perfilUsuario' => 'PerfilUsuarioController@exibirDados',
+    '/perfilUsuario/atualizar' => 'PerfilUsuarioController@atualizarDados',
+    '/perfilUsuario/desativar' => 'PerfilUsuarioController@desativarUsuario',  // Alterada de 'deletar' para 'desativar'
+
+    '/ajudaContato' => 'AjudaContatoController@index',
+    '/dicasSeguranca' => 'DicasSegurancaController@index',
 
 ];

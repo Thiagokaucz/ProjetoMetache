@@ -65,9 +65,22 @@ class ChatMensagemController {
     
                             // Verifica ou cria o chat
                             $chatId = $this->ChatMensagemModel->verificarOuCriarChat($produtoID, $userID, $vendedorID);
-    
+                            
+                            $existeChat = $this->ChatMensagemModel->verificarExistenciaChat($chatId);
+
+                            if ($existeChat) {
+                                echo "O chat existe!";
+                            } else {
+                                echo "O chat não existe!";
+                                // Se um chat foi encontrado ou criado, cria a notificação
+                                $conteudoNotificacao = "Usuário " . $userID . " iniciou uma negociação no chat " . $chatId;
+                                $statusCriouNotificacao = $this->ChatMensagemModel->criarNotificacao($userID, $vendedorID, $chatId, $conteudoNotificacao);
+                                
+                            }                                                                       
+
                             // Busca as mensagens desse chat
                             $messages = $this->ChatMensagemModel->getMessagesByChatId($chatId);
+
                         }
     
                     } else {

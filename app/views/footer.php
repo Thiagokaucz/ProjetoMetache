@@ -27,10 +27,10 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Ajuda e contato</a>
+            <a class="nav-link active" aria-current="page" href="ajudaContato">Ajuda e contato</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Dicas de segurança</a>
+            <a class="nav-link" href="dicasSeguranca">Dicas de segurança</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/anunciar">Anunciar</a>

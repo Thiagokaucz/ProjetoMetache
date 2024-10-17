@@ -24,7 +24,7 @@
             <?php foreach ($notificacoes as $notificacao): ?>
                 <div class="notificacao-item list-group-item d-flex justify-content-between align-items-center">
                     <div>
-                        <strong><?= htmlspecialchars($notificacao['notificacaoID']) ?></strong><br>
+                        <strong><?= htmlspecialchars($notificacao['conteudo']) ?></strong><br>
                         <small class="text-muted"><?= htmlspecialchars(date('d/m/Y H:i', strtotime($notificacao['dataHora']))) ?></small>
                     </div>
                     <button class="btn negociar-btn btn-block mt-2" 
