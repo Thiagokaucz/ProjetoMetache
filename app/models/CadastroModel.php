@@ -21,8 +21,8 @@ class CadastroModel {
 
     // Função para cadastrar usuário
     public function cadastrar($nome, $sobrenome, $email, $senha, $cep) {
-        $query = 'INSERT INTO Usuario (nome, sobrenome, email, senha, cep, dataHoraRegistro) 
-                  VALUES (:nome, :sobrenome, :email, :senha, :cep, NOW())';
+        $query = 'INSERT INTO usuario (nome, sobrenome, email, senha, cep, dataHoraRegistro, statusConta) 
+                VALUES (:nome, :sobrenome, :email, :senha, :cep, NOW(), "ativa")';
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':nome', $nome);
@@ -33,4 +33,5 @@ class CadastroModel {
 
         return $stmt->execute(); // Retorna true se for bem-sucedido
     }
+
 }

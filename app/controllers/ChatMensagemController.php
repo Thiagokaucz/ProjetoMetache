@@ -13,68 +13,144 @@ class ChatMensagemController {
     }
 
     public function chat() {
-        // Verifica se o ID do produto foi passado na URL
-        if (isset($_GET['id'])) {
-            $produtoID = $_GET['id']; // Obtém o ID do produto
-
-            // Obtém o userID da sessão
-            $userID = $_SESSION['user_id']; // Supondo que você armazena o userID na sessão
-
-            // Busca o userID do vendedor associado ao produto
-            $vendedorID = $this->ChatMensagemModel->buscarUserIDdeProduto($produtoID);
-            if (!$vendedorID) {
-                echo "Produto não encontrado.";
-                return;
-            }
-
-            if ($userID == $vendedorID) {
-                echo "Você não pode comprar um produto que é seu.";
-                exit(); // Interrompe a execução para que o usuário não continue
-            }            
-
-            // Verifica ou cria o chat
-            $chatId = $this->ChatMensagemModel->verificarOuCriarChat($produtoID, $userID, $vendedorID);
-
-            // Busca as mensagens desse chat
-            $messages = $this->ChatMensagemModel->getMessagesByChatId($chatId); 
-            
-            // Passa as mensagens para a visualização
-            require_once 'app/views/header.php';
-            require_once 'app/views/chatMensagem.php'; // Chama a tela passando as mensagens
-            require_once 'app/views/footer.php';
-        } else {
-            echo "ID do produto não fornecido.";
-        }
-    }
+        // Verifica se os parâmetros necessários foram passados na URL
+        if (isset($_GET['Produto'], $_GET['Origem'], $_GET['Tipo'])) {
+            if (isset($_SESSION['user_id'])) { // Verifica se o usuário está logado
     
+                // Sanitiza os dados recebidos pela URL
+                $produtoID = filter_input(INPUT_GET, 'Produto', FILTER_SANITIZE_NUMBER_INT);
+                $origem = filter_input(INPUT_GET, 'Origem', FILTER_SANITIZE_STRING);
+                $tipoID = filter_input(INPUT_GET, 'Tipo', FILTER_SANITIZE_STRING);
+                $userID = $_SESSION['user_id'];
+    
+                // Armazenando as variáveis em sessão
+                $_SESSION['produtoID'] = $produtoID;
+                $_SESSION['origem'] = $origem;
+                $_SESSION['tipoID'] = $tipoID;
+    
+                // Lógica para validar com base na origem
+                if ($origem === 'ListaChat') {
+                    if ($tipoID === 'MinhasCompras') {
+                        //echo "Chat para o comprador";
+    
+                        // Verifica ou cria o chat
+                        $chatId = $this->ChatMensagemModel->verificarChatComprador($produtoID, $userID);
+    
+                        // Busca as mensagens desse chat
+                        $messages = $this->ChatMensagemModel->getMessagesByChatId($chatId);
+    
+                    } elseif ($tipoID === 'MinhasVendas') {
+                        //echo "Chat para o vendedor";
+    
+                        // Verifica ou cria o chat
+                        $chatId = $this->ChatMensagemModel->verificarChatVendedor($produtoID, $userID);
+    
+                        // Busca as mensagens desse chat
+                        $messages = $this->ChatMensagemModel->getMessagesByChatId($chatId);
+    
+                    } else {
+                        //echo "Tipo desconhecido na origem ListaChat";
+                    }
+    
+                } elseif ($origem === 'DetalhesAnuncio') {
+                    if ($tipoID === 'IniciarChat') {
+    
+                        $vendedorID = $this->ChatMensagemModel->buscarUserIDPorProdutoID($produtoID);
+    
+                        if ($userID == $vendedorID) {
+                            echo "Não pode comprar o seu próprio produto!";
+                            exit();
+                        } else {
+                            //echo "Chat que vem dos detalhes do anúncio";
+    
+                            // Verifica ou cria o chat
+                            $chatId = $this->ChatMensagemModel->verificarOuCriarChat($produtoID, $userID, $vendedorID);
+                            
+                            $existeChat = $this->ChatMensagemModel->verificarExistenciaChat($chatId);
 
+                            if ($existeChat) {
+                                echo "O chat existe!";
+                            } else {
+                                echo "O chat não existe!";
+                                // Se um chat foi encontrado ou criado, cria a notificação
+                                $conteudoNotificacao = "Usuário " . $userID . " iniciou uma negociação no chat " . $chatId;
+                                $statusCriouNotificacao = $this->ChatMensagemModel->criarNotificacao($userID, $vendedorID, $chatId, $conteudoNotificacao);
+                                
+                            }                                                                       
+
+                            // Busca as mensagens desse chat
+                            $messages = $this->ChatMensagemModel->getMessagesByChatId($chatId);
+
+                        }
+    
+                    } else {
+                        echo "Tipo desconhecido na origem DetalhesAnuncio";
+                    }
+                } else {
+                    echo "Origem desconhecida";
+                }
+                
+                $tipoChat = $_GET['Tipo'];
+                echo $tipoChat;
+                
+                if ($tipoChat == "IniciarChat" || $tipoChat == "MinhasCompras") {
+                    // Carrega as views apropriadas
+                    require_once 'app/views/header.php';
+                    require_once 'app/views/chatMensagemCompra.php'; // Chama a tela passando as mensagens
+                    require_once 'app/views/footer.php';
+                
+                } elseif ($tipoChat == "MinhasVendas") {
+                    // Carrega as views apropriadas
+                    require_once 'app/views/header.php';
+                    require_once 'app/views/chatMensagemVenda.php'; 
+                    require_once 'app/views/footer.php';
+                }                
+
+    
+            } else {
+                header('Location: /login');
+                exit();
+            }
+        } else {
+            echo "Parâmetros obrigatórios não fornecidos.";
+        }
+    }    
+    
     public function sendMessage() {
         // Verifica se a requisição é POST
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Obtém o ID do chat e a mensagem do formulário
             $chatId = $_POST['chatId'];
             $messageContent = $_POST['message'];
-
-            // Obtém o ID do usuário da sessão
             $userId = $_SESSION['user_id'];
-
+    
             // Insere a mensagem na tabela
             $this->saveMessage($chatId, $messageContent, $userId);
-
-            $produtoID = $this->ChatMensagemModel->buscarProdutoIDPorChatID($chatId);
-
+    
+            // Obtendo as variáveis de sessão
+            $produtoID = $_SESSION['produtoID'];
+            $origem = $_SESSION['origem'];
+            $tipoID = $_SESSION['tipoID'];
+    
             // Redireciona de volta para a página do chat
-            header("Location: /chat?id=$produtoID");
+            header("Location: /chat?Produto=$produtoID&Origem=$origem&Tipo=$tipoID");
+            
+            // Remove as variáveis de sessão específicas
+            //unset($_SESSION['produtoID']);
+            unset($_SESSION['origem']);
+            unset($_SESSION['tipoID']);
+            
             exit(); // Sempre chame exit após redirecionar
         } else {
             echo "Método não permitido.";
         }
     }
+    
+    
 
     // Método para salvar a mensagem no banco de dados
     private function saveMessage($chatId, $messageContent, $userId) {
         $database = new Database();
-        $pdo = $database->getConnection();
+        $pdo = $database->obterConexao();
         
         $stmt = $pdo->prepare("INSERT INTO mensagem (conteudo, dataHora, chatID, userID) VALUES (:conteudo, NOW(), :chatID, :userID)");
         $stmt->bindParam(':conteudo', $messageContent);
@@ -102,4 +178,55 @@ class ChatMensagemController {
             exit();
         }
     }
+
+    public function enviarLinkCompra() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $chatId = filter_input(INPUT_POST, 'chatId', FILTER_SANITIZE_NUMBER_INT);
+            $valorBrutoCompra = filter_input(INPUT_POST, 'valorBrutoCompra', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+            $valorFrete = filter_input(INPUT_POST, 'valorFrete', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+            $produtoID = $_SESSION['produtoID'];
+
+            // Verifica se já existe um link pendente para o mesmo chat
+            $linkExistente = $this->ChatMensagemModel->verificarLinkExistente($chatId);
+    
+            if ($linkExistente) {
+                // Verifica se já passou 1 minuto desde a criação do link
+                $dataHoraLink = new DateTime($linkExistente['dataHora']);
+                $dataHoraAtual = new DateTime();
+                $intervalo = $dataHoraAtual->diff($dataHoraLink);
+    
+                if ($intervalo->i < 1) {
+                    // Se não passou 1 minuto, não permite a criação do novo link
+                    echo "Já existe um link pendente. Tente novamente mais tarde.";
+                    return; // Interrompe a execução
+                } else {
+                    // Se já passou 1 minuto, atualiza o status do link existente para cancelado
+                    $this->ChatMensagemModel->atualizarStatusLink($linkExistente['linkCompraID'], 'cancelado');
+                }
+            }
+    
+            // Calcular o valor total da compra
+            $valorCompra = $valorBrutoCompra + $valorFrete;
+            $statusLinkCompra = 'pendente'; // Definindo um status inicial
+
+            // Inserir os dados na tabela 'linkcompra' e obter o ID do link gerado
+            $linkCompraID = $this->ChatMensagemModel->salvarLinkCompra($chatId, $valorBrutoCompra, $valorCompra, $statusLinkCompra, $valorFrete, $produtoID); // Passa o produtoID
+    
+            // Criar a mensagem com o ID do link de compra
+            $conteudoMensagem = "Link de compra gerado: valor total R$ " . number_format($valorCompra, 2, ',', '.');
+    
+            // Salvar a mensagem na tabela 'mensagem', incluindo o ID do link de compra na coluna 'linkcompra'
+            $this->ChatMensagemModel->salvarMensagemComLinkCompra($chatId, $conteudoMensagem, $_SESSION['user_id'], $linkCompraID);
+    
+            // Redirecionar de volta ao chat
+            header("Location: /chat?Produto={$_SESSION['produtoID']}&Origem={$_SESSION['origem']}&Tipo={$_SESSION['tipoID']}");
+            exit();
+        } else {
+            echo "Método não permitido.";
+        }
+    }
+    
+    
+    
+    
 }

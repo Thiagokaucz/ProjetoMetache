@@ -34,8 +34,8 @@
             <h2>Compras</h2>
             <?php if (!empty($ChatsCompras)): ?>
                 <?php foreach ($ChatsCompras as $chat): ?>
-                    <div class="chat-item" onclick="window.location.href='chatCompra?id=<?= $chat['produtoID'] ?>'">
-                        <strong>Produto: <?= htmlspecialchars($chat['produtoID']) ?></strong> <!-- Exibindo o ID do vendedor -->
+                    <div class="chat-item" onclick="window.location.href='chat?Produto=<?= $chat['produtoID'] ?>&Origem=ListaChat&Tipo=MinhasCompras'">
+                        <strong>Produto ID: <?= htmlspecialchars($chat['produtoID']) ?></strong> <!-- Exibindo o ID do vendedor -->
                         <!--<span class="text-muted"> - Última mensagem: <?= htmlspecialchars($chat['ultimamendagem']) ?></span>-->
                     </div>
                 <?php endforeach; ?>
@@ -49,8 +49,8 @@
             <h2>Vendas</h2>
             <?php if (!empty($ChatsVendas)): ?>
                 <?php foreach ($ChatsVendas as $chat): ?>
-                    <div class="chat-item" onclick="window.location.href='chat?id=<?= $chat['produtoID'] ?>'">
-                        <strong>Comprador ID: <?= htmlspecialchars($chat['vendedorID']) ?></strong> <!-- Exibindo o ID do comprador -->
+                    <div class="chat-item" onclick="window.location.href='chat?Produto=<?= $chat['produtoID'] ?>&Origem=ListaChat&Tipo=MinhasVendas'">
+                        <strong>Produto ID: <?= htmlspecialchars($chat['produtoID']) ?></strong> <!-- Exibindo o ID do comprador -->
                         <!--<span class="text-muted"> - Última mensagem: <?= htmlspecialchars($chat['ultimamendagem']) ?></span>-->
                     </div>
                 <?php endforeach; ?>

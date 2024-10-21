@@ -62,8 +62,15 @@
     </div>
 
     <div class="mb-3">
-      <label for="localizacao" class="form-label">Cidade do anuncio*</label>
-      <input type="text" class="form-control" id="localizacao" name="localizacao" required>
+      <label for="localizacao" class="form-label">Estado do anúncio*</label>
+      <select class="form-control" id="localizacao" name="localizacao" required>
+        <option value="" disabled selected>Selecione o estado</option>
+        <option value="PR">PR</option>
+        <option value="SP">SP</option>
+        <option value="RJ">RJ</option>
+        <option value="MG">MG</option>
+        <option value="RS">RS</option>
+      </select>
     </div>
 
     <div class="mb-3">

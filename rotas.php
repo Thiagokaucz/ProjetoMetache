@@ -14,11 +14,27 @@ $rotas = [
 
     '/chatLista' => 'ChatListaController@verificarUsuarioNoChat',
 
-    '/chatCompra' => 'ChatMensagemController@chat', 
+    '/chat' => 'ChatMensagemController@chat', 
     '/sendMessage' => 'ChatMensagemController@sendMessage', 
     '/getMessagesAjax' => 'ChatMensagemController@getMessagesAjax', 
+    '/enviarLinkCompra' => 'ChatMensagemController@enviarLinkCompra',
 
     '/notificacao' => 'NotificacaoController@mostrarNotificacoes',
     '/excluir' => 'NotificacaoController@excluirNotificacao',
+
+    '/PesquisarProdutosPor' => 'ProdutosPesquisaController@pesquisarProdutos',
+
+    '/perfilUsuario' => 'PerfilUsuarioController@exibirDados',
+    '/perfilUsuario/atualizar' => 'PerfilUsuarioController@atualizarDados',
+    '/perfilUsuario/desativar' => 'PerfilUsuarioController@desativarUsuario',  // Alterada de 'deletar' para 'desativar'
+
+    '/ajudaContato' => 'AjudaContatoController@index',
+    '/dicasSeguranca' => 'DicasSegurancaController@index',
+
+    '/minhasCompras' => 'AquisicoesController@mostrarAquisicoes',
+
+    '/meusAnuncios' => 'MeusAnunciosController@mostrarAnuncios',
+
+    '/CompraLinkChat' => 'CompraLinkChatController@mostrarDados',
 
 ];

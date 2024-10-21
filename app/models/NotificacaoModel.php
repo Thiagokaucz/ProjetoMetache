@@ -10,10 +10,10 @@ class NotificacaoModel {
     }
 
     // Função para obter todas as notificações de um usuário
-    public function getNotificacoesByUserID($userID) {
-        $query = 'SELECT * FROM notificacao WHERE userID = :userID ORDER BY dataHora DESC';
+    public function getNotificacoesByUserID($destinatarioID) {
+        $query = 'SELECT * FROM notificacao WHERE destinatarioID = :destinatarioID ORDER BY dataHora DESC';
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':userID', $userID);
+        $stmt->bindParam(':destinatarioID', $destinatarioID);
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna todas as notificações
