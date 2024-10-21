@@ -17,6 +17,7 @@ $rotas = [
     '/chat' => 'ChatMensagemController@chat', 
     '/sendMessage' => 'ChatMensagemController@sendMessage', 
     '/getMessagesAjax' => 'ChatMensagemController@getMessagesAjax', 
+    '/enviarLinkCompra' => 'ChatMensagemController@enviarLinkCompra',
 
     '/notificacao' => 'NotificacaoController@mostrarNotificacoes',
     '/excluir' => 'NotificacaoController@excluirNotificacao',
@@ -29,5 +30,11 @@ $rotas = [
 
     '/ajudaContato' => 'AjudaContatoController@index',
     '/dicasSeguranca' => 'DicasSegurancaController@index',
+
+    '/minhasCompras' => 'AquisicoesController@mostrarAquisicoes',
+
+    '/meusAnuncios' => 'MeusAnunciosController@mostrarAnuncios',
+
+    '/CompraLinkChat' => 'CompraLinkChatController@mostrarDados',
 
 ];

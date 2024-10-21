@@ -10,11 +10,18 @@ class ChatMensagemModel {
     }
 
     public function getMessagesByChatId($chatId) {
-        $stmt = $this->conn->prepare("SELECT * FROM mensagem WHERE chatID = :chatId ORDER BY dataHora ASC");
+        $stmt = $this->conn->prepare("
+            SELECT m.*, lc.valorCompra 
+            FROM mensagem m
+            LEFT JOIN linkCompra lc ON m.chatID = lc.chatID 
+            WHERE m.chatID = :chatId 
+            ORDER BY m.dataHora ASC
+        ");
         $stmt->bindParam(':chatId', $chatId, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
 
     public function verificarChatComprador($produtoID, $compradorID) {
 
@@ -121,5 +128,59 @@ class ChatMensagemModel {
             // Se encontrar o produto, retorna o userID, caso contrário, retorna null
             return $produto ? $produto['userID'] : null;
         }   
+
+        public function salvarLinkCompra($chatId, $valorBrutoCompra, $valorCompra, $statusLinkCompra, $valorFrete, $produtoId) {
+            // Inserir o link de compra na tabela 'linkcompra'
+            $query = "INSERT INTO linkcompra (chatID, valorBrutoCompra, valorCompra, statusLinkCompra, valorFrete, produtoID) 
+                      VALUES (:chatID, :valorBrutoCompra, :valorCompra, :statusLinkCompra, :valorFrete, :produtoID)";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':chatID', $chatId);
+            $stmt->bindParam(':valorBrutoCompra', $valorBrutoCompra);
+            $stmt->bindParam(':valorCompra', $valorCompra);
+            $stmt->bindParam(':statusLinkCompra', $statusLinkCompra);
+            $stmt->bindParam(':valorFrete', $valorFrete);
+            $stmt->bindParam(':produtoID', $produtoId); // Adiciona o produtoID
+            $stmt->execute();
+        
+            // Retornar o ID do link de compra recém-criado
+            return $this->conn->lastInsertId();
+        }
+        
+        
+        public function salvarMensagemComLinkCompra($chatId, $conteudo, $userId, $linkCompraID) {
+            // Inserir a mensagem na tabela 'mensagem' com o ID do link de compra
+            $query = "INSERT INTO mensagem (conteudo, dataHora, chatID, userID, linkcompra) 
+                      VALUES (:conteudo, NOW(), :chatID, :userID, :linkcompra)";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':conteudo', $conteudo);
+            $stmt->bindParam(':chatID', $chatId);
+            $stmt->bindParam(':userID', $userId);
+            $stmt->bindParam(':linkcompra', $linkCompraID);
+            $stmt->execute();
+        }
+        public function verificarLinkExistente($chatId) {
+            $sql = "SELECT linkCompraID, dataHora FROM linkcompra WHERE chatID = :chatID AND statusLinkCompra = 'pendente'";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':chatID', $chatId);
+            $stmt->execute();
+            
+            return $stmt->fetch(PDO::FETCH_ASSOC); // Retorna os dados do link se existir
+        }
+        
+        
+        public function cancelarLinkCompra($linkCompraID) {
+            $query = "UPDATE linkcompra SET statusLinkCompra = 'cancelado' WHERE linkCompraID = :linkCompraID";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':linkCompraID', $linkCompraID);
+            return $stmt->execute(); // Executa e retorna se deu certo
+        }
+        public function atualizarStatusLink($linkCompraID, $status) {
+            $sql = "UPDATE linkcompra SET statusLinkCompra = :status WHERE linkCompraID = :linkCompraID";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':status', $status);
+            $stmt->bindParam(':linkCompraID', $linkCompraID);
+            return $stmt->execute();
+        }
+        
     
 }
