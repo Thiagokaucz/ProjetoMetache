@@ -37,4 +37,8 @@ $rotas = [
 
     '/CompraLinkChat' => 'CompraLinkChatController@mostrarDados',
 
+    '/tratarCompra' => 'TratarCompraController@processarCompra',
+
+    '/finalizarCompra' => 'FinalizarCompraController@processar',
+
 ];

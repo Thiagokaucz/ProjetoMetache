@@ -1,230 +1,112 @@
--- Criar o banco de dados
-CREATE DATABASE metache;
+CREATE TABLE `usuario` (
+  `userID` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) DEFAULT NULL,
+  `sobrenome` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `senha` varchar(255) DEFAULT NULL,
+  `cep` varchar(10) DEFAULT NULL,
+  `dataHoraRegistro` datetime DEFAULT CURRENT_TIMESTAMP,
+  `statusConta` ENUM('ativa', 'desativada') DEFAULT 'ativa',
+  PRIMARY KEY (`userID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Usar o banco de dados criado
-USE metache;
+CREATE TABLE `aquisicoes` (
+  `aquisicaoID` int(11) NOT NULL AUTO_INCREMENT,
+  `produtoID` int(11) DEFAULT NULL,
+  `chatID` int(11) DEFAULT NULL,
+  `compradorID` int(11) DEFAULT NULL,
+  `dataHora` datetime DEFAULT NULL,
+  `vendedorID` int(11) DEFAULT NULL,
+  `statusAquisicao` datetime DEFAULT NULL,
+  PRIMARY KEY (`aquisicaoID`),
+  FOREIGN KEY (`produtoID`) REFERENCES `produto` (`produtoID`),
+  FOREIGN KEY (`chatID`) REFERENCES `chat` (`chatID`),
+  FOREIGN KEY (`compradorID`) REFERENCES `usuario` (`userID`),
+  FOREIGN KEY (`vendedorID`) REFERENCES `usuario` (`userID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Tabela Tipo
-CREATE TABLE Tipo (
-    tipoID INT PRIMARY KEY,
-    tipo VARCHAR(255)
-);
+CREATE TABLE `categoria` (
+  `categoriaID` int(11) NOT NULL AUTO_INCREMENT,
+  `categoria` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`categoriaID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Tabela Categoria
-CREATE TABLE Categoria (
-    categoriaID INT PRIMARY KEY,
-    categoria VARCHAR(255)
-);
+CREATE TABLE `chat` (
+  `chatID` int(11) NOT NULL AUTO_INCREMENT,
+  `produtoID` int(11) DEFAULT NULL,
+  `compradorID` int(11) DEFAULT NULL,
+  `vendedorID` int(11) DEFAULT NULL,
+  `dataInicioChat` datetime DEFAULT NULL,
+  PRIMARY KEY (`chatID`),
+  FOREIGN KEY (`produtoID`) REFERENCES `produto` (`produtoID`),
+  FOREIGN KEY (`compradorID`) REFERENCES `usuario` (`userID`),
+  FOREIGN KEY (`vendedorID`) REFERENCES `usuario` (`userID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Tabela Usuario
-CREATE TABLE Usuario (
-    userID INT PRIMARY KEY,
-    nome VARCHAR(255),
-    sobrenome VARCHAR(255),
-    email VARCHAR(255),
-    senha VARCHAR(255),
-    cep VARCHAR(255),
-    dataHoraRegistro DATETIME
-);
+CREATE TABLE `comprapagamento` (
+  `compraID` int(11) NOT NULL AUTO_INCREMENT,
+  `aquisicaoID` int(11) DEFAULT NULL,
+  `nomeCompleto` varchar(255) DEFAULT NULL,
+  `cpf` varchar(255) DEFAULT NULL,
+  `chavePix` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`compraID`),
+  FOREIGN KEY (`aquisicaoID`) REFERENCES `aquisicoes` (`aquisicaoID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Tabela Produto
-CREATE TABLE Produto (
-    produtoID INT PRIMARY KEY,
-    userID INT,
-    categoriaID INT,
-    titulo VARCHAR(255),
-    condicao VARCHAR(255),
-    descricao VARCHAR(255),
-    disponibilidade VARCHAR(255),
-    valor DECIMAL(10,2),
-    lojamercado VARCHAR(255),
-    dataHoraPub DATETIME,
-    localizacao VARCHAR(255)
-);
+CREATE TABLE `linkcompra` (
+  `linkCompraID` int(11) NOT NULL AUTO_INCREMENT,
+  `chatID` int(11) DEFAULT NULL,
+  `valorBrutoCompra` decimal(7,2) DEFAULT NULL,
+  `valorCompra` decimal(7,2) DEFAULT NULL,
+  `statusLinkCompra` enum('pendente','aceito','recusado','cancelado') NOT NULL DEFAULT 'pendente',
+  `valorFrete` decimal(7,2) DEFAULT NULL,
+  `dataHora` datetime DEFAULT CURRENT_TIMESTAMP,
+  `produtoID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`linkCompraID`),
+  FOREIGN KEY (`chatID`) REFERENCES `chat` (`chatID`),
+  FOREIGN KEY (`produtoID`) REFERENCES `produto` (`produtoID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Tabela LinkCompra
-CREATE TABLE LinkCompra (
-    linkCompraID INT PRIMARY KEY,
-    chatID INT,
-    valorBrutoCompra DECIMAL(7,2),
-    valorCompra DECIMAL(7,2),
-    statusLinkCompra VARCHAR(255),
-    valorFrete DECIMAL(7,2)
-);
+CREATE TABLE `mensagem` (
+  `mensagemID` int(11) NOT NULL AUTO_INCREMENT,
+  `conteudo` varchar(255) DEFAULT NULL,
+  `userID` int(11) DEFAULT NULL,
+  `dataHora` datetime DEFAULT NULL,
+  `chatID` int(11) DEFAULT NULL,
+  `linkcompra` int(11) DEFAULT NULL,
+  PRIMARY KEY (`mensagemID`),
+  FOREIGN KEY (`userID`) REFERENCES `usuario` (`userID`),
+  FOREIGN KEY (`chatID`) REFERENCES `chat` (`chatID`),
+  FOREIGN KEY (`linkcompra`) REFERENCES `linkcompra` (`linkCompraID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Tabela Chat
-CREATE TABLE Chat (
-    chatID INT PRIMARY KEY,
-    produtoID INT,
-    userID INT,
-    compradorID INT,
-    dataInicioChat DATETIME
-);
+CREATE TABLE `notificacao` (
+  `notificacaoID` int(11) NOT NULL AUTO_INCREMENT,
+  `userID` int(11) DEFAULT NULL,
+  `conteudo` text DEFAULT NULL,
+  `dataHora` datetime DEFAULT NULL,
+  `destinatarioID` int(11) NOT NULL,
+  `chatID` int(11) NOT NULL,
+  PRIMARY KEY (`notificacaoID`),
+  FOREIGN KEY (`userID`) REFERENCES `usuario` (`userID`),
+  FOREIGN KEY (`destinatarioID`) REFERENCES `usuario` (`userID`),
+  FOREIGN KEY (`chatID`) REFERENCES `chat` (`chatID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Tabela Mensagem
-CREATE TABLE Mensagem (
-    mensagemID INT PRIMARY KEY,
-    conteudo VARCHAR(255),
-    destinatarioID INT,
-    dataHora DATETIME
-);
-
--- Tabela Aquisicoes
-CREATE TABLE Aquisicoes (
-    aquisicaoID INT PRIMARY KEY,
-    produtoID INT,
-    chatID INT,
-    userID INT,
-    dataHora DATETIME,
-    remetente VARCHAR(255),
-    statusAquisicao DATETIME
-);
-
--- Tabela CompraPagamento
-CREATE TABLE CompraPagamento (
-    compraID INT PRIMARY KEY,
-    aquisicaoID INT,
-    nomeCompleto VARCHAR(255),
-    cpf VARCHAR(255),
-    chavePix VARCHAR(255)
-);
-
--- Tabela PesquisaAnuncio
-CREATE TABLE PesquisaAnuncio (
-    historicoUserID INT,
-    produtoID INT,
-    usuarioID INT,
-    dataHora DATETIME,
-    PRIMARY KEY (historicoUserID, produtoID)
-);
-
--- Tabela Notificacao
-CREATE TABLE Notificacao (
-    notificacaoID INT PRIMARY KEY,
-    userID INT,
-    remetenteID INT,
-    conteudo TEXT,
-    dataHora DATETIME
-);
-
--- Tabela OpiniaoAnunciante
-CREATE TABLE OpiniaoAnunciante (
-    opiniaoID INT PRIMARY KEY,
-    userID INT,
-    autor VARCHAR(255),
-    texto TEXT,
-    tipoOpiniao VARCHAR(255),
-    data DATETIME,
-    estrelas INT
-);
-
--- Tabela Categoria_Tipo (Tabela de associação entre Tipo e Categoria)
-CREATE TABLE Categoria_Tipo (
-    tipoID INT,
-    categoriaID INT,
-    PRIMARY KEY (tipoID, categoriaID)
-);
-
--- Alterações para adicionar as chaves estrangeiras
-
--- Relacionamento entre Produto e Usuario
-ALTER TABLE Produto
-ADD CONSTRAINT fk_produto_usuario
-FOREIGN KEY (userID) REFERENCES Usuario(userID);
-
--- Relacionamento entre Produto e Categoria
-ALTER TABLE Produto
-ADD CONSTRAINT fk_produto_categoria
-FOREIGN KEY (categoriaID) REFERENCES Categoria(categoriaID);
-
--- Relacionamento entre LinkCompra e Chat
-ALTER TABLE LinkCompra
-ADD CONSTRAINT fk_linkcompra_chat
-FOREIGN KEY (chatID) REFERENCES Chat(chatID);
-
--- Relacionamento entre Chat e Produto
-ALTER TABLE Chat
-ADD CONSTRAINT fk_chat_produto
-FOREIGN KEY (produtoID) REFERENCES Produto(produtoID);
-
--- Relacionamento entre Chat e Usuario (vendedor)
-ALTER TABLE Chat
-ADD CONSTRAINT fk_chat_usuario_vendedor
-FOREIGN KEY (userID) REFERENCES Usuario(userID);
-
--- Relacionamento entre Chat e Usuario (comprador)
-ALTER TABLE Chat
-ADD CONSTRAINT fk_chat_usuario_comprador
-FOREIGN KEY (compradorID) REFERENCES Usuario(userID);
-
--- Relacionamento entre Mensagem e Usuario (destinatário)
-ALTER TABLE Mensagem
-ADD CONSTRAINT fk_mensagem_destinatario
-FOREIGN KEY (destinatarioID) REFERENCES Usuario(userID);
-
--- Relacionamento entre Aquisicoes e Produto
-ALTER TABLE Aquisicoes
-ADD CONSTRAINT fk_aquisicoes_produto
-FOREIGN KEY (produtoID) REFERENCES Produto(produtoID);
-
--- Relacionamento entre Aquisicoes e Chat
-ALTER TABLE Aquisicoes
-ADD CONSTRAINT fk_aquisicoes_chat
-FOREIGN KEY (chatID) REFERENCES Chat(chatID);
-
--- Relacionamento entre Aquisicoes e Usuario
-ALTER TABLE Aquisicoes
-ADD CONSTRAINT fk_aquisicoes_usuario
-FOREIGN KEY (userID) REFERENCES Usuario(userID);
-
--- Relacionamento entre CompraPagamento e Aquisicoes
-ALTER TABLE CompraPagamento
-ADD CONSTRAINT fk_comprapagamento_aquisicoes
-FOREIGN KEY (aquisicaoID) REFERENCES Aquisicoes(aquisicaoID);
-
--- Relacionamento entre PesquisaAnuncio e Produto
-ALTER TABLE PesquisaAnuncio
-ADD CONSTRAINT fk_pesquisaanuncio_produto
-FOREIGN KEY (produtoID) REFERENCES Produto(produtoID);
-
--- Relacionamento entre PesquisaAnuncio e Usuario
-ALTER TABLE PesquisaAnuncio
-ADD CONSTRAINT fk_pesquisaanuncio_usuario
-FOREIGN KEY (usuarioID) REFERENCES Usuario(userID);
-
--- Relacionamento entre Notificacao e Usuario (usuário que recebe a notificação)
-ALTER TABLE Notificacao
-ADD CONSTRAINT fk_notificacao_usuario
-FOREIGN KEY (userID) REFERENCES Usuario(userID);
-
--- Relacionamento entre Notificacao e Usuario (remetente da notificação)
-ALTER TABLE Notificacao
-ADD CONSTRAINT fk_notificacao_remetente
-FOREIGN KEY (remetenteID) REFERENCES Usuario(userID);
-
--- Relacionamento entre OpiniaoAnunciante e Usuario
-ALTER TABLE OpiniaoAnunciante
-ADD CONSTRAINT fk_opiniao_usuario
-FOREIGN KEY (userID) REFERENCES Usuario(userID);
-
--- Relacionamento entre Categoria_Tipo e Tipo
-ALTER TABLE Categoria_Tipo
-ADD CONSTRAINT fk_categoriatipo_tipo
-FOREIGN KEY (tipoID) REFERENCES Tipo(tipoID);
-
--- Relacionamento entre Categoria_Tipo e Categoria
-ALTER TABLE Categoria_Tipo
-ADD CONSTRAINT fk_categoriatipo_categoria
-FOREIGN KEY (categoriaID) REFERENCES Categoria(categoriaID);
-
-
-
-ALTER TABLE Usuario 
-MODIFY COLUMN userID INT AUTO_INCREMENT;
--- Alterar a tabela Tipo para definir tipoID como AUTO_INCREMENT
-ALTER TABLE Tipo 
-MODIFY COLUMN tipoID INT AUTO_INCREMENT;
-
--- Alterar a tabela Categoria para definir categoriaID como AUTO_INCREMENT
-ALTER TABLE Categoria 
-MODIFY COLUMN categoriaID INT AUTO_INCREMENT;
+CREATE TABLE `produto` (
+  `produtoID` int(11) NOT NULL AUTO_INCREMENT,
+  `userID` int(11) DEFAULT NULL,
+  `categoriaID` int(11) DEFAULT NULL,
+  `titulo` varchar(255) DEFAULT NULL,
+  `condicao` varchar(255) DEFAULT NULL,
+  `descricao` varchar(255) DEFAULT NULL,
+  `disponibilidade` varchar(255) DEFAULT NULL,
+  `valor` decimal(10,2) DEFAULT NULL,
+  `locImagem` varchar(255) DEFAULT NULL,
+  `dataHoraPub` datetime DEFAULT NULL,
+  `localizacao` varchar(255) DEFAULT NULL,
+  `visualizacao` int(11) DEFAULT 0,
+  PRIMARY KEY (`produtoID`),
+  FOREIGN KEY (`userID`) REFERENCES `usuario` (`userID`),
+  FOREIGN KEY (`categoriaID`) REFERENCES `categoria` (`categoriaID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
