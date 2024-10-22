@@ -15,6 +15,14 @@
             <p><strong>Valor:</strong> R$ <?= htmlspecialchars($aquisicao['produto']['valor']) ?></p>
             <p><strong>Localização:</strong> <?= htmlspecialchars($aquisicao['produto']['localizacao']) ?></p>
             <p><strong>Data de Publicação:</strong> <?= htmlspecialchars($aquisicao['produto']['dataHoraPub']) ?></p>
+
+            <?php if (isset($aquisicao['envio'])): ?>
+                <h3>Detalhes do Envio</h3>
+                <p><strong>Transportadora:</strong> <?= htmlspecialchars($aquisicao['envio']['transportadora']) ?></p>
+                <p><strong>Data/Hora do Envio:</strong> <?= htmlspecialchars($aquisicao['envio']['dataHoraEnvio']) ?></p>
+                <p><strong>Código de Rastreio:</strong> <?= htmlspecialchars($aquisicao['envio']['codigoRastreio']) ?></p>
+                <p><strong>Comentário:</strong> <?= htmlspecialchars($aquisicao['envio']['comentario']) ?></p>
+            <?php endif; ?>
         </div>
         <hr>
     <?php endforeach; ?>

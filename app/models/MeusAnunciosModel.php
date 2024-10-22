@@ -22,14 +22,25 @@ class MeusAnunciosModel {
 
     // Verificar se o produto está em aquisição
     public function verificarProdutoEmAquisicao($produtoID) {
-        $sql = "SELECT COUNT(*) as total 
+        $sql = "SELECT statusAquisicao 
                 FROM aquisicoes 
-                WHERE produtoID = :produtoID";
+                WHERE produtoID = :produtoID 
+                LIMIT 1";  // Limite para garantir apenas um resultado
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':produtoID', $produtoID, PDO::PARAM_INT);
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return $result['total'] > 0; // Retorna verdadeiro se o produto está em aquisição
+        return $stmt->fetch(PDO::FETCH_ASSOC); // Retorna o status da aquisição
     }
+    public function obterAquisicaoPorProduto($produtoID) {
+        $sql = "SELECT aquisicaoID, chatID, statusAquisicao 
+                FROM aquisicoes 
+                WHERE produtoID = :produtoID LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':produtoID', $produtoID, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        return $stmt->fetch(PDO::FETCH_ASSOC); // Retorna a primeira aquisição encontrada ou false se não houver
+    }
+    
+    
 }

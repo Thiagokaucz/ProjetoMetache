@@ -16,20 +16,33 @@ class MeusAnunciosController {
             header('Location: /login');
             exit;
         }
-
+    
         $userID = $_SESSION['user_id'];
-
+    
         // Buscar os produtos criados pelo usuário logado
         $anuncios = $this->meusAnunciosModel->buscarProdutosPorUsuario($userID);
-
+    
         // Para cada produto, verificar se está em aquisição
         foreach ($anuncios as &$anuncio) {
-            $estaEmAquisicao = $this->meusAnunciosModel->verificarProdutoEmAquisicao($anuncio['produtoID']);
-            $anuncio['statusAquisicao'] = $estaEmAquisicao ? 'Está em aquisição' : 'Não está em aquisição';
+            $aquisicao = $this->meusAnunciosModel->obterAquisicaoPorProduto($anuncio['produtoID']);
+            
+            if ($aquisicao) {
+                // Se o produto estiver em aquisição, atribuímos o status e o aquisicaoID
+                $anuncio['statusAquisicao'] = $aquisicao['statusAquisicao'];
+                $anuncio['aquisicaoID'] = $aquisicao['aquisicaoID'];
+                $anuncio['chatID'] = $aquisicao['chatID']; // Pega também o chatID associado
+            } else {
+                // Caso contrário, marca como não estando em aquisição
+                $anuncio['statusAquisicao'] = 'Não está na tabela aquisição';
+                $anuncio['aquisicaoID'] = null;
+                $anuncio['chatID'] = null;
+            }
         }
-
+    
         // Exibir os resultados
         require_once 'app/views/header.php';
         require 'app/views/MeusAnuncios.php';
     }
+    
+    
 }

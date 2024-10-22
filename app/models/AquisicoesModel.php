@@ -30,4 +30,17 @@ class AquisicoesModel {
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    // AquisicoesModel.php
+
+    public function buscarEnvioPorAquisicaoID($aquisicaoID) {
+        $sql = "SELECT transportadora, dataHora AS dataHoraEnvio, codigoRastreio, comentario 
+                FROM envioProduto 
+                WHERE aquisicaoID = :aquisicaoID";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':aquisicaoID', $aquisicaoID, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
 }

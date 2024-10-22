@@ -41,4 +41,7 @@ $rotas = [
 
     '/finalizarCompra' => 'FinalizarCompraController@processar',
 
+    '/enviarProduto' => 'EnviarProdutoController@mostrarFormulario',
+    '/enviarProdutoForm' => 'EnviarProdutoController@enviarProduto',
+
 ];
