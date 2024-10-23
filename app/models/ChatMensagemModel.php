@@ -11,14 +11,16 @@ class ChatMensagemModel {
 
     public function getMessagesByChatId($chatId) {
         $stmt = $this->conn->prepare("
-            SELECT m.*, lc.valorCompra 
+            SELECT m.*, lc.valorCompra, u.nome AS nomeUsuario
             FROM mensagem m
-            LEFT JOIN linkCompra lc ON m.chatID = lc.chatID 
-            WHERE m.chatID = :chatId 
+            LEFT JOIN linkCompra lc ON m.chatID = lc.chatID
+            LEFT JOIN usuario u ON m.userID = u.userID
+            WHERE m.chatID = :chatId
             ORDER BY m.dataHora ASC
         ");
         $stmt->bindParam(':chatId', $chatId, PDO::PARAM_INT);
         $stmt->execute();
+        
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
@@ -182,5 +184,16 @@ class ChatMensagemModel {
             return $stmt->execute();
         }
         
-    
+        public function buscarProdutoPorID($produtoID) {
+            // Modificar a query para buscar também o campo 'valor'
+            $sql = "SELECT titulo, locImagem, valor FROM produto WHERE produtoID = :produtoID";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':produtoID', $produtoID, PDO::PARAM_INT);
+            $stmt->execute();
+        
+            // Retorna os dados do produto, incluindo título, imagem e valor
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+        
+
 }

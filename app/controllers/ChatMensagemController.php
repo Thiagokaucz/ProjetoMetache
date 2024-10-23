@@ -36,6 +36,8 @@ class ChatMensagemController {
                         // Verifica ou cria o chat
                         $chatId = $this->ChatMensagemModel->verificarChatComprador($produtoID, $userID);
     
+                        $chatId= filter_input(INPUT_GET, 'chatID', FILTER_SANITIZE_STRING);
+
                         // Busca as mensagens desse chat
                         $messages = $this->ChatMensagemModel->getMessagesByChatId($chatId);
     
@@ -45,6 +47,8 @@ class ChatMensagemController {
                         // Verifica ou cria o chat
                         $chatId = $this->ChatMensagemModel->verificarChatVendedor($produtoID, $userID);
     
+                        $chatId= filter_input(INPUT_GET, 'chatID', FILTER_SANITIZE_STRING);
+
                         // Busca as mensagens desse chat
                         $messages = $this->ChatMensagemModel->getMessagesByChatId($chatId);
     
@@ -69,9 +73,9 @@ class ChatMensagemController {
                             $existeChat = $this->ChatMensagemModel->verificarExistenciaChat($chatId);
 
                             if ($existeChat) {
-                                echo "O chat existe!";
+                                //echo "O chat existe!";
                             } else {
-                                echo "O chat não existe!";
+                                //echo "O chat não existe!";
                                 // Se um chat foi encontrado ou criado, cria a notificação
                                 $conteudoNotificacao = "Usuário " . $userID . " iniciou uma negociação no chat " . $chatId;
                                 $statusCriouNotificacao = $this->ChatMensagemModel->criarNotificacao($userID, $vendedorID, $chatId, $conteudoNotificacao);
@@ -91,8 +95,13 @@ class ChatMensagemController {
                 }
                 
                 $tipoChat = $_GET['Tipo'];
-                echo $tipoChat;
-                
+                //echo $tipoChat;
+
+                            //--------------------------------------------------------------------------------------
+                            // Buscando os dados do produto
+                            $produtoDetalhes = $this->ChatMensagemModel->buscarProdutoPorID($produtoID);
+                            //--------------------------------------------------------------------------------------
+
                 if ($tipoChat == "IniciarChat" || $tipoChat == "MinhasCompras") {
                     // Carrega as views apropriadas
                     require_once 'app/views/header.php';

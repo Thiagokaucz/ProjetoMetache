@@ -16,6 +16,12 @@
             <p><strong>Localização:</strong> <?= htmlspecialchars($aquisicao['produto']['localizacao']) ?></p>
             <p><strong>Data de Publicação:</strong> <?= htmlspecialchars($aquisicao['produto']['dataHoraPub']) ?></p>
 
+            <p><a href="detalheProduto?id=<?= htmlspecialchars($aquisicao['produto']['produtoID']) ?>">Detalhes do produto</a></p>
+
+            <p><a href="chat?Produto=<?= htmlspecialchars($aquisicao['produto']['produtoID']) ?>&Origem=ListaChat&Tipo=MinhasCompras&chatID=<?= htmlspecialchars($aquisicao['chatID']) ?>">Chat</a></p>
+
+            <!--colocar um recebi o produto  -->
+
             <?php if (isset($aquisicao['envio'])): ?>
                 <h3>Detalhes do Envio</h3>
                 <p><strong>Transportadora:</strong> <?= htmlspecialchars($aquisicao['envio']['transportadora']) ?></p>

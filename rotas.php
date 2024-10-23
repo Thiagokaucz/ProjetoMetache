@@ -13,6 +13,7 @@ $rotas = [
     '/detalheProduto' => 'DetalheProdutoController@mostrarDetalhes', 
 
     '/chatLista' => 'ChatListaController@verificarUsuarioNoChat',
+    '/ChatListaExcluir' => 'ChatListaController@excluirChat',
 
     '/chat' => 'ChatMensagemController@chat', 
     '/sendMessage' => 'ChatMensagemController@sendMessage', 

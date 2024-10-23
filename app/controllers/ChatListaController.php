@@ -11,7 +11,6 @@ class ChatListaController {
     }
 
     public function verificarUsuarioNoChat() {
-
         if (isset($_SESSION['user_id'])) { // Verifica se o usuário está logado
             $userChatId = $_SESSION['user_id']; // Obtém o ID do usuário da sessão
 
@@ -24,6 +23,18 @@ class ChatListaController {
             require_once 'app/views/footer.php';
         } else {
             header('Location: /login');
+            exit();
+        }
+    }
+
+    public function excluirChat() {
+        if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+            $chatID = $_GET['id'];
+            $this->ChatListaModel->excluirChatPorID($chatID);
+            header('Location: /chatLista'); // Redireciona para a lista de chats após exclusão
+            exit();
+        } else {
+            header('Location: /chatLista');
             exit();
         }
     }
