@@ -13,12 +13,14 @@ class MeusAnunciosModel {
     public function buscarProdutosPorUsuario($userID) {
         $sql = "SELECT produtoID, userID, categoriaID, titulo, condicao, descricao, disponibilidade, valor, locImagem, dataHoraPub, localizacao, visualizacao 
                 FROM produto 
-                WHERE userID = :userID";
+                WHERE userID = :userID 
+                GROUP BY produtoID"; // Adiciona o GROUP BY para evitar duplicação por possíveis joins ou outras causas
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
 
     // Verificar se o produto está em aquisição
     public function verificarProdutoEmAquisicao($produtoID) {

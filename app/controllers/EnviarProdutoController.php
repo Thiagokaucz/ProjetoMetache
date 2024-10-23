@@ -48,7 +48,7 @@ class EnviarProdutoController {
         $this->enviarProdutoModel->atualizarStatusAquisicao($aquisicaoID);
     
         // Redireciona para uma página de sucesso ou para onde desejar
-        header('Location: /minhasCompras');
+        header('Location: /meusAnuncios');
         exit;
     }
     

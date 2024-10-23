@@ -2,7 +2,7 @@
 class Database {
     
     private $host = 'localhost'; 
-    private $nomeDoBanco = 'projetoMetache';
+    private $nomeDoBanco = 'metache';
     private $usuario = 'root'; 
     private $senha = ''; 
     

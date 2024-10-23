@@ -68,7 +68,7 @@ class AnunciarProdutoController {
             // Chama a função do modelo para criar o produto e faz o upload das fotos
             if ($produtoModel->criarProduto($_POST, $_FILES, $userID)) {
                 // Redireciona para a página de sucesso ou lista de produtos
-                header("Location: /produtos");
+                header("Location: /meusAnuncios");
                 exit;
             } else {
                 // Caso ocorra um erro, mostra uma página de erro

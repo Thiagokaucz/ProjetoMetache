@@ -36,7 +36,7 @@ class NotificacaoController {
             // Chama o método do modelo para excluir a notificação
             if ($this->notificacaoModel->deleteNotificacao($notificacaoID)) {
                 // Redireciona para a lista de notificações após excluir
-                header('Location: /notificacoes'); // Ajuste o caminho se necessário
+                header('Location: /notificacao'); // Ajuste o caminho se necessário
                 exit();
             } else {
                 echo "Erro ao excluir notificação.";

@@ -37,7 +37,7 @@
         }
 
         // Chama a função de busca a cada 5 segundos
-        setInterval(fetchMessages, 5000);
+        setInterval(fetchMessages, 500);
 
         // Carrega as mensagens assim que a página é carregada
         $(document).ready(function() {
