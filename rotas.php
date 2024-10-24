@@ -47,4 +47,10 @@ $rotas = [
     '/enviarProduto' => 'EnviarProdutoController@mostrarFormulario',
     '/enviarProdutoForm' => 'EnviarProdutoController@enviarProduto',
 
+    '/editarProduto' => 'EditarProdutoController@editarProduto',
+
+    '/alterarDisponibilidade' => 'MeusAnunciosController@alterarDisponibilidade',
+
+    '/excluirAnuncio' => 'MeusAnunciosController@excluirAnuncio',
+
 ];

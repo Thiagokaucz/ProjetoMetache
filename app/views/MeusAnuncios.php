@@ -9,7 +9,7 @@ if (!empty($anuncios)):
     // Exibir os anúncios únicos
     foreach ($anunciosUnicos as $anuncio): ?>
         <div class="anuncio">
-        <h2>Título: <?= htmlspecialchars($anuncio['titulo']) ?></h2>
+            <h2>Título: <?= htmlspecialchars($anuncio['titulo']) ?></h2>
             <p><strong>Descrição:</strong> <?= htmlspecialchars($anuncio['descricao']) ?></p>
             <p><strong>Valor:</strong> R$ <?= number_format($anuncio['valor'], 2, ',', '.') ?></p>
             <p><strong>Disponibilidade:</strong> <?= htmlspecialchars($anuncio['disponibilidade']) ?></p>
@@ -18,6 +18,16 @@ if (!empty($anuncios)):
 
             <!-- Ver Detalhes do Produto -->
             <p><a href="http://localhost/detalheProduto?id=<?= $anuncio['produtoID'] ?>">Ver Detalhes do Produto</a></p>
+
+            <!-- Link para Editar Produto, visível apenas se disponibilidade for 'disponível' -->
+            <?php if ($anuncio['disponibilidade'] === 'disponível'): ?>
+                <p><a href="http://localhost/editarProduto?id=<?= $anuncio['produtoID'] ?>">Editar Produto</a></p>
+                <!-- Opção para Pausar -->
+                <p><a href="http://localhost/alterarDisponibilidade?id=<?= $anuncio['produtoID'] ?>&acao=pausar">Pausar Produto</a></p>
+            <?php elseif ($anuncio['disponibilidade'] === 'pausado'): ?>
+                <!-- Opção para Liberar -->
+                <p><a href="http://localhost/alterarDisponibilidade?id=<?= $anuncio['produtoID'] ?>&acao=liberar">Liberar Produto</a></p>
+            <?php endif; ?>
 
             <!-- Se o produto estiver em aquisição -->
             <?php if ($anuncio['statusAquisicao'] !== 'Não está na tabela aquisição' && isset($anuncio['chatID'])): ?>
@@ -28,12 +38,29 @@ if (!empty($anuncios)):
                 </p>
             <?php endif; ?>
 
+            <!-- Excluir Produto (somente se o status for 'disponível' ou 'pausado') -->
+            <?php if ($anuncio['disponibilidade'] === 'disponível' || $anuncio['disponibilidade'] === 'pausado'): ?>
+                <p><a href="http://localhost/excluirAnuncio?id=<?= $anuncio['produtoID'] ?>" 
+                    onclick="return confirm('Tem certeza de que deseja excluir este anúncio?')">Excluir Produto</a></p>
+            <?php endif; ?>
+
+
             <!-- Verificar se o produto está em aquisição e atribuir a variável $aquisicao -->
             <?php if ($anuncio['statusAquisicao'] !== 'Não está na tabela aquisição'): ?>
                 <?php 
-                    // Aqui você deve buscar a aquisições se necessário.
+                    // Aqui você deve buscar as aquisições se necessário.
                     // Exemplo (supondo que você tenha uma função que busca isso):
-                    $aquisicao = $this->meusAnunciosModel->obterAquisicaoPorProduto($anuncio['produtoID']); 
+                    $aquisicao = $this->meusAnunciosModel->obterAquisicaoPorProduto($anuncio['produtoID']); // isso é gambi
+                    echo ('Valor do Produto: R$ ' . number_format($aquisicao['valorProduto'], 2, ',', '.') . '<br>');
+                    echo ('Valor do Frete: R$ ' . number_format($aquisicao['valorFrete'], 2, ',', '.') . '<br>');
+                    
+                    // Calcular o total
+                    $total = $aquisicao['valorProduto'] + $aquisicao['valorFrete'];
+                    
+                    // Exibir o total
+                    echo ('<strong>Total: R$ ' . number_format($total, 2, ',', '.') . '</strong><br>');
+                    
+
                 ?>
                 
                 <!-- Se o status de aquisição for esperando envio -->
