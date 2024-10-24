@@ -50,8 +50,8 @@
     <h1>Mensagens do Chat ID: <?= htmlspecialchars($chatId) ?></h1>
 
     <div class="produto-container">
-        <img src="<?= $produtoDetalhes['locImagem'] ?>" alt="Imagem do produto" class="produto-img">
-        <div class="produto-detalhes">
+    <img src="<?= $produtoDetalhes['locImagem'] ?>" alt="Imagem do produto" class="produto-img" style="max-width: 100px; height: auto;">
+    <div class="produto-detalhes">
             <h3><?= htmlspecialchars($produtoDetalhes['titulo']) ?></h3>
             <h1>Valor: <?= htmlspecialchars($produtoDetalhes['valor']) ?></h1>
         </div>

@@ -11,7 +11,7 @@ class AquisicoesModel {
 
     // Buscar aquisições de um usuário específico
     public function buscarAquisicoesPorUsuario($compradorID) {
-        $sql = "SELECT aquisicaoID, produtoID, chatID, compradorID, dataHora, vendedorID, statusAquisicao 
+        $sql = "SELECT aquisicaoID, produtoID, chatID, compradorID, dataHora, vendedorID, statusAquisicao, valorProduto, valorFrete
                 FROM aquisicoes 
                 WHERE compradorID = :compradorID";
         $stmt = $this->conn->prepare($sql);

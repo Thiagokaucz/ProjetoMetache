@@ -141,7 +141,7 @@ class ChatMensagemController {
             $tipoID = $_SESSION['tipoID'];
     
             // Redireciona de volta para a página do chat
-            header("Location: /chat?Produto=$produtoID&Origem=$origem&Tipo=$tipoID");
+            header("Location: /chat?Produto=$produtoID&Origem=$origem&Tipo=$tipoID&chatID=$chatId");
             
             // Remove as variáveis de sessão específicas
             //unset($_SESSION['produtoID']);
@@ -209,8 +209,11 @@ class ChatMensagemController {
                     echo "Já existe um link pendente. Tente novamente mais tarde.";
                     return; // Interrompe a execução
                 } else {
+
+                    $this->ChatMensagemModel->excluirMensagemELinkCompra($linkExistente['linkCompraID']);
+
                     // Se já passou 1 minuto, atualiza o status do link existente para cancelado
-                    $this->ChatMensagemModel->atualizarStatusLink($linkExistente['linkCompraID'], 'cancelado');
+                    //$this->ChatMensagemModel->atualizarStatusLink($linkExistente['linkCompraID'], 'cancelado');
                 }
             }
     
@@ -228,7 +231,7 @@ class ChatMensagemController {
             $this->ChatMensagemModel->salvarMensagemComLinkCompra($chatId, $conteudoMensagem, $_SESSION['user_id'], $linkCompraID);
     
             // Redirecionar de volta ao chat
-            header("Location: /chat?Produto={$_SESSION['produtoID']}&Origem={$_SESSION['origem']}&Tipo={$_SESSION['tipoID']}");
+            header("Location: /chat?Produto={$_SESSION['produtoID']}&Origem={$_SESSION['origem']}&Tipo={$_SESSION['tipoID']}&chatID=$chatId");
             exit();
         } else {
             echo "Método não permitido.";

@@ -44,5 +44,18 @@ class MeusAnunciosModel {
         return $stmt->fetch(PDO::FETCH_ASSOC); // Retorna a primeira aquisição encontrada ou false se não houver
     }
     
-    
+    // Função para buscar o chatID baseado no produtoID
+    public function buscarChatIDPorProdutoID($produtoID) {
+        $sql = "SELECT chatID 
+                FROM aquisicoes 
+                WHERE produtoID = :produtoID 
+                LIMIT 1";  // Limite para garantir apenas um resultado
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':produtoID', $produtoID, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC); // Retorna o resultado como um array associativo
+        return $resultado ? $resultado['chatID'] : null; // Retorna o chatID ou null se não encontrado
+    }
+
 }

@@ -20,8 +20,12 @@ if (!empty($anuncios)):
             <p><a href="http://localhost/detalheProduto?id=<?= $anuncio['produtoID'] ?>">Ver Detalhes do Produto</a></p>
 
             <!-- Se o produto estiver em aquisição -->
-            <?php if ($anuncio['statusAquisicao'] !== 'Não está na tabela aquisição'): ?>
-                <p><a href="/chat?Produto=<?= $anuncio['produtoID'] ?>&Origem=ListaChat&Tipo=MinhasVendas">Ir para o Chat</a></p>
+            <?php if ($anuncio['statusAquisicao'] !== 'Não está na tabela aquisição' && isset($anuncio['chatID'])): ?>
+                <p>
+                    <a href="/chat?Produto=<?= htmlspecialchars($anuncio['produtoID']) ?>&Origem=ListaChat&Tipo=MinhasVendas&chatID=<?= htmlspecialchars($anuncio['chatID']) ?>">
+                        Ir para o Chat
+                    </a>
+                </p>
             <?php endif; ?>
 
             <!-- Verificar se o produto está em aquisição e atribuir a variável $aquisicao -->

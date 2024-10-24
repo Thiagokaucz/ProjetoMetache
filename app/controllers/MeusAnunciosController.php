@@ -24,15 +24,24 @@ class MeusAnunciosController {
             $anuncios = [];
         }
 
-        // Para cada produto, buscar o status de aquisição
+        // Para cada produto, buscar o status de aquisição e o chatID
         foreach ($anuncios as &$anuncio) {
+            // Obter a aquisição do produto
             $aquisicao = $this->meusAnunciosModel->obterAquisicaoPorProduto($anuncio['produtoID']);
+            
+            // Buscar o chatID associado ao produto
+            $chatID = $this->meusAnunciosModel->buscarChatIDPorProdutoID($anuncio['produtoID']);
+            
+            // Verificar se a aquisição foi encontrada
             if ($aquisicao) {
                 $anuncio['statusAquisicao'] = $aquisicao['statusAquisicao'];
+                $anuncio['chatID'] = $chatID; // Adiciona o chatID ao anúncio
             } else {
                 $anuncio['statusAquisicao'] = 'Não está na tabela aquisição';
+                $anuncio['chatID'] = $chatID; // Pode ser null se não houver aquisição
             }
         }
+
 
         require_once 'app/views/header.php';
         require 'app/views/MeusAnuncios.php';

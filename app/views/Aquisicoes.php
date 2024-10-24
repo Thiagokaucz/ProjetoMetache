@@ -8,11 +8,13 @@
             <p><strong>Data/Hora:</strong> <?= htmlspecialchars($aquisicao['dataHora']) ?></p>
             <p><strong>Remetente:</strong> <?= htmlspecialchars($aquisicao['vendedorID']) ?></p>
             <p><strong>Status:</strong> <?= htmlspecialchars($aquisicao['statusAquisicao']) ?></p>
+            <p><strong>Valor pago:</strong> <?= htmlspecialchars($aquisicao['valorProduto']) ?></p>
+            <p><strong>Frete pago:</strong> <?= htmlspecialchars($aquisicao['valorFrete']) ?></p>
 
             <h3>Detalhes do Produto</h3>
             <p><strong>Título:</strong> <?= htmlspecialchars($aquisicao['produto']['titulo']) ?></p>
             <p><strong>Descrição:</strong> <?= htmlspecialchars($aquisicao['produto']['descricao']) ?></p>
-            <p><strong>Valor:</strong> R$ <?= htmlspecialchars($aquisicao['produto']['valor']) ?></p>
+            <p><strong>Valor do anuncio:</strong> R$ <?= htmlspecialchars($aquisicao['produto']['valor']) ?></p>
             <p><strong>Localização:</strong> <?= htmlspecialchars($aquisicao['produto']['localizacao']) ?></p>
             <p><strong>Data de Publicação:</strong> <?= htmlspecialchars($aquisicao['produto']['dataHoraPub']) ?></p>
 
