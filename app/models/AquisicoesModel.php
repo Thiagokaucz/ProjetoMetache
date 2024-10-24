@@ -43,4 +43,13 @@ class AquisicoesModel {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function atualizarStatusAquisicao($aquisicaoID, $novoStatus) {
+        $sql = "UPDATE aquisicoes SET statusAquisicao = :novoStatus WHERE aquisicaoID = :aquisicaoID";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':novoStatus', $novoStatus);
+        $stmt->bindParam(':aquisicaoID', $aquisicaoID, PDO::PARAM_INT);
+        
+        return $stmt->execute();
+    }
+    
 }

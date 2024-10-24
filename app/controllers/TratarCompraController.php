@@ -4,10 +4,14 @@ session_start();
 class TratarCompraController {
     public function processarCompra() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Capturando dados do formulário
             $linkCompraID = isset($_POST['linkCompraID']) ? htmlspecialchars($_POST['linkCompraID']) : null;
             $produtoID = isset($_POST['produtoID']) ? htmlspecialchars($_POST['produtoID']) : null;
             $chatID = isset($_POST['chatID']) ? htmlspecialchars($_POST['chatID']) : null;
-            $vendedorID = isset($_POST['vendedorID']) ? htmlspecialchars($_POST['vendedorID']) : null; // Obtendo o vendedorID
+            $vendedorID = isset($_POST['vendedorID']) ? htmlspecialchars($_POST['vendedorID']) : null;
+            $valorBrutoCompra = isset($_POST['valorBrutoCompra']) ? htmlspecialchars($_POST['valorBrutoCompra']) : null; 
+            $valorCompra = isset($_POST['valorCompra']) ? htmlspecialchars($_POST['valorCompra']) : null; 
+            $valorFrete = isset($_POST['valorFrete']) ? htmlspecialchars($_POST['valorFrete']) : null; 
             
             // Verifica se o userID está definido na sessão
             $userID = isset($_SESSION['user_id']) ? htmlspecialchars($_SESSION['user_id']) : 'Usuário não logado';
@@ -23,6 +27,9 @@ class TratarCompraController {
                 echo "Chat ID: " . $chatID . "<br>";
                 echo "Usuário ID: " . $userID . "<br>";
                 echo "Vendedor ID: " . htmlspecialchars($vendedorID) . "<br>"; // Exibe o vendedorID
+                echo "Valor Bruto Compra: " . htmlspecialchars($valorBrutoCompra) . "<br>";
+                echo "Valor da Compra: " . htmlspecialchars($valorCompra) . "<br>";
+                echo "Valor do Frete: " . htmlspecialchars($valorFrete) . "<br>";
 
                 // Formulário de aprovação
                 echo '
@@ -31,6 +38,9 @@ class TratarCompraController {
                     <input type="hidden" name="produtoID" value="' . htmlspecialchars($produtoID) . '">
                     <input type="hidden" name="chatID" value="' . htmlspecialchars($chatID) . '">
                     <input type="hidden" name="vendedorID" value="' . htmlspecialchars($vendedorID) . '"> <!-- Adicionando o vendedorID -->
+                    <input type="hidden" name="valorBrutoCompra" value="' . htmlspecialchars($valorBrutoCompra) . '"> <!-- Passando valor bruto -->
+                    <input type="hidden" name="valorCompra" value="' . htmlspecialchars($valorCompra) . '"> <!-- Passando valor da compra -->
+                    <input type="hidden" name="valorFrete" value="' . htmlspecialchars($valorFrete) . '"> <!-- Passando valor do frete -->
                     <input type="hidden" name="acao" value="comprar">
 
                     <h3>DEBUG -- Aprovar a compra? -- DEBUG</h3>
@@ -55,7 +65,10 @@ class TratarCompraController {
                         window.location.href = "/finalizarCompra?linkCompraID=' . urlencode($linkCompraID) . 
                                               '&produtoID=' . urlencode($produtoID) . 
                                               '&chatID=' . urlencode($chatID) . 
-                                              '&vendedorID=' . urlencode($vendedorID) . '"; // Adicionando o vendedorID na URL
+                                              '&vendedorID=' . urlencode($vendedorID) . 
+                                              '&valorBrutoCompra=' . urlencode($valorBrutoCompra) . 
+                                              '&valorCompra=' . urlencode($valorCompra) . 
+                                              '&valorFrete=' . urlencode($valorFrete) . '"; // Adicionando valores na URL
                     }, 5000);
                 </script>';
             } else {

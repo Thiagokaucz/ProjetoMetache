@@ -8,8 +8,7 @@ class FinalizarCompraModel {
         $database = new Database();
         $this->db = $database->obterConexao(); // Obtém a conexão PDO
     }
-
-    public function finalizarCompra($produtoID, $chatID, $compradorID, $vendedorID) {
+    public function finalizarCompra($produtoID, $chatID, $compradorID, $vendedorID, $valorProduto, $valorFrete) {
         // Inicia uma transação para garantir que ambas operações sejam feitas corretamente
         $this->db->beginTransaction();
 
@@ -18,8 +17,8 @@ class FinalizarCompraModel {
             $dataHora = date('Y-m-d H:i:s');
 
             // Inserir a nova aquisição na tabela aquisicoes
-            $sql = "INSERT INTO aquisicoes (produtoID, chatID, compradorID, dataHora, vendedorID, statusAquisicao) 
-                    VALUES (:produtoID, :chatID, :compradorID, :dataHora, :vendedorID, 'esperando envio')";
+            $sql = "INSERT INTO aquisicoes (produtoID, chatID, compradorID, dataHora, vendedorID, valorProduto, valorFrete, statusAquisicao) 
+                    VALUES (:produtoID, :chatID, :compradorID, :dataHora, :vendedorID, :valorProduto, :valorFrete, 'esperando envio')";
 
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':produtoID', $produtoID);
@@ -27,6 +26,8 @@ class FinalizarCompraModel {
             $stmt->bindParam(':compradorID', $compradorID);
             $stmt->bindParam(':dataHora', $dataHora);
             $stmt->bindParam(':vendedorID', $vendedorID);
+            $stmt->bindParam(':valorProduto', $valorProduto);
+            $stmt->bindParam(':valorFrete', $valorFrete);
 
             // Executa a inserção
             if (!$stmt->execute()) {

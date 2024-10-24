@@ -29,7 +29,9 @@
             <input type="hidden" name="userID" value="<?= htmlspecialchars($_SESSION['user_id']) ?>"> <!-- Pegando o userID da sessão -->
             <input type="hidden" name="chatID" value="<?= htmlspecialchars($dados['chatID']) ?>"> <!-- Certifique-se que o chatID esteja disponível -->
             <input type="hidden" name="vendedorID" value="<?= htmlspecialchars($dados['vendedorID']) ?>"> <!-- Passando o vendedorID -->
-
+            <input type="hidden" name="valorBrutoCompra" value="<?= htmlspecialchars($dados['valorBrutoCompra']) ?>"> <!-- Passando o valor bruto da compra -->
+            <input type="hidden" name="valorCompra" value="<?= htmlspecialchars($dados['valorCompra']) ?>"> <!-- Passando o valor da compra -->
+            <input type="hidden" name="valorFrete" value="<?= htmlspecialchars($dados['valorFrete']) ?>"> <!-- Passando o valor do frete -->
 
             <!-- Botão para confirmar a compra -->
             <button type="submit" name="acao" value="comprar">Comprar</button>

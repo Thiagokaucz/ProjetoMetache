@@ -33,6 +33,8 @@ $rotas = [
     '/dicasSeguranca' => 'DicasSegurancaController@index',
 
     '/minhasCompras' => 'AquisicoesController@mostrarAquisicoes',
+    '/receberProduto' => 'AquisicoesController@receberProduto',
+
 
     '/meusAnuncios' => 'MeusAnunciosController@mostrarAnuncios',
 

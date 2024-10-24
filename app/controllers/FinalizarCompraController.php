@@ -16,20 +16,25 @@ class FinalizarCompraController {
         $produtoID = $_GET['produtoID'] ?? null;
         $chatID = $_GET['chatID'] ?? null;
         $vendedorID = $_GET['vendedorID'] ?? null;
+        
+        // Recebendo os valores da compra
+        $valorBrutoCompra = $_GET['valorBrutoCompra'] ?? null;
+        $valorCompra = $_GET['valorCompra'] ?? null;
+        $valorFrete = $_GET['valorFrete'] ?? null;
 
         // Obtendo o compradorID da sessão
         $compradorID = $_SESSION['user_id'] ?? null;
 
         // Verificando se todos os parâmetros estão presentes
-        if ($produtoID && $chatID && $compradorID && $vendedorID) {
+        if ($produtoID && $chatID && $compradorID && $vendedorID && $valorBrutoCompra && $valorCompra && $valorFrete) {
             // Chama o método do modelo para finalizar a compra
-            if ($this->finalizarCompraModel->finalizarCompra($produtoID, $chatID, $compradorID, $vendedorID)) {
+            if ($this->finalizarCompraModel->finalizarCompra($produtoID, $chatID, $compradorID, $vendedorID, $valorCompra, $valorFrete)) {
                 // Mensagem de sucesso
                 echo "Compra realizada com sucesso!";
                 // Redireciona para /minhascompras após 5 segundos
                 echo '<script>
                     setTimeout(function() {
-                        window.location.href = "/minhascompras";
+                        window.location.href = "/minhasCompras";
                     }, 5000);
                 </script>';
             } else {
@@ -37,8 +42,8 @@ class FinalizarCompraController {
             }
         } else {
             echo "Parâmetros inválidos. Verifique os dados fornecidos.";
-            //echo $produtoID . "&" . $chatID . "&" . $compradorID . "&" . $vendedorID;
-
+            // Você pode exibir os parâmetros para depuração
+            // echo $produtoID . "&" . $chatID . "&" . $compradorID . "&" . $vendedorID;
         }
     }
 }

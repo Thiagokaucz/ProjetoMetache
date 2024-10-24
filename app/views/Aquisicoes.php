@@ -1,5 +1,3 @@
-<h1>Lista de Aquisições</h1>
-
 <?php if (!empty($aquisicoes)): ?>
     <?php foreach ($aquisicoes as $aquisicao): ?>
         <div class="aquisicao">
@@ -14,7 +12,7 @@
             <h3>Detalhes do Produto</h3>
             <p><strong>Título:</strong> <?= htmlspecialchars($aquisicao['produto']['titulo']) ?></p>
             <p><strong>Descrição:</strong> <?= htmlspecialchars($aquisicao['produto']['descricao']) ?></p>
-            <p><strong>Valor do anuncio:</strong> R$ <?= htmlspecialchars($aquisicao['produto']['valor']) ?></p>
+            <p><strong>Valor do anúncio:</strong> R$ <?= htmlspecialchars($aquisicao['produto']['valor']) ?></p>
             <p><strong>Localização:</strong> <?= htmlspecialchars($aquisicao['produto']['localizacao']) ?></p>
             <p><strong>Data de Publicação:</strong> <?= htmlspecialchars($aquisicao['produto']['dataHoraPub']) ?></p>
 
@@ -22,14 +20,19 @@
 
             <p><a href="chat?Produto=<?= htmlspecialchars($aquisicao['produto']['produtoID']) ?>&Origem=ListaChat&Tipo=MinhasCompras&chatID=<?= htmlspecialchars($aquisicao['chatID']) ?>">Chat</a></p>
 
-            <!--colocar um recebi o produto  -->
-
             <?php if (isset($aquisicao['envio'])): ?>
                 <h3>Detalhes do Envio</h3>
                 <p><strong>Transportadora:</strong> <?= htmlspecialchars($aquisicao['envio']['transportadora']) ?></p>
                 <p><strong>Data/Hora do Envio:</strong> <?= htmlspecialchars($aquisicao['envio']['dataHoraEnvio']) ?></p>
                 <p><strong>Código de Rastreio:</strong> <?= htmlspecialchars($aquisicao['envio']['codigoRastreio']) ?></p>
                 <p><strong>Comentário:</strong> <?= htmlspecialchars($aquisicao['envio']['comentario']) ?></p>
+            <?php endif; ?>
+
+            <!-- Link "Recebi o produto" -->
+            <?php if ($aquisicao['statusAquisicao'] === 'finalizado'): ?>
+                <p>
+                    <a href="receberProduto?aquisicaoID=<?= htmlspecialchars($aquisicao['aquisicaoID']) ?>">Recebi o produto</a>
+                </p>
             <?php endif; ?>
         </div>
         <hr>

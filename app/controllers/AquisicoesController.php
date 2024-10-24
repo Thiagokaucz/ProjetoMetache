@@ -37,4 +37,29 @@ public function mostrarAquisicoes() {
     require 'app/views/Aquisicoes.php';
 }
 
+public function receberProduto() {
+    session_start();
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: /login');
+        exit;
+    }
+
+    // Obtendo o ID da aquisição
+    $aquisicaoID = $_GET['aquisicaoID'] ?? null;
+
+    if ($aquisicaoID) {
+        // Atualiza o status da aquisição para 'produto entregue'
+        if ($this->aquisicoesModel->atualizarStatusAquisicao($aquisicaoID, 'produto entregue')) {
+            // Redireciona de volta à lista de aquisições com uma mensagem de sucesso
+            header('Location: /minhasCompras');
+        } else {
+            // Redireciona com uma mensagem de erro
+            header('Location: /minhasCompras');
+        }
+    } else {
+        // Redireciona com mensagem de erro se o ID não foi fornecido
+        header('Location: /minhasCompras');
+    }
+}
+
 }
