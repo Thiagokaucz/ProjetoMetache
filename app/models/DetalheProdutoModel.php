@@ -11,7 +11,7 @@ class ProductModel {
 
     // Método para buscar os detalhes do produto
     public function getProductDetails($productId) {
-        $query = "SELECT p.produtoID, p.titulo, p.condicao, p.descricao, p.valor, p.locImagem, p.dataHoraPub, p.localizacao, u.nome, u.dataCadastro, u.status
+        $query = "SELECT p.produtoID, p.titulo, p.condicao, p.descricao, p.valor, p.locImagem, p.dataHoraPub, p.localizacao, u.nome, u.dataCadastro, u.status 
                   FROM produto p
                   INNER JOIN usuarios u ON p.userID = u.userID
                   WHERE p.produtoID = :productId";
@@ -39,5 +39,15 @@ class ProductModel {
         // Retorna os dados do produto junto com os dados do anunciante
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    // Método para incrementar visualizações
+    public function incrementarVisualizacao($productId) {
+    $query = "UPDATE produto SET visualizacao = visualizacao + 1 WHERE produtoID = :productId";
+    
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':productId', $productId, PDO::PARAM_INT);
+    return $stmt->execute(); // Retorna verdadeiro se a execução for bem-sucedida
+}
+
 }
 ?>

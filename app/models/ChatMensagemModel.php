@@ -11,14 +11,16 @@ class ChatMensagemModel {
 
     public function getMessagesByChatId($chatId) {
         $stmt = $this->conn->prepare("
-            SELECT m.*, lc.valorCompra 
+            SELECT m.*, lc.valorCompra, u.nome AS nomeUsuario
             FROM mensagem m
-            LEFT JOIN linkCompra lc ON m.chatID = lc.chatID 
-            WHERE m.chatID = :chatId 
+            LEFT JOIN linkCompra lc ON m.chatID = lc.chatID
+            LEFT JOIN usuario u ON m.userID = u.userID
+            WHERE m.chatID = :chatId
             ORDER BY m.dataHora ASC
         ");
         $stmt->bindParam(':chatId', $chatId, PDO::PARAM_INT);
         $stmt->execute();
+        
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
@@ -182,5 +184,40 @@ class ChatMensagemModel {
             return $stmt->execute();
         }
         
+        public function buscarProdutoPorID($produtoID) {
+            // Modificar a query para buscar também o campo 'valor'
+            $sql = "SELECT titulo, locImagem, valor FROM produto WHERE produtoID = :produtoID";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':produtoID', $produtoID, PDO::PARAM_INT);
+            $stmt->execute();
+        
+            // Retorna os dados do produto, incluindo título, imagem e valor
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+        
+        public function excluirMensagemELinkCompra($linkCompraID) {
+            // Inicia a transação
+            $this->conn->beginTransaction();
     
+            try {
+                // 1. Excluir as mensagens na tabela mensagem que referenciam o linkCompraID
+                $stmt = $this->conn->prepare("DELETE FROM mensagem WHERE linkCompra = :linkCompraID");
+                $stmt->bindParam(':linkCompraID', $linkCompraID);
+                $stmt->execute();
+    
+                // 2. Excluir o link na tabela linkcompra
+                $stmt = $this->conn->prepare("DELETE FROM linkcompra WHERE linkCompraID = :linkCompraID");
+                $stmt->bindParam(':linkCompraID', $linkCompraID);
+                $stmt->execute();
+    
+                // Se tudo estiver correto, realiza o commit
+                $this->conn->commit();
+            } catch (Exception $e) {
+                // Em caso de erro, realiza o rollback
+                $this->conn->rollBack();
+                // Loga o erro ou lança uma exceção
+                throw new Exception("Erro ao excluir link de compra e mensagens: " . $e->getMessage());
+            }
+        }
+
 }

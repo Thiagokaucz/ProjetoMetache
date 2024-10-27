@@ -12,6 +12,8 @@ class AnunciarProdutoController {
 
     // Exibe o formulário de anúncio
     public function index() {
+        if (isset($_SESSION['user_id'])) { // Verifica se o usuário está logado
+
         require_once 'app/views/header.php';
         
         // Criação da instância do modelo de produtos
@@ -21,6 +23,10 @@ class AnunciarProdutoController {
         // Passando as categorias para a view
         require_once 'app/views/anunciarProduto.php';  
         require_once 'app/views/footer.php';
+
+        }else{
+            header("Location: /login");
+        }
     }
     
    // Cria o anúncio do produto
@@ -62,7 +68,7 @@ class AnunciarProdutoController {
             // Chama a função do modelo para criar o produto e faz o upload das fotos
             if ($produtoModel->criarProduto($_POST, $_FILES, $userID)) {
                 // Redireciona para a página de sucesso ou lista de produtos
-                header("Location: /produtos");
+                header("Location: /meusAnuncios");
                 exit;
             } else {
                 // Caso ocorra um erro, mostra uma página de erro

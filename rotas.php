@@ -13,6 +13,7 @@ $rotas = [
     '/detalheProduto' => 'DetalheProdutoController@mostrarDetalhes', 
 
     '/chatLista' => 'ChatListaController@verificarUsuarioNoChat',
+    '/ChatListaExcluir' => 'ChatListaController@excluirChat',
 
     '/chat' => 'ChatMensagemController@chat', 
     '/sendMessage' => 'ChatMensagemController@sendMessage', 
@@ -32,9 +33,26 @@ $rotas = [
     '/dicasSeguranca' => 'DicasSegurancaController@index',
 
     '/minhasCompras' => 'AquisicoesController@mostrarAquisicoes',
+    '/receberProduto' => 'AquisicoesController@receberProduto',
+
 
     '/meusAnuncios' => 'MeusAnunciosController@mostrarAnuncios',
 
     '/CompraLinkChat' => 'CompraLinkChatController@mostrarDados',
+
+    '/tratarCompra' => 'TratarCompraController@processarCompra',
+
+    '/finalizarCompra' => 'FinalizarCompraController@processar',
+
+    '/enviarProduto' => 'EnviarProdutoController@mostrarFormulario',
+    '/enviarProdutoForm' => 'EnviarProdutoController@enviarProduto',
+
+    '/editarProduto' => 'EditarProdutoController@editarProduto',
+
+    '/alterarDisponibilidade' => 'MeusAnunciosController@alterarDisponibilidade',
+
+    '/excluirAnuncio' => 'MeusAnunciosController@excluirAnuncio',
+
+    '/VerificarCompraController' => 'VerificarCompraController@processarCompra',
 
 ];

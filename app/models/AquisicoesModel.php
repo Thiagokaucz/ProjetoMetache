@@ -11,7 +11,7 @@ class AquisicoesModel {
 
     // Buscar aquisições de um usuário específico
     public function buscarAquisicoesPorUsuario($compradorID) {
-        $sql = "SELECT aquisicaoID, produtoID, chatID, compradorID, dataHora, vendedorID, statusAquisicao 
+        $sql = "SELECT aquisicaoID, produtoID, chatID, compradorID, dataHora, vendedorID, statusAquisicao, valorProduto, valorFrete
                 FROM aquisicoes 
                 WHERE compradorID = :compradorID";
         $stmt = $this->conn->prepare($sql);
@@ -30,4 +30,26 @@ class AquisicoesModel {
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    // AquisicoesModel.php
+
+    public function buscarEnvioPorAquisicaoID($aquisicaoID) {
+        $sql = "SELECT transportadora, dataHora AS dataHoraEnvio, codigoRastreio, comentario 
+                FROM envioProduto 
+                WHERE aquisicaoID = :aquisicaoID";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':aquisicaoID', $aquisicaoID, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function atualizarStatusAquisicao($aquisicaoID, $novoStatus) {
+        $sql = "UPDATE aquisicoes SET statusAquisicao = :novoStatus WHERE aquisicaoID = :aquisicaoID";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':novoStatus', $novoStatus);
+        $stmt->bindParam(':aquisicaoID', $aquisicaoID, PDO::PARAM_INT);
+        
+        return $stmt->execute();
+    }
+    
 }

@@ -26,6 +26,9 @@
         <option value="" selected>Escolha...</option>
         <option value="Novo">Novo</option>
         <option value="Usado">Usado</option>
+        <option value="Usado">Vintage</option>
+        <option value="Usado">Com defeito</option>
+
       </select>
     </div>
 

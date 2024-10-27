@@ -88,34 +88,34 @@
               <a class="nav-link dropdown-toggle" style="color: white;" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Eletronicos Usados</a>
               <ul class="dropdown-menu">
                   <?php foreach ($categorias as $categoria): ?>
-                    <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=<?= htmlspecialchars($categoria['categoria'])?>&Regiao=&Ordem=Data&Pesquisa=`;"><?= htmlspecialchars($categoria['categoria']) ?></a></li>
+                    <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=<?= htmlspecialchars($categoria['categoria'])?>&Regiao=PR&Ordem=Data&Pesquisa="><?= htmlspecialchars($categoria['categoria']) ?></a></li>
                     <?php endforeach; ?>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=Todos&Regiao=&Pesquisa=">Todos</a></li>
+                  <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=Todos&Regiao=PR&Pesquisa=">Todos</a></li>
               </ul>
           </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" style="color: white;" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Eletronicos com defeito</a>
               <ul class="dropdown-menu">
                   <?php foreach ($categorias as $categoria): ?>
-                    <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=<?= htmlspecialchars($categoria['categoria'])?>&Regiao=&Ordem=Data&Pesquisa=`;"><?= htmlspecialchars($categoria['categoria']) ?></a></li>
+                    <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=<?= htmlspecialchars($categoria['categoria'])?>&Regiao=PR&Ordem=Data&Pesquisa="><?= htmlspecialchars($categoria['categoria']) ?></a></li>
                   <?php endforeach; ?>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=Todos&Regiao=&Pesquisa=">Todos</a></li>
+                  <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=Todos&Regiao=PR&Pesquisa=">Todos</a></li>
               </ul>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" style="color: white;" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Eletronicos vintage</a>
               <ul class="dropdown-menu">
                   <?php foreach ($categorias as $categoria): ?>
-                    <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=<?= htmlspecialchars($categoria['categoria'])?>&Regiao=&Ordem=Data&Pesquisa=`;"><?= htmlspecialchars($categoria['categoria']) ?></a></li>
+                    <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=<?= htmlspecialchars($categoria['categoria'])?>&Regiao=PR&Ordem=Data&Pesquisa="><?= htmlspecialchars($categoria['categoria']) ?></a></li>
                   <?php endforeach; ?>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=Todos&Regiao=&Ordem=Data&Pesquisa=`;">Todos</a></li>
+                  <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=Todos&Regiao=PR&Ordem=Data&Pesquisa=">Todos</a></li>
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link "style="color: white;" href="/PesquisarProdutosPor?Categoria=Todos&Regiao=&Ordem=Data&Pesquisa=`;">Todos</a>
+              <a class="nav-link "style="color: white;" href="/PesquisarProdutosPor?Categoria=Todos&Regiao=PR&Ordem=Data&Pesquisa=">Todos</a>
             </li>
           </ul>
         </div>
@@ -125,7 +125,7 @@
 
   <section class="bg-white">
     <div class="container">
-      <h2 class="pt-3 pb-3">Últimos Anúncios Vistos</h2>
+      <h2 class="pt-3 pb-3">Últimos Anúncios adicionados</h2>
       <div class="row row-cols-2 row-cols-md-4 row-cols-lg-5">
 
       <?php if (empty($anunciosRecentes)): ?>
@@ -161,7 +161,7 @@
 
     <ul class="nav justify-content-center">
       <li class="nav-item">
-        <a class="nav-link active text-dark" aria-current="page" href="/VerMaisProdutosPor?Tipo=UltimosAnunciosVistos">Ver mais</a>
+        <a class="nav-link active text-dark" aria-current="page" href="/PesquisarProdutosPor?Categoria=Todos&Regiao=PR&Ordem=Data&Pesquisa=">Ver mais</a>
       </li>
     </ul>
   </div>
@@ -203,7 +203,7 @@
     </div>
     <ul class="nav justify-content-center">
       <li class="nav-item">
-        <a class="nav-link active text-dark" aria-current="page" href="/VerMaisProdutosPor?Tipo=MaisPesquisados">Ver mais</a>
+        <a class="nav-link active text-dark" aria-current="page" href="/PesquisarProdutosPor?Categoria=Todos&Regiao=PR&Ordem=Data&Pesquisa=">Ver mais</a>
       </li>
     </ul>
   </div>

@@ -1,5 +1,6 @@
 <?php
 require_once 'app/models/ProdutosPesquisaModel.php';
+session_start();
 
 class ProdutosPesquisaController {
     private $produtosPesquisaModel;

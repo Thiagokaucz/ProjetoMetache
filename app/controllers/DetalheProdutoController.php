@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once 'app/models/DetalheProdutoModel.php';
 
 class DetalheProdutoController {
@@ -20,6 +22,10 @@ class DetalheProdutoController {
             $produto = $this->produtoModel->getProdutoById($id);
 
             if ($produto) {
+
+                // Incrementa a visualização do produto
+                $this->produtoModel->incrementarVisualizacao($id);
+
                 // Passa os dados para a view
                 require_once 'app/views/header.php';
                 require_once 'app/views/detalheProduto.php'; // Passa os dados para a view

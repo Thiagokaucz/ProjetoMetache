@@ -19,10 +19,10 @@
                         data.forEach(function(message) {
                             messagesHtml += `
                                 <li>
-                                    <strong>Usuário ID ${message.userID}:</strong>
+                                    <strong>${message.nomeUsuario}:</strong> <!-- Alterado para mostrar o nome do usuário -->
                                     ${message.conteudo} <br>
                                     <small>${message.dataHora}</small><br>
-                                    ${message.linkcompra ? '<strong>Link de Compra:</strong> <a href="CompraLinkChat?id=' + message.linkcompra + '&produtoID=<?= htmlspecialchars($_SESSION['produtoID']) ?>' + '" target="_blank">' + message.linkcompra + '</a>' : ''}
+                                    ${message.linkcompra ? '<strong>Link de Compra:</strong> <a href="CompraLinkChat?id=' + message.linkcompra + '&produtoID=<?= htmlspecialchars($_SESSION['produtoID']) ?>" target="_blank">' + message.linkcompra + '</a>' : ''}
                                 </li>`;
                         });
                     } else {
@@ -37,7 +37,7 @@
         }
 
         // Chama a função de busca a cada 5 segundos
-        setInterval(fetchMessages, 5000);
+        setInterval(fetchMessages, 5000); // Ajuste o intervalo se necessário
 
         // Carrega as mensagens assim que a página é carregada
         $(document).ready(function() {
@@ -48,13 +48,21 @@
 <body>
     <h1>Chat do comprador</h1>
     <h1>Mensagens do Chat ID: <?= htmlspecialchars($chatId) ?></h1>
+    
+    <div class="produto-container">
+    <img src="<?= $produtoDetalhes['locImagem'] ?>" alt="Imagem do produto" class="produto-img" style="max-width: 100px; height: auto;">
+    <div class="produto-detalhes">
+            <h3><?= htmlspecialchars($produtoDetalhes['titulo']) ?></h3>
+            <h1>Valor: <?= htmlspecialchars($produtoDetalhes['valor']) ?></h1>
+        </div>
+    </div>
 
     <!-- Exibe as mensagens iniciais -->
     <ul id="messages">
         <?php if (!empty($messages)): ?>
             <?php foreach ($messages as $message): ?>
                 <li>
-                    <strong>Usuário ID <?= htmlspecialchars($message['userID']) ?>:</strong>
+                    <strong><?= htmlspecialchars($message['nomeUsuario']) ?>:</strong> <!-- Alterado para mostrar o nome do usuário -->
                     <?= htmlspecialchars($message['conteudo']) ?><br>
                     <small><?= htmlspecialchars($message['dataHora']) ?></small><br>
                     <?php if (!empty($message['linkcompra'])): ?>

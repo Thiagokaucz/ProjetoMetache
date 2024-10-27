@@ -36,6 +36,8 @@ class ChatMensagemController {
                         // Verifica ou cria o chat
                         $chatId = $this->ChatMensagemModel->verificarChatComprador($produtoID, $userID);
     
+                        $chatId= filter_input(INPUT_GET, 'chatID', FILTER_SANITIZE_STRING);
+
                         // Busca as mensagens desse chat
                         $messages = $this->ChatMensagemModel->getMessagesByChatId($chatId);
     
@@ -45,6 +47,8 @@ class ChatMensagemController {
                         // Verifica ou cria o chat
                         $chatId = $this->ChatMensagemModel->verificarChatVendedor($produtoID, $userID);
     
+                        $chatId= filter_input(INPUT_GET, 'chatID', FILTER_SANITIZE_STRING);
+
                         // Busca as mensagens desse chat
                         $messages = $this->ChatMensagemModel->getMessagesByChatId($chatId);
     
@@ -69,9 +73,9 @@ class ChatMensagemController {
                             $existeChat = $this->ChatMensagemModel->verificarExistenciaChat($chatId);
 
                             if ($existeChat) {
-                                echo "O chat existe!";
+                                //echo "O chat existe!";
                             } else {
-                                echo "O chat não existe!";
+                                //echo "O chat não existe!";
                                 // Se um chat foi encontrado ou criado, cria a notificação
                                 $conteudoNotificacao = "Usuário " . $userID . " iniciou uma negociação no chat " . $chatId;
                                 $statusCriouNotificacao = $this->ChatMensagemModel->criarNotificacao($userID, $vendedorID, $chatId, $conteudoNotificacao);
@@ -91,8 +95,13 @@ class ChatMensagemController {
                 }
                 
                 $tipoChat = $_GET['Tipo'];
-                echo $tipoChat;
-                
+                //echo $tipoChat;
+
+                            //--------------------------------------------------------------------------------------
+                            // Buscando os dados do produto
+                            $produtoDetalhes = $this->ChatMensagemModel->buscarProdutoPorID($produtoID);
+                            //--------------------------------------------------------------------------------------
+
                 if ($tipoChat == "IniciarChat" || $tipoChat == "MinhasCompras") {
                     // Carrega as views apropriadas
                     require_once 'app/views/header.php';
@@ -132,7 +141,7 @@ class ChatMensagemController {
             $tipoID = $_SESSION['tipoID'];
     
             // Redireciona de volta para a página do chat
-            header("Location: /chat?Produto=$produtoID&Origem=$origem&Tipo=$tipoID");
+            header("Location: /chat?Produto=$produtoID&Origem=$origem&Tipo=$tipoID&chatID=$chatId");
             
             // Remove as variáveis de sessão específicas
             //unset($_SESSION['produtoID']);
@@ -200,8 +209,11 @@ class ChatMensagemController {
                     echo "Já existe um link pendente. Tente novamente mais tarde.";
                     return; // Interrompe a execução
                 } else {
+
+                    $this->ChatMensagemModel->excluirMensagemELinkCompra($linkExistente['linkCompraID']);
+
                     // Se já passou 1 minuto, atualiza o status do link existente para cancelado
-                    $this->ChatMensagemModel->atualizarStatusLink($linkExistente['linkCompraID'], 'cancelado');
+                    //$this->ChatMensagemModel->atualizarStatusLink($linkExistente['linkCompraID'], 'cancelado');
                 }
             }
     
@@ -219,7 +231,7 @@ class ChatMensagemController {
             $this->ChatMensagemModel->salvarMensagemComLinkCompra($chatId, $conteudoMensagem, $_SESSION['user_id'], $linkCompraID);
     
             // Redirecionar de volta ao chat
-            header("Location: /chat?Produto={$_SESSION['produtoID']}&Origem={$_SESSION['origem']}&Tipo={$_SESSION['tipoID']}");
+            header("Location: /chat?Produto={$_SESSION['produtoID']}&Origem={$_SESSION['origem']}&Tipo={$_SESSION['tipoID']}&chatID=$chatId");
             exit();
         } else {
             echo "Método não permitido.";

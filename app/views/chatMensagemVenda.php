@@ -19,7 +19,7 @@
                         data.forEach(function(message) {
                             messagesHtml += `
                                 <li>
-                                    <strong>Usuário ID ${message.userID}:</strong>
+                                    <strong>${message.nomeUsuario}:</strong> <!-- Alterado para mostrar o nome do usuário -->
                                     ${message.conteudo} <br>
                                     <small>${message.dataHora}</small>
                                 </li>`;
@@ -49,20 +49,28 @@
     <h1>Chat do Vendedor</h1>
     <h1>Mensagens do Chat ID: <?= htmlspecialchars($chatId) ?></h1>
 
+    <div class="produto-container">
+    <img src="<?= $produtoDetalhes['locImagem'] ?>" alt="Imagem do produto" class="produto-img" style="max-width: 100px; height: auto;">
+    <div class="produto-detalhes">
+            <h3><?= htmlspecialchars($produtoDetalhes['titulo']) ?></h3>
+            <h1>Valor: <?= htmlspecialchars($produtoDetalhes['valor']) ?></h1>
+        </div>
+    </div>
+
     <!-- Exibe as mensagens iniciais -->
     <ul id="messages">
-        <?php if (!empty($messages)): ?>
-            <?php foreach ($messages as $message): ?>
-                <li>
-                    <strong>Usuário ID <?= htmlspecialchars($message['userID']) ?>:</strong>
-                    <?= htmlspecialchars($message['conteudo']) ?><br>
-                    <small><?= htmlspecialchars($message['dataHora']) ?></small>
-                </li>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p>Nenhuma mensagem encontrada para este chat.</p>
-        <?php endif; ?>
-    </ul>
+    <?php if (!empty($messages)): ?>
+        <?php foreach ($messages as $message): ?>
+            <li>
+                <strong><?= htmlspecialchars($message['nomeUsuario']) ?>:</strong>
+                <?= htmlspecialchars($message['conteudo']) ?><br>
+                <small><?= htmlspecialchars($message['dataHora']) ?></small>
+            </li>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>Nenhuma mensagem encontrada para este chat.</p>
+    <?php endif; ?>
+</ul>
 
     <!-- Formulário para enviar nova mensagem -->
     <form action="/sendMessage" method="POST">
@@ -74,18 +82,16 @@
     <a href="/chat">Voltar</a> <!-- Link de navegação de volta -->
 
     <form action="/enviarLinkCompra" method="POST">
-    <input type="hidden" name="chatId" value="<?= htmlspecialchars($chatId) ?>">
-    
-    <label for="valorBrutoCompra">Coloque o valor do produto:</label>
-    <input type="text" id="valorBrutoCompra" name="valorBrutoCompra" required>
+        <input type="hidden" name="chatId" value="<?= htmlspecialchars($chatId) ?>">
+        
+        <label for="valorBrutoCompra">Coloque o valor do produto:</label>
+        <input type="text" id="valorBrutoCompra" name="valorBrutoCompra" required>
 
-    <label for="valorFrete">Coloque o valor do frete:</label>
-    <input type="text" id="valorFrete" name="valorFrete" value="0.00" required>
+        <label for="valorFrete">Coloque o valor do frete:</label>
+        <input type="text" id="valorFrete" name="valorFrete" value="0.00" required>
 
-    <!-- Outras mensagens de aviso aqui -->
-    
-    <button type="submit">Enviar link de venda</button>
-</form>
+        <button type="submit">Enviar link de venda</button>
+    </form>
 
 </body>
 </html>
