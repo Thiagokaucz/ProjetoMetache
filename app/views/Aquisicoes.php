@@ -6,8 +6,8 @@
             <p><strong>Data/Hora:</strong> <?= htmlspecialchars($aquisicao['dataHora']) ?></p>
             <p><strong>Remetente:</strong> <?= htmlspecialchars($aquisicao['vendedorID']) ?></p>
             <p><strong>Status:</strong> <?= htmlspecialchars($aquisicao['statusAquisicao']) ?></p>
-            <p><strong>Valor pago:</strong> <?= htmlspecialchars($aquisicao['valorProduto']) ?></p>
-            <p><strong>Frete pago:</strong> <?= htmlspecialchars($aquisicao['valorFrete']) ?></p>
+            <p><strong>Valor pago:</strong> R$ <?= htmlspecialchars($aquisicao['valorProduto']) ?></p>
+            <p><strong>Frete pago:</strong> R$ <?= htmlspecialchars($aquisicao['valorFrete']) ?></p>
 
             <h3>Detalhes do Produto</h3>
             <p><strong>Título:</strong> <?= htmlspecialchars($aquisicao['produto']['titulo']) ?></p>
@@ -17,7 +17,6 @@
             <p><strong>Data de Publicação:</strong> <?= htmlspecialchars($aquisicao['produto']['dataHoraPub']) ?></p>
 
             <p><a href="detalheProduto?id=<?= htmlspecialchars($aquisicao['produto']['produtoID']) ?>">Detalhes do produto</a></p>
-
             <p><a href="chat?Produto=<?= htmlspecialchars($aquisicao['produto']['produtoID']) ?>&Origem=ListaChat&Tipo=MinhasCompras&chatID=<?= htmlspecialchars($aquisicao['chatID']) ?>">Chat</a></p>
 
             <?php if (isset($aquisicao['envio'])): ?>
@@ -29,7 +28,7 @@
             <?php endif; ?>
 
             <!-- Link "Recebi o produto" -->
-            <?php if ($aquisicao['statusAquisicao'] === 'finalizado'): ?>
+            <?php if ($aquisicao['statusAquisicao'] === 'enviado'): ?>
                 <p>
                     <a href="receberProduto?aquisicaoID=<?= htmlspecialchars($aquisicao['aquisicaoID']) ?>">Recebi o produto</a>
                 </p>

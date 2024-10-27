@@ -23,7 +23,7 @@ class EnviarProdutoModel {
     
 
     public function atualizarStatusAquisicao($aquisicaoID) {
-        $sql = "UPDATE aquisicoes SET statusAquisicao = 'finalizado' WHERE aquisicaoID = :aquisicaoID";
+        $sql = "UPDATE aquisicoes SET statusAquisicao = 'enviado' WHERE aquisicaoID = :aquisicaoID";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':aquisicaoID', $aquisicaoID, PDO::PARAM_INT);
         $stmt->execute();

@@ -53,4 +53,6 @@ $rotas = [
 
     '/excluirAnuncio' => 'MeusAnunciosController@excluirAnuncio',
 
+    '/VerificarCompraController' => 'VerificarCompraController@processarCompra',
+
 ];

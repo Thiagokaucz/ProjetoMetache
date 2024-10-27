@@ -22,20 +22,24 @@ public function mostrarAquisicoes() {
     // Buscar as aquisições do usuário logado
     $aquisicoes = $this->aquisicoesModel->buscarAquisicoesPorUsuario($userID);
 
-    foreach ($aquisicoes as &$aquisicao) {
+    // Usar array_map para transformar as aquisições
+    $aquisicoes = array_map(function($aquisicao) {
         $produto = $this->aquisicoesModel->buscarProdutoPorID($aquisicao['produtoID']);
         $aquisicao['produto'] = $produto; // Associar os dados do produto
 
-        // Se o status da aquisição for 'finalizado', buscar detalhes do envio
-        if ($aquisicao['statusAquisicao'] === 'finalizado') {
+        // Se o status da aquisição for 'enviado', buscar detalhes do envio
+        if ($aquisicao['statusAquisicao'] === 'enviado') {
             $envio = $this->aquisicoesModel->buscarEnvioPorAquisicaoID($aquisicao['aquisicaoID']);
             $aquisicao['envio'] = $envio; // Associar os dados de envio
         }
-    }
+
+        return $aquisicao;
+    }, $aquisicoes);
 
     require_once 'app/views/header.php';
     require 'app/views/Aquisicoes.php';
 }
+
 
 public function receberProduto() {
     session_start();
