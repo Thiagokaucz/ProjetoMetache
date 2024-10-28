@@ -53,5 +53,37 @@ class FinalizarCompraModel {
             return false;
         }
     }
+
+    public function atualizarAquisicaoIDPorProduto($produtoID) {
+        // Primeiro, busca a aquisicaoID na tabela aquisicoes
+        $sql = "SELECT aquisicaoID FROM aquisicoes WHERE produtoID = :produtoID";
+        
+        // Prepara a declaração
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':produtoID', $produtoID);
+        $stmt->execute();
+        
+        // Busca o resultado
+        $aquisicao = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        // Verifica se a aquisicaoID foi encontrada
+        if ($aquisicao) {
+            $aquisicaoID = $aquisicao['aquisicaoID'];
+
+            // Agora, atualiza a tabela compraspagamento
+            $updateSql = "UPDATE compraspagamento SET aquisicaoID = :aquisicaoID WHERE produto_id = :produtoID"; // Mudado para produto_id
+            
+            // Prepara a declaração para a atualização
+            $updateStmt = $this->db->prepare($updateSql);
+            $updateStmt->bindParam(':aquisicaoID', $aquisicaoID);
+            $updateStmt->bindParam(':produtoID', $produtoID);
+
+            // Executa a atualização
+            return $updateStmt->execute();
+        }
+        
+        // Retorna false se não encontrou a aquisicaoID
+        return false;
+    }
 }
 ?>

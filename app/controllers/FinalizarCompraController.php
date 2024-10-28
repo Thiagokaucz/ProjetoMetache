@@ -29,8 +29,14 @@ class FinalizarCompraController {
         if ($produtoID && $chatID && $compradorID && $vendedorID && $valorBrutoCompra && $valorCompra && $valorFrete) {
             // Chama o método do modelo para finalizar a compra
             if ($this->finalizarCompraModel->finalizarCompra($produtoID, $chatID, $compradorID, $vendedorID, $valorCompra, $valorFrete)) {
-                // Mensagem de sucesso
-                echo "Compra realizada com sucesso!";
+                // Agora, atualiza a tabela compraspagamento
+                if ($this->finalizarCompraModel->atualizarAquisicaoIDPorProduto($produtoID)) {
+                    // Mensagem de sucesso
+                    echo "Compra realizada com sucesso e aquisicaoID atualizada!";
+                } else {
+                    echo "Compra realizada, mas erro ao atualizar aquisicaoID.";
+                }
+                
                 // Redireciona para /minhascompras após 5 segundos
                 echo '<script>
                     setTimeout(function() {
