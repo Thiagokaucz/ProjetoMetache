@@ -20,7 +20,7 @@ class ChatListaController {
 
             require_once 'app/views/header.php';
             require_once 'app/views/ChatLista.php';
-            require_once 'app/views/footer.php';
+            require_once 'app/views/footerConfig.php';
         } else {
             header('Location: /login');
             exit();
