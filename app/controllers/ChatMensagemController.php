@@ -97,6 +97,10 @@ class ChatMensagemController {
                 $tipoChat = $_GET['Tipo'];
                 //echo $tipoChat;
 
+                $vendedorNome = $this->ChatMensagemModel->getVendedorNomePorChatID($chatId);
+                $compradorNome = $this->ChatMensagemModel->getCompradorNomePorChatID($chatId);
+
+                //echo "valor:" . $vendedorNome . $compradorNome;
                             //--------------------------------------------------------------------------------------
                             // Buscando os dados do produto
                             $produtoDetalhes = $this->ChatMensagemModel->buscarProdutoPorID($produtoID);
@@ -106,13 +110,13 @@ class ChatMensagemController {
                     // Carrega as views apropriadas
                     require_once 'app/views/header.php';
                     require_once 'app/views/chatMensagemCompra.php'; // Chama a tela passando as mensagens
-                    require_once 'app/views/footer.php';
+                    require_once 'app/views/footerConfig.php';
                 
                 } elseif ($tipoChat == "MinhasVendas") {
                     // Carrega as views apropriadas
                     require_once 'app/views/header.php';
                     require_once 'app/views/chatMensagemVenda.php'; 
-                    require_once 'app/views/footer.php';
+                    require_once 'app/views/footerConfig.php';
                 }                
 
     

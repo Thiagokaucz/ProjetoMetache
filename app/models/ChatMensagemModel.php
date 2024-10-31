@@ -185,15 +185,16 @@ class ChatMensagemModel {
         }
         
         public function buscarProdutoPorID($produtoID) {
-            // Modificar a query para buscar também o campo 'valor'
-            $sql = "SELECT titulo, locImagem, valor FROM produto WHERE produtoID = :produtoID";
+            // Modificar a query para buscar também o campo 'produtoID' e 'valor'
+            $sql = "SELECT produtoID, titulo, locImagem, valor FROM produto WHERE produtoID = :produtoID";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':produtoID', $produtoID, PDO::PARAM_INT);
             $stmt->execute();
         
-            // Retorna os dados do produto, incluindo título, imagem e valor
+            // Retorna os dados do produto, incluindo produtoID, título, imagem e valor
             return $stmt->fetch(PDO::FETCH_ASSOC);
         }
+        
         
         public function excluirMensagemELinkCompra($linkCompraID) {
             // Inicia a transação
@@ -220,4 +221,43 @@ class ChatMensagemModel {
             }
         }
 
+    // Função para obter o nome do vendedor
+    public function getVendedorNomePorChatID($chatID) {
+        $sql = "SELECT u.nome AS nomeVendedor
+                FROM chat c
+                JOIN usuario u ON c.vendedorID = u.userID
+                WHERE c.chatID = :chatID"; // Usando chatID
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':chatID', $chatID, PDO::PARAM_INT); // Liga o parâmetro
+        $stmt->execute(); // Executa a consulta
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC); // Busca o resultado
+
+        if ($result) {
+            return $result['nomeVendedor'];
+        } else {
+            return null; // Retornar null se não encontrar
+        }
+    }
+
+    // Função para obter o nome do comprador
+    public function getCompradorNomePorChatID($chatID) {
+        $sql = "SELECT u.nome AS nomeComprador
+                FROM chat c
+                JOIN usuario u ON c.compradorID = u.userID
+                WHERE c.chatID = :chatID"; // Usando chatID
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':chatID', $chatID, PDO::PARAM_INT); // Liga o parâmetro
+        $stmt->execute(); // Executa a consulta
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC); // Busca o resultado
+
+        if ($result) {
+            return $result['nomeComprador'];
+        } else {
+            return null; // Retornar null se não encontrar
+        }
+    }
 }

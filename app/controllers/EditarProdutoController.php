@@ -47,7 +47,9 @@ class EditarProdutoController {
                 }
 
                 // Exibe a view de edição com os dados do produto
+                require_once 'app/views/header.php'; // Carregar cabeçalho
                 require_once 'app/views/editarProduto.php';
+                require_once 'app/views/footerConfig.php';
             } else {
                 echo "Você não tem permissão para editar este produto.";
             }

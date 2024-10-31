@@ -24,18 +24,19 @@ class MeusAnunciosModel {
 
     // Verificar se o produto está em aquisição
     public function verificarProdutoEmAquisicao($produtoID) {
-        $sql = "SELECT statusAquisicao 
+        $sql = "SELECT statusAquisicao, statusPagamentoVendedor
                 FROM aquisicoes 
                 WHERE produtoID = :produtoID 
                 LIMIT 1";  // Limite para garantir apenas um resultado
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':produtoID', $produtoID, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC); // Retorna o status da aquisição
+        return $stmt->fetch(PDO::FETCH_ASSOC); // Retorna o status da aquisição e pagamento
     }
+
     public function obterAquisicaoPorProduto($produtoID) {
         // Adicione valorProduto e valorFrete à consulta
-        $sql = "SELECT aquisicaoID, chatID, statusAquisicao, valorProduto, valorFrete 
+        $sql = "SELECT aquisicaoID, chatID, statusAquisicao, statusPagamentoVendedor, valorProduto, valorFrete 
                 FROM aquisicoes 
                 WHERE produtoID = :produtoID 
                 LIMIT 1";

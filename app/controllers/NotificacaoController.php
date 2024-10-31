@@ -21,7 +21,7 @@ class NotificacaoController {
             // Exibe a view de notificações
             require_once 'app/views/header.php';
             require_once 'app/views/notificacao.php';
-            require_once 'app/views/footer.php';
+            require_once 'app/views/footerConfig.php';
         } else {
             header('Location: /login');
             exit();
