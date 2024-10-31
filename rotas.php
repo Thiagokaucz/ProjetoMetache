@@ -55,4 +55,5 @@ $rotas = [
 
     '/VerificarCompraController' => 'VerificarCompraController@processarCompra',
 
+    '/admin/pagamentosPendentes' => 'AdminController@mostrarPagamentosPendentes',
 ];

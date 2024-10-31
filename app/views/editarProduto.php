@@ -4,30 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Produto</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Editar Produto</h1>
+    <div class="container my-4">
+        <h1 class="mb-4">Editar Produto</h1>
 
-    <!-- Formulário para edição de produto -->
-    <form method="POST" action="">
-        <label for="categoriaID">Categoria:</label>
-        <input type="number" name="categoriaID" id="categoriaID" value="<?= htmlspecialchars($produto['categoriaID']) ?>" required><br>
+        <!-- Formulário para edição de produto -->
+        <form method="POST" action="" class="border p-4 rounded shadow">
+            <div class="mb-3">
+                <label for="categoriaID" class="form-label">Categoria:</label>
+                <input type="number" name="categoriaID" id="categoriaID" class="form-control" value="<?= htmlspecialchars($produto['categoriaID']) ?>" required>
+            </div>
 
-        <label for="titulo">Título:</label>
-        <input type="text" name="titulo" id="titulo" value="<?= htmlspecialchars($produto['titulo']) ?>" required><br>
+            <div class="mb-3">
+                <label for="titulo" class="form-label">Título:</label>
+                <input type="text" name="titulo" id="titulo" class="form-control" value="<?= htmlspecialchars($produto['titulo']) ?>" required>
+            </div>
 
-        <label for="descricao">Descrição:</label>
-        <textarea name="descricao" id="descricao" required><?= htmlspecialchars($produto['descricao']) ?></textarea><br>
+            <div class="mb-3">
+                <label for="descricao" class="form-label">Descrição:</label>
+                <textarea name="descricao" id="descricao" class="form-control" required><?= htmlspecialchars($produto['descricao']) ?></textarea>
+            </div>
 
-        <label for="valor">Valor:</label>
-        <input type="text" name="valor" id="valor" value="<?= htmlspecialchars($produto['valor']) ?>" required><br>
+            <div class="mb-3">
+                <label for="valor" class="form-label">Valor:</label>
+                <input type="text" name="valor" id="valor" class="form-control" value="<?= htmlspecialchars($produto['valor']) ?>" required>
+            </div>
 
-        <label for="localizacao">Localização:</label>
-        <input type="text" name="localizacao" id="localizacao" value="<?= htmlspecialchars($produto['localizacao']) ?>" required><br>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a href="/meusAnuncios" class="btn btn-secondary">Voltar</a>
+        </form>
+    </div>
 
-        <button type="submit">Salvar</button>
-    </form>
-
-    <a href="/meusAnuncios">Voltar</a>
+    <!-- Bootstrap JS (Opcional) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
 </body>
 </html>

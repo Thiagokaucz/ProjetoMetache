@@ -27,6 +27,10 @@ public function mostrarAquisicoes() {
         $produto = $this->aquisicoesModel->buscarProdutoPorID($aquisicao['produtoID']);
         $aquisicao['produto'] = $produto; // Associar os dados do produto
 
+        // Adicionando a imagem do produto
+        $imagemProduto = $this->aquisicoesModel->buscarImagemProdutoPorAquisicao($aquisicao['aquisicaoID']);
+        $aquisicao['produto']['locImagem'] = $imagemProduto; // Adiciona a imagem do produto ao array
+
         // Se o status da aquisição for 'enviado', buscar detalhes do envio
         if ($aquisicao['statusAquisicao'] === 'enviado') {
             $envio = $this->aquisicoesModel->buscarEnvioPorAquisicaoID($aquisicao['aquisicaoID']);
@@ -38,7 +42,9 @@ public function mostrarAquisicoes() {
 
     require_once 'app/views/header.php';
     require 'app/views/Aquisicoes.php';
+    
 }
+
 
 
 public function receberProduto() {

@@ -56,16 +56,13 @@
           <!-- Exibição das Informações do Anunciante -->
           <div class="border p-3 mb-4">
             <h5><?php echo $produto['nomeAnunciante']; ?></h5>
-            <span class="badge bg-success">Online</span>
             <p class="mt-2 text-muted">Entrou no Metache em: <?php echo date('d/m/Y', strtotime($produto['dataEntradaAnunciante'])); ?></p>
-            <a href="#" class="text-decoration-none">Ver perfil do anunciante</a>
           </div>
 
           <div class="border p-3">
             <h5>Histórico do anunciante</h5>
             <div class="d-flex align-items-center">
-              <span class="me-2" style="color: #FFA500;">★★★★☆</span>
-              <p class="mb-0">Mais de 50 vendas</p>
+              <p class="mb-0">Total de <?php echo number_format($totalVendas)?> na plataforma</p>
             </div>
           </div>
         </div>

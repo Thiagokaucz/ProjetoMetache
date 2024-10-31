@@ -49,5 +49,30 @@ class ProductModel {
     return $stmt->execute(); // Retorna verdadeiro se a execução for bem-sucedida
 }
 
+public function getUserIDByProductId($produtoID) {
+    $query = "SELECT userID FROM produto WHERE produtoID = :produtoID";
+
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':produtoID', $produtoID, PDO::PARAM_INT);
+    $stmt->execute();
+
+    // Retorna o userID ou null se não encontrado
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result ? $result['userID'] : null; 
+}
+
+
+// Método para contar quantas vezes o vendedorID aparece na tabela aquisicoes
+public function contarVendasPorVendedor($userID) {
+    $query = "SELECT COUNT(*) AS totalVendas FROM aquisicoes WHERE vendedorID = :userID";
+    
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
+    $stmt->execute();
+    
+    $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $resultado['totalVendas'] ?? 0; // Retorna o total de vendas ou 0 se não houver
+}
+
 }
 ?>

@@ -17,7 +17,7 @@ class PerfilUsuarioController {
             if ($usuario) {
                 require_once 'app/views/header.php';
                 require 'app/views/PerfilUsuario.php'; // View para exibir os dados do usuário
-                require_once 'app/views/footer.php';
+                require_once 'app/views/footerConfig.php';
             } else {
                 echo "Usuário não encontrado.";
             }

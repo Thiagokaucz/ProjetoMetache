@@ -51,5 +51,15 @@ class AquisicoesModel {
         
         return $stmt->execute();
     }
+    public function buscarImagemProdutoPorAquisicao($aquisicaoID) {
+        $sql = "SELECT p.locImagem 
+                FROM aquisicoes a
+                JOIN produto p ON a.produtoID = p.produtoID
+                WHERE a.aquisicaoID = :aquisicaoID";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':aquisicaoID', $aquisicaoID, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchColumn(); // Retorna apenas a coluna locImagem
+    }
     
 }

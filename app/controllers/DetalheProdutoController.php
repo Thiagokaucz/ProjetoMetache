@@ -26,6 +26,10 @@ class DetalheProdutoController {
                 // Incrementa a visualização do produto
                 $this->produtoModel->incrementarVisualizacao($id);
 
+                $userAnuncio = $this->produtoModel->getUserIDByProductId($id);
+
+                $totalVendas = $this->produtoModel->contarVendasPorVendedor($userAnuncio);
+                
                 // Passa os dados para a view
                 require_once 'app/views/header.php';
                 require_once 'app/views/detalheProduto.php'; // Passa os dados para a view

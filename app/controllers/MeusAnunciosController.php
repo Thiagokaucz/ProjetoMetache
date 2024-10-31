@@ -46,6 +46,7 @@ class MeusAnunciosController {
 
         require_once 'app/views/header.php';
         require 'app/views/MeusAnuncios.php';
+        
     }
 
         // Função para alterar a disponibilidade do produto
