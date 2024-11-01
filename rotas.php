@@ -55,5 +55,13 @@ $rotas = [
 
     '/VerificarCompraController' => 'VerificarCompraController@processarCompra',
 
-    '/admin/pagamentosPendentes' => 'AdminController@mostrarPagamentosPendentes',
+    '/denunciarProduto' => 'DenunciaController@mostrarFormulario',  // Rota para o formulário
+    '/enviarDenuncia' => 'DenunciaController@criarDenuncia',       // Rota para o envio do formulário
+
+    '/admPagamentos' => 'AdmListaComprasController@exibirComprasPendentes',
+
+    '/PagamentoAdm' => 'AdmPagamentoController@mostrarPagamento',
+
+    '/pagar' => 'AdmPagamentoController@pagar',
+
 ];

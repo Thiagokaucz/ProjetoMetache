@@ -22,7 +22,6 @@ class AnunciarProdutoController {
 
         // Passando as categorias para a view
         require_once 'app/views/anunciarProduto.php';  
-        require_once 'app/views/footerConfig.php';
 
         }else{
             header("Location: /login");

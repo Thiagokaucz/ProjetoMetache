@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Produto</title>
     <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .btn-custom {
+            background-color: #FF6B01;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <div class="container my-4">
@@ -33,7 +38,7 @@
                 <input type="text" name="valor" id="valor" class="form-control" value="<?= htmlspecialchars($produto['valor']) ?>" required>
             </div>
 
-            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="submit" class="btn btn-custom">Salvar</button>
             <a href="/meusAnuncios" class="btn btn-secondary">Voltar</a>
         </form>
     </div>

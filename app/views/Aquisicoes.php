@@ -46,7 +46,8 @@
                                class="btn btn-success mb-2 w-100">Recebi o produto</a>
                         <?php endif; ?>
                         <?php if ($aquisicao['statusAquisicao'] === 'produto entregue'): ?>
-                            <a href="denunciarProduto?aquisicaoID=<?= htmlspecialchars($aquisicao['aquisicaoID']) ?>" 
+                            <a href="/denunciarProduto?aquisicaoID=<?= htmlspecialchars($aquisicao['aquisicaoID']) ?>"
+
                                class="btn btn-danger w-100">Denunciar</a>
                         <?php endif; ?>
                     </div>

@@ -53,7 +53,7 @@
                                 <div class="chat-bubble${(message.userID === <?= json_encode($_SESSION['user_id']) ?>) ? ' sender' : ''}">
                                     <p>${message.conteudo}</p>
                                     <small class="text-muted">${message.dataHora}</small>
-                                    ${message.linkcompra ? `<br><strong>Link de Compra:</strong> <a href="CompraLinkChat?id=${message.linkcompra}&produtoID=<?= htmlspecialchars($_SESSION['produtoID']) ?>" target="_blank">${message.linkcompra}</a>` : ''}
+                                    ${message.linkcompra ? `<br><strong>Para aceitar, aperte no</strong> <a href="CompraLinkChat?id=${message.linkcompra}&produtoID=<?= htmlspecialchars($_SESSION['produtoID']) ?>" target="_blank">Link de compra</a>` : ''}
                                 </div>`;
                         });
                     } else {

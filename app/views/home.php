@@ -125,7 +125,7 @@
 
   <section class="bg-white">
     <div class="container">
-      <h2 class="pt-3 pb-3">Últimos Anúncios adicionados</h2>
+      <h2 class="pt-5 pb-3">Últimos Anúncios adicionados</h2>
       <div class="row row-cols-2 row-cols-md-4 row-cols-lg-5">
 
       <?php if (empty($anunciosRecentes)): ?>
@@ -144,7 +144,7 @@
                     <?= $anuncio['localizacao'] ?>
                   </div>
                   <div class="col-6 text-end" style="font-size: 12px;">
-                    <?= $anuncio['dataHoraPub'] ?>
+                  <?= date('d/m/Y', strtotime($anuncio['dataHoraPub'])); ?>
                   </div>
                   <div class="col-12" style="font-size: 12px; color: #FF6B01;">
                     <?= $anuncio['condicao'] ?>
@@ -203,7 +203,7 @@
     </div>
     <ul class="nav justify-content-center">
       <li class="nav-item">
-        <a class="nav-link active text-dark" aria-current="page" href="/PesquisarProdutosPor?Categoria=Todos&Regiao=PR&Ordem=Data&Pesquisa=">Ver mais</a>
+        <a class="nav-link active text-dark pb-5" aria-current="page" href="/PesquisarProdutosPor?Categoria=Todos&Regiao=PR&Ordem=Data&Pesquisa=">Ver mais</a>
       </li>
     </ul>
   </div>

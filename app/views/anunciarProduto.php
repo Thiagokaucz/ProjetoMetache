@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulário de Anúncio</title>
+  <!-- Bootstrap CSS -->
   <style>
     .btn-orange {
       background-color: #FF6B01; 
@@ -12,37 +13,46 @@
     .btn-orange:hover {
       background-color: #e55b01; 
     }
+    body {
+      background-color: #f8f9fa; /* Cor de fundo suave */
+    }
+    .container {
+      margin-top: 30px; /* Espaçamento no topo */
+      background: white; /* Fundo branco para o formulário */
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    }
   </style>
 </head>
 <body>
 
-<div class="container mt-5">
-  <h2>Escolha os detalhes</h2>
+<div class="container">
+  <h2 class="mb-4">Escolha os detalhes</h2>
   <form action="/criar-produto" method="POST" enctype="multipart/form-data">
     
-    <div class="input-group mb-3">
-      <label class="input-group-text" for="condicao">Condição:</label>
+    <div class="mb-3">
+      <label for="condicao" class="form-label">Condição:</label>
       <select class="form-select" id="condicao" name="condicao" required>
         <option value="" selected>Escolha...</option>
         <option value="Novo">Novo</option>
         <option value="Usado">Usado</option>
-        <option value="Usado">Vintage</option>
-        <option value="Usado">Com defeito</option>
-
+        <option value="Vintage">Vintage</option>
+        <option value="Com defeito">Com defeito</option>
       </select>
     </div>
 
-    <div class="input-group mb-3">
-      <label class="input-group-text" for="categoria">Categoria:</label>
+    <div class="mb-3">
+      <label for="categoria" class="form-label">Categoria:</label>
       <select class="form-select" id="categoria" name="categoria" required>
         <option value="" selected>Escolha...</option>
         <?php foreach ($categorias as $categoria): ?>
-            <option value="<?= $categoria['categoriaID']; ?>"><?= $categoria['categoria']; ?></option>
+            <option value="<?= htmlspecialchars($categoria['categoriaID']); ?>"><?= htmlspecialchars($categoria['categoria']); ?></option>
         <?php endforeach; ?>
       </select>
     </div>
 
-    <h2>Crie seu anúncio</h2>
+    <h2 class="mt-4">Crie seu anúncio</h2>
     
     <div class="mb-3">
       <label for="titulo" class="form-label">Título*</label>
@@ -61,12 +71,13 @@
 
     <div class="mb-3">
       <label for="valor" class="form-label">Valor*</label>
-      <input type="text" class="form-control" id="valor" name="valor" required placeholder="R$ 700,00">
+      <input type="number" class="form-control" id="valor" name="valor" required min="0" step="0.01" placeholder="700,00">
+      <small class="form-text text-muted">Insira o valor em reais (R$).</small>
     </div>
 
     <div class="mb-3">
       <label for="localizacao" class="form-label">Estado do anúncio*</label>
-      <select class="form-control" id="localizacao" name="localizacao" required>
+      <select class="form-select" id="localizacao" name="localizacao" required>
         <option value="" disabled selected>Selecione o estado</option>
         <option value="PR">PR</option>
         <option value="SP">SP</option>
@@ -83,7 +94,14 @@
 
     <button type="submit" class="btn btn-orange">Criar Anúncio</button>
   </form>
-</div>
 
+  <!-- Espaço no final -->
+</div>
+  <div class="mt-4"></div>
+
+<!-- Bootstrap JS (Opcional) -->
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
 </body>
 </html>

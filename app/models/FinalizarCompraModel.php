@@ -85,5 +85,6 @@ class FinalizarCompraModel {
         // Retorna false se não encontrou a aquisicaoID
         return false;
     }
+    
 }
 ?>

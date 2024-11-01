@@ -7,46 +7,55 @@
 </head>
 <body>
     <div class="container">
-        <h1>Resultados da Pesquisa</h1>
-        
-        <p>Total de produtos encontrados: <?php echo $totalProdutos; ?></p>
-        <?php if (!empty($pesquisa)): ?>
-            <p>Pesquisando por: <strong><?php echo htmlspecialchars($pesquisa); ?></strong></p>
-        <?php endif; ?>
+    <h1 class="pt-5 pb-3">Resultados da Pesquisa</h1>
 
-        <form method="GET" action="">
-            <div class="row mb-3">
-                <div class="col">
-                    <label for="categoria">Categoria:</label>
-                    <select name="Categoria" id="categoria" class="form-select">
-                        <option value="Todos">Todos</option>
-                        <?php foreach ($categorias as $cat): ?>
-                            <option value="<?php echo $cat['categoria']; ?>" <?php if($cat['categoria'] == $categoria) echo 'selected'; ?>><?php echo $cat['categoria']; ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="col">
-                    <label for="regiao">Região:</label>
-                    <select name="Regiao" id="regiao" class="form-select">
-                        <?php foreach ($regioes as $reg): ?>
-                            <option value="<?php echo $reg; ?>" <?php if($reg == $regiao) echo 'selected'; ?>><?php echo $reg; ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="col">
-                    <label for="ordem">Ordenar por:</label>
-                    <select name="Ordem" id="ordem" class="form-select"> 
-                        <option value="Data" <?php if($ordem == 'Data') echo 'selected'; ?>>Data</option>
-                        <option value="Preco" <?php if($ordem == 'Preco') echo 'selected'; ?>>Preço</option>
-                    </select>
-                </div>
-                <div class="col">
-                    <label for="pesquisa">Pesquisar:</label>
-                    <input type="text" name="Pesquisa" id="pesquisa" class="form-control" value="<?php echo htmlspecialchars($pesquisa); ?>">
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Buscar</button>
-        </form>
+<p>Total de produtos encontrados: <strong><?php echo $totalProdutos; ?></strong></p>
+<?php if (!empty($pesquisa)): ?>
+    <p>Pesquisando por: <strong><?php echo htmlspecialchars($pesquisa); ?></strong></p>
+<?php endif; ?>
+
+<form method="GET" action="" class="mb-4">
+    <div class="row g-4"> <!-- Aumentando o espaçamento entre as colunas -->
+        <div class="col-md-3">
+            <label for="categoria" class="form-label">Categoria:</label>
+            <select name="Categoria" id="categoria" class="form-select">
+                <option value="Todos">Todos</option>
+                <?php foreach ($categorias as $cat): ?>
+                    <option value="<?php echo $cat['categoria']; ?>" <?php if ($cat['categoria'] == $categoria) echo 'selected'; ?>>
+                        <?php echo htmlspecialchars($cat['categoria']); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="regiao" class="form-label">Região:</label>
+            <select name="Regiao" id="regiao" class="form-select">
+                <?php foreach ($regioes as $reg): ?>
+                    <option value="<?php echo htmlspecialchars($reg); ?>" <?php if ($reg == $regiao) echo 'selected'; ?>>
+                        <?php echo htmlspecialchars($reg); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="ordem" class="form-label">Ordenar por:</label>
+            <select name="Ordem" id="ordem" class="form-select">
+                <option value="Data" <?php if ($ordem == 'Data') echo 'selected'; ?>>Data</option>
+                <option value="Preco" <?php if ($ordem == 'Preco') echo 'selected'; ?>>Preço</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="pesquisa" class="form-label">Pesquisar:</label>
+            <input type="text" name="Pesquisa" id="pesquisa" class="form-control" value="<?php echo htmlspecialchars($pesquisa); ?>" placeholder="Digite sua pesquisa...">
+        </div>
+    </div>
+    <div class="mt-3"> <!-- Adicionando espaço entre o formulário e o botão -->
+        <button type="submit" class="btn" style="background-color: #FF6B01; color: white; padding: 10px 20px; border: none; border-radius: 5px; transition: background-color 0.3s;">
+            Buscar
+        </button>
+    </div>
+</form>
+
 
         <h2 class="pt-3 pb-3">Produtos Encontrados</h2>
         <div class="row row-cols-2 row-cols-md-4 row-cols-lg-5">
