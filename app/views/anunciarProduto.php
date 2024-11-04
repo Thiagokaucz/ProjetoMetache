@@ -56,18 +56,22 @@
     
     <div class="mb-3">
       <label for="titulo" class="form-label">Título*</label>
-      <input type="text" class="form-control" id="titulo" name="titulo" required>
+      <input type="text" class="form-control" id="titulo" name="titulo" required maxlength="30">
+      <small class="form-text text-muted">Máximo de 30 caracteres.</small>
     </div>
+
 
     <div class="mb-3">
       <label for="marca" class="form-label">Marca*</label>
       <input type="text" class="form-control" id="marca" name="marca" required>
     </div>
 
-    <div class="form-floating mb-3">
-      <textarea class="form-control" id="descricao" name="descricao" placeholder="Descrição do item" style="height: 100px" required></textarea>
-      <label for="descricao">Descrição*</label>
+    <div class="mb-3">
+      <label for="descricao" class="form-label">Descrição*</label>
+      <textarea class="form-control" id="descricao" name="descricao" placeholder="Descrição do item" style="min-height: 100px" required></textarea>
+      <small class="form-text text-muted">Insira uma breve descrição do item.</small>
     </div>
+
 
     <div class="mb-3">
       <label for="valor" class="form-label">Valor*</label>

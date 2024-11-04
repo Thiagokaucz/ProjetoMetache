@@ -39,8 +39,8 @@
                 <tr><th>Vendedor</th><td><?php echo $detalhes['vendedor']['nome'] . ' ' . $detalhes['vendedor']['sobrenome']; ?></td></tr>
                 <tr><th>Email do Vendedor</th><td><?php echo $detalhes['vendedor']['email']; ?></td></tr>
             </table>
-            <form action="/pagar?id=<?php echo $detalhes['pagamento']['id']; ?>" method="post" onsubmit="return confirmarPagamento();">
-                <button type="submit" class="btn btn-custom">Marcar como Pago</button>
+            <form action="/pagamentoVendedor?id=<?php echo $detalhes['pagamento']['id']; ?>" method="post" onsubmit="return confirmarPagamento();">
+                <button type="submit" class="btn btn-custom">Realizar pagamento</button>
             </form>
         <?php else: ?>
             <p>Nenhum pagamento encontrado.</p>

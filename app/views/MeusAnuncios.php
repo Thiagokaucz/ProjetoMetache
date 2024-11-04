@@ -35,7 +35,7 @@
     // Verifique se existem duplicatas
     $anunciosUnicos = array_map("unserialize", array_unique(array_map("serialize", $anuncios))); ?>
 
-    <div class="container my-4">
+    <div class="container my-4 pb-3">
         <?php // Exibir os anúncios únicos
         foreach ($anunciosUnicos as $anuncio): ?>
             <div class="card mb-4 shadow-sm">

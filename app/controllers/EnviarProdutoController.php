@@ -47,7 +47,7 @@ class EnviarProdutoController {
         // Atualiza o status na tabela aquisicoes
         $this->enviarProdutoModel->atualizarStatusAquisicao($aquisicaoID);
 
-        $this->enviarProdutoModel->atualizarStatusAdmMetache($aquisicaoID);
+        //$this->enviarProdutoModel->atualizarStatusAdmMetache($aquisicaoID);
     
         // Redireciona para uma página de sucesso ou para onde desejar
         header('Location: /meusAnuncios');

@@ -40,9 +40,9 @@
                             </div>
                             <div class="mb-3">
                                 <label class="mb-2 text-muted" for="email">E-Mail</label>
-                                <input id="email" type="email" class="form-control" name="email" required>
+                                <input id="email" type="email" class="form-control" name="email" required >
                                 <div class="invalid-feedback">
-                                    Endereço de e-mail inválido ou obrigatório.
+                                    Digite um e-mail válido, como exemplo@dominio.com.
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -59,11 +59,23 @@
                             </div>
                             <div class="mb-3">
                                 <label class="mb-2 text-muted" for="cep">CEP</label>
-                                <input id="cep" type="text" class="form-control" name="cep" required pattern="\d{5}-?\d{3}" placeholder="12345-678">
+                                <input id="cep" type="text" class="form-control" name="cep" required pattern="\d{5}-?\d{3}" placeholder="12345-123">
                                 <div class="invalid-feedback">
-                                    O CEP deve conter apenas números (e pode incluir um hífen).
+                                    Digite um CEP válido, como 12345-678.
                                 </div>
                             </div>
+
+                            <!-- Checkbox para aceitar os termos de uso -->
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="aceitarTermos" required>
+                                <label class="form-check-label" for="aceitarTermos">
+                                    Aceito os <a href="/termosDeUso" target="_blank" class="text-decoration-none" style="color: #FF6B01;">termos de uso</a>.
+                                </label>
+                                <div class="invalid-feedback">
+                                    Você deve aceitar os termos de uso.
+                                </div>
+                            </div>
+                            
                             <div class="d-grid gap-2 mx-auto">
                                 <button class="btn btn-primary" type="submit" style="background-color: #FF6B01; border-color: #FF6B01;">Cadastrar</button>
                             </div>
@@ -92,28 +104,56 @@
         const senhaInput = document.getElementById('senha');
 
         togglePassword.addEventListener('click', function () {
-            // Alternar o tipo de entrada
             const type = senhaInput.getAttribute('type') === 'password' ? 'text' : 'password';
             senhaInput.setAttribute('type', type);
-            // Alterar o ícone
             this.innerHTML = type === 'password' ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
         });
 
-        // Validação do formulário
-        (function () {
-            'use strict';
-            const forms = document.querySelectorAll('.needs-validation');
+        // Validação em tempo real
+        document.getElementById('cep').addEventListener('input', function () {
+            this.value = this.value.replace(/[^0-9-]/g, '');
+            validarCampo(this, /^\d{5}-?\d{3}$/);
+        });
 
-            Array.from(forms).forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
+        document.getElementById('email').addEventListener('input', function () {
+            validarCampo(this, /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
+        });
+
+        document.getElementById('nome').addEventListener('input', function () {
+            validarCampo(this, /^[a-zA-ZÀ-ÖØ-öø-ÿ]+$/);
+        });
+
+        document.getElementById('sobrenome').addEventListener('input', function () {
+            validarCampo(this, /^[a-zA-ZÀ-ÖØ-öø-ÿ]+$/);
+        });
+
+        document.getElementById('senha').addEventListener('input', function () {
+            validarCampo(this, /.+/);
+        });
+
+        function validarCampo(campo, regex) {
+            if (regex.test(campo.value)) {
+                campo.classList.add('is-valid');
+                campo.classList.remove('is-invalid');
+            } else {
+                campo.classList.add('is-invalid');
+                campo.classList.remove('is-valid');
+            }
+        }
+
+        
+        // Adicionando validação para o checkbox de termos
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function (event) {
+                const aceitarTermos = document.getElementById('aceitarTermos');
+                if (!aceitarTermos.checked) {
+                    event.preventDefault(); // Impede o envio do formulário
+                    alert('Você deve aceitar os termos de uso.'); // Alerta ao usuário
+                }
             });
-        })();
+        });
+
     </script>
 
     <!-- Adicionando Bootstrap Icons -->

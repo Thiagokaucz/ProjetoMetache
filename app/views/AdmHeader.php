@@ -12,7 +12,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="/homeadm">
                 <img src="public/img/Metache.png" alt="Logo" height="25" width="auto">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,11 +21,22 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/chatLista">Relatorio</a>
+                        <a class="nav-link" href="/ListPagamentosAdm">Pagamentos vendas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/notificacao">Lucro</a>
+                        <a class="nav-link" href="/admcadastrarusuario">Cadastrar funcionarios</a>
                     </li>
+                </ul>
+
+                <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link"><span class="bi bi-person"></span> <?php echo htmlspecialchars($_SESSION['admin_name']); ?></a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admlogout" style="color: red;"><span class="bi bi-box-arrow-right"></span> Sair</a>
+                        </li>
+
                 </ul>
 
             </div>

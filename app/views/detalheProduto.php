@@ -62,7 +62,7 @@
           <div class="border p-3">
             <h5>Histórico do anunciante</h5>
             <div class="d-flex align-items-center">
-              <p class="mb-0">Total de <?php echo number_format($totalVendas)?> na plataforma</p>
+              <p class="mb-0">Vendas na plataforma: <?php echo number_format($totalVendas)?></p>
             </div>
           </div>
         </div>

@@ -1,4 +1,7 @@
 <?php
+
+session_start();
+
 require_once 'app/models/AdmPagamentoModel.php';
 
 class AdmPagamentoController {

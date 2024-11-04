@@ -1,5 +1,5 @@
 <?php if (!empty($aquisicoes)): ?>
-    <div class="container my-4">
+    <div class="container my-4 pb-3">
         <?php foreach ($aquisicoes as $aquisicao): ?>
             <div class="card mb-4 shadow-sm">
                 <div class="card-body row align-items-center">
@@ -82,6 +82,6 @@
     </div>
 <?php else: ?>
     <div class="container">
-        <p class="text-center mt-5 text-muted">Nenhuma aquisição encontrada.</p>
+        <p class="text-center mt-5 text-muted ">Nenhuma aquisição encontrada.</p>
     </div>
 <?php endif; ?>

@@ -54,7 +54,7 @@
                             <td><?php echo number_format($compra['valor_frete'], 2, ',', '.'); ?></td>
                             <td><?php echo date('d/m/Y H:i', strtotime($compra['created_at'])); ?></td>
                             <td>
-                                <a href="PagamentoAdm?id=<?php echo $compra['id']; ?>" class="btn btn-custom">Pagar</a>
+                                <a href="PagamentoAdm?id=<?php echo $compra['id']; ?>" class="btn btn-custom">Finalizar venda</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

@@ -10,23 +10,29 @@ class AnunciarProdutoController {
         $produtoModel = new AnunciarProdutoModel();
     }
 
-    // Exibe o formulário de anúncio
-    public function index() {
-        if (isset($_SESSION['user_id'])) { // Verifica se o usuário está logado
-
-        require_once 'app/views/header.php';
-        
-        // Criação da instância do modelo de produtos
+// Exibe o formulário de anúncio
+public function index() {
+    if (isset($_SESSION['user_id'])) { // Verifica se o usuário está logado
+        $userID = $_SESSION['user_id'];
         $produtoModel = new AnunciarProdutoModel();
+
+        // Verifica se o usuário está cadastrado como vendedor
+        if (!$produtoModel->verificarVendedor($userID)) {
+            echo "Você precisa estar cadastrado como vendedor para anunciar produtos.";
+            return; // Para evitar que o formulário seja carregado
+        }
+
+        // Criação da instância do modelo de produtos
         $categorias = $produtoModel->getCategorias();  // Aqui você busca as categorias diretamente do modelo de produtos
 
         // Passando as categorias para a view
+        require_once 'app/views/header.php';
         require_once 'app/views/anunciarProduto.php';  
-
-        }else{
-            header("Location: /login");
-        }
+    } else {
+        header("Location: /login");
     }
+}
+
     
    // Cria o anúncio do produto
    public function criarProduto() {

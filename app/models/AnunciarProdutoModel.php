@@ -85,5 +85,16 @@ class AnunciarProdutoModel {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);  // Retorna um array de categorias
     }
+
+    public function verificarVendedor($userID) {
+        $query = "SELECT is_vendedor FROM usuario WHERE userID = :userID";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':userID', $userID);
+        $stmt->execute();
+        
+        // Verifica se o usuário é vendedor
+        return $stmt->fetchColumn() === 'sim'; // Retorna true se for vendedor, false caso contrário
+    }
+    
 }
 ?>

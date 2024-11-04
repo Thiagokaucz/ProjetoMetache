@@ -42,6 +42,8 @@ public function mostrarAquisicoes() {
 
     require_once 'app/views/header.php';
     require 'app/views/Aquisicoes.php';
+    require_once 'app/views/footerConfig.php';
+
     
 }
 
@@ -61,6 +63,7 @@ public function receberProduto() {
         // Atualiza o status da aquisição para 'produto entregue'
         if ($this->aquisicoesModel->atualizarStatusAquisicao($aquisicaoID, 'produto entregue')) {
             // Redireciona de volta à lista de aquisições com uma mensagem de sucesso
+            $this->aquisicoesModel->atualizarStatusAdmMetache($aquisicaoID);
             header('Location: /minhasCompras');
         } else {
             // Redireciona com uma mensagem de erro

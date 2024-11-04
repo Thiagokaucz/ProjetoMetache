@@ -61,5 +61,35 @@ class AquisicoesModel {
         $stmt->execute();
         return $stmt->fetchColumn(); // Retorna apenas a coluna locImagem
     }
+
+
+    public function atualizarStatusAdmMetache($aquisicaoID) {
+        // Primeiro, busca o produtoID usando o aquisicaoID
+        $sql = "SELECT produtoID FROM aquisicoes WHERE aquisicaoID = :aquisicaoID";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':aquisicaoID', $aquisicaoID);
+        $stmt->execute();
+        
+        // Busca o resultado
+        $aquisicao = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        // Verifica se o produtoID foi encontrado
+        if ($aquisicao) {
+            $produtoID = $aquisicao['produtoID'];
+    
+            // Atualiza o statusAdmMetache para 'pendente_pagamento'
+            $updateSql = "UPDATE compraspagamento SET statusAdmMetache = 'pendente_pagamento' WHERE produto_id = :produtoID";
+    
+            // Prepara a declaração para a atualização
+            $updateStmt = $this->conn->prepare($updateSql);
+            $updateStmt->bindParam(':produtoID', $produtoID);
+    
+            // Executa a atualização
+            return $updateStmt->execute();
+        }
+        
+        // Retorna false se não encontrou o produtoID
+        return false;
+    }
     
 }
