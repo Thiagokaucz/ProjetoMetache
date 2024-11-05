@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once 'app/models/AquisicoesModel.php';
 
 class AquisicoesController {
@@ -10,69 +11,57 @@ class AquisicoesController {
 
 // AquisicoesController.php
 
-public function mostrarAquisicoes() {
-    session_start();
-    if (!isset($_SESSION['user_id'])) {
-        header('Location: /login');
-        exit;
-    }
+    public function mostrarAquisicoes() { 
 
-    $userID = $_SESSION['user_id'];
-
-    // Buscar as aquisições do usuário logado
-    $aquisicoes = $this->aquisicoesModel->buscarAquisicoesPorUsuario($userID);
-
-    // Usar array_map para transformar as aquisições
-    $aquisicoes = array_map(function($aquisicao) {
-        $produto = $this->aquisicoesModel->buscarProdutoPorID($aquisicao['produtoID']);
-        $aquisicao['produto'] = $produto; // Associar os dados do produto
-
-        // Adicionando a imagem do produto
-        $imagemProduto = $this->aquisicoesModel->buscarImagemProdutoPorAquisicao($aquisicao['aquisicaoID']);
-        $aquisicao['produto']['locImagem'] = $imagemProduto; // Adiciona a imagem do produto ao array
-
-        // Se o status da aquisição for 'enviado', buscar detalhes do envio
-        if ($aquisicao['statusAquisicao'] === 'enviado') {
-            $envio = $this->aquisicoesModel->buscarEnvioPorAquisicaoID($aquisicao['aquisicaoID']);
-            $aquisicao['envio'] = $envio; // Associar os dados de envio
+        // Redireciona para a página de login se o usuário não estiver logado
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit();
         }
 
-        return $aquisicao;
-    }, $aquisicoes);
+        $userID = $_SESSION['user_id'];
+        $aquisicoes = $this->aquisicoesModel->buscarAquisicoesPorUsuario($userID);
 
-    require_once 'app/views/header.php';
-    require 'app/views/Aquisicoes.php';
-    require_once 'app/views/footerConfig.php';
+        $aquisicoes = array_map(function($aquisicao) {
+            $produto = $this->aquisicoesModel->buscarProdutoPorID($aquisicao['produtoID']);
+            $aquisicao['produto'] = $produto;
 
-    
-}
+            $imagemProduto = $this->aquisicoesModel->buscarImagemProdutoPorAquisicao($aquisicao['aquisicaoID']);
+            $aquisicao['produto']['locImagem'] = $imagemProduto;
 
+            if ($aquisicao['statusAquisicao'] === 'enviado') {
+                $envio = $this->aquisicoesModel->buscarEnvioPorAquisicaoID($aquisicao['aquisicaoID']);
+                $aquisicao['envio'] = $envio;
+            }
 
+            return $aquisicao;
+        }, $aquisicoes);
 
-public function receberProduto() {
-    session_start();
-    if (!isset($_SESSION['user_id'])) {
-        header('Location: /login');
-        exit;
+        require_once 'app/views/header.php';
+        require 'app/views/Aquisicoes.php';
+        require_once 'app/views/footerConfig.php';
     }
 
-    // Obtendo o ID da aquisição
-    $aquisicaoID = $_GET['aquisicaoID'] ?? null;
 
-    if ($aquisicaoID) {
-        // Atualiza o status da aquisição para 'produto entregue'
-        if ($this->aquisicoesModel->atualizarStatusAquisicao($aquisicaoID, 'produto entregue')) {
-            // Redireciona de volta à lista de aquisições com uma mensagem de sucesso
-            $this->aquisicoesModel->atualizarStatusAdmMetache($aquisicaoID);
-            header('Location: /minhasCompras');
+    public function receberProduto() {
+        // Redireciona para a página de login se o usuário não estiver logado
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit();
+        }
+
+        $aquisicaoID = $_GET['aquisicaoID'] ?? null;
+
+        if ($aquisicaoID) {
+            if ($this->aquisicoesModel->atualizarStatusAquisicao($aquisicaoID, 'produto entregue')) {
+                $this->aquisicoesModel->atualizarStatusAdmMetache($aquisicaoID);
+                header('Location: /minhasCompras');
+            } else {
+                header('Location: /minhasCompras');
+            }
         } else {
-            // Redireciona com uma mensagem de erro
             header('Location: /minhasCompras');
         }
-    } else {
-        // Redireciona com mensagem de erro se o ID não foi fornecido
-        header('Location: /minhasCompras');
     }
-}
 
 }

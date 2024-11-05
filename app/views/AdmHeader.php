@@ -23,22 +23,29 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/ListPagamentosAdm">Pagamentos vendas</a>
                     </li>
+                    
+                    <!-- Apenas para o gerente -->
+                    <?php if ($_SESSION['cargo'] === 'gerente'): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admcadastrarusuario">Cadastrar funcionarios</a>
+                        <a class="nav-link" href="/admcadastrarusuario">Cadastrar funcionários</a>
                     </li>
+                    <?php endif; ?>
                 </ul>
 
                 <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link"><span class="bi bi-person"></span> <?php echo htmlspecialchars($_SESSION['admin_name']); ?></a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link"><span class="bi bi-person"></span> 
+                            <?php 
+                                echo htmlspecialchars($_SESSION['admin_name']); 
+                                echo " - Conta de " . ($_SESSION['cargo'] === 'gerente' ? 'Gerente' : 'Funcionário'); 
+                            ?>
+                        </a>
+                    </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="/admlogout" style="color: red;"><span class="bi bi-box-arrow-right"></span> Sair</a>
-                        </li>
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admlogout" style="color: red;"><span class="bi bi-box-arrow-right"></span> Sair</a>
+                    </li>
                 </ul>
-
             </div>
         </div>
     </nav>

@@ -17,7 +17,7 @@ class AdmLogin {
         $admin = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($admin && password_verify($senha, $admin['senha'])) {
-            return $admin; // Retorna o administrador logado
+            return $admin; // Retorna o administrador logado com todas as informações, incluindo o cargo
         }
 
         return false; // Retorna falso se as credenciais estiverem incorretas

@@ -14,10 +14,10 @@ class NotificacaoController {
     public function mostrarNotificacoes() {
         if (isset($_SESSION['user_id'])) {
             $userID = $_SESSION['user_id'];
-
-            // Obtém todas as notificações do usuário
+            
+            // Obtém todas as notificações do usuário com produtoID, locImagem, produtoTitulo e usuarioNome
             $notificacoes = $this->notificacaoModel->getNotificacoesByUserID($userID);
-
+    
             // Exibe a view de notificações
             require_once 'app/views/header.php';
             require_once 'app/views/notificacao.php';
@@ -27,6 +27,9 @@ class NotificacaoController {
             exit();
         }
     }
+    
+    
+    
 
     public function excluirNotificacao() {
         // Verifica se o ID da notificação foi passado na URL

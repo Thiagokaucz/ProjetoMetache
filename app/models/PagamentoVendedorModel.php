@@ -26,7 +26,7 @@ class PagamentoVendedorModel {
     }
 
     public function calcularValorPagamento($valorCompra) {
-        return $valorCompra * 0.05; // Calcula 5% do valor da compra
+        return $valorCompra * 0.95; // Calcula 95% do valor da compra
     }
 
     public function obterTokenVendedor($vendedor_id) {
@@ -37,5 +37,32 @@ class PagamentoVendedorModel {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result ? $result['token'] : null;  // Retorna o token ou null se não encontrado
     }
+
+    public function atualizarStatusAdmMetache($id, $status) {
+        // Atualiza o statusAdmMetache na tabela compraspagamento
+        $sql = "UPDATE compraspagamento SET statusAdmMetache = :status WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+    
+        // Busca o chat_id correspondente na tabela compraspagamento
+        $sqlChatId = "SELECT chat_id FROM compraspagamento WHERE id = :id";
+        $stmtChatId = $this->db->prepare($sqlChatId);
+        $stmtChatId->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmtChatId->execute();
+        $result = $stmtChatId->fetch(PDO::FETCH_ASSOC);
+    
+        if ($result && isset($result['chat_id'])) {
+            $chatId = $result['chat_id'];
+    
+            // Atualiza o statusPagamentoVendedor na tabela aquisicoes com o chat_id correspondente
+            $sqlUpdateAquisicoes = "UPDATE aquisicoes SET statusPagamentoVendedor = 'pagamento_realizado' WHERE chatID = :chat_id";
+            $stmtUpdateAquisicoes = $this->db->prepare($sqlUpdateAquisicoes);
+            $stmtUpdateAquisicoes->bindParam(':chat_id', $chatId, PDO::PARAM_STR);
+            $stmtUpdateAquisicoes->execute();
+        }
+    }
+    
 }
 ?>

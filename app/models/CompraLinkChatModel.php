@@ -12,7 +12,8 @@ class CompraLinkChatModel {
     public function getDadosCompra($linkCompraId, $produtoID) {
         $stmt = $this->conn->prepare("
             SELECT lc.linkCompraID, lc.valorBrutoCompra, lc.valorCompra, lc.statusLinkCompra, lc.valorFrete, 
-                   lc.chatID,  -- Inclui o chatID da tabela linkcompra
+                   lc.chatID,
+                   lc.visualizacao, -- Incluindo visualizacao na seleção
                    p.produtoID, p.titulo, p.descricao, p.valor 
             FROM linkcompra lc 
             JOIN produto p ON lc.produtoID = p.produtoID 
@@ -27,8 +28,13 @@ class CompraLinkChatModel {
         $stmt = $this->conn->prepare("SELECT vendedorID FROM chat WHERE chatID = :chatID");
         $stmt->bindParam(':chatID', $chatID, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchColumn(); // Retorna apenas o vendedorID
+        return $stmt->fetchColumn();
     }
-    
-    
+
+    public function marcarComoVisualizado($linkCompraId) {
+        $stmt = $this->conn->prepare("UPDATE linkcompra SET visualizacao = 'vizualizado' WHERE linkCompraID = :linkCompraId");
+        $stmt->bindParam(':linkCompraId', $linkCompraId, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
 }
+

@@ -78,6 +78,13 @@ $rotas = [
     '/link' => 'DadosController@linkPage',
     '/dados' => 'DadosController@showData',
 
-    '/pagamentoVendedor' => 'PagamentoVendedorController@realizarPagamento'
+    '/pagamentoVendedor' => 'PagamentoVendedorController@realizarPagamento',
+
+    '/PosPagamento' => 'PagamentoVendedorController@atualizarStatusAdmMetache',
+
+    '/contarNaoVisualizadas' => 'HeaderController@contarNaoVisualizadas',
+    '/marcarTodasComoVisualizadas' => 'HeaderController@marcarTodasComoVisualizadas',
+
+    '/TermosUso' => 'TermosController@mostrarTermos'
 
 ];

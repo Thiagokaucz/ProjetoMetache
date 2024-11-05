@@ -1,7 +1,14 @@
 <?php
-session_start(); 
+session_start();
+require_once 'app/models/TratarCompraModel.php';
 
 class TratarCompraController {
+    private $tratarCompraModel;
+
+    public function __construct() {
+        $this->tratarCompraModel = new TratarCompraModel();
+    }
+
     public function processarCompra() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Capturando dados do formulário
@@ -9,9 +16,9 @@ class TratarCompraController {
             $produtoID = isset($_POST['produtoID']) ? htmlspecialchars($_POST['produtoID']) : null;
             $chatID = isset($_POST['chatID']) ? htmlspecialchars($_POST['chatID']) : null;
             $vendedorID = isset($_POST['vendedorID']) ? htmlspecialchars($_POST['vendedorID']) : null;
-            $valorBrutoCompra = isset($_POST['valorBrutoCompra']) ? htmlspecialchars($_POST['valorBrutoCompra']) : null; 
-            $valorCompra = isset($_POST['valorCompra']) ? htmlspecialchars($_POST['valorCompra']) : null; 
-            $valorFrete = isset($_POST['valorFrete']) ? htmlspecialchars($_POST['valorFrete']) : null; 
+            $valorBrutoCompra = isset($_POST['valorBrutoCompra']) ? htmlspecialchars($_POST['valorBrutoCompra']) : null;
+            $valorCompra = isset($_POST['valorCompra']) ? htmlspecialchars($_POST['valorCompra']) : null;
+            $valorFrete = isset($_POST['valorFrete']) ? htmlspecialchars($_POST['valorFrete']) : null;
 
             // Verifica se o userID está definido na sessão
             $userID = isset($_SESSION['user_id']) ? htmlspecialchars($_SESSION['user_id']) : 'Usuário não logado';
@@ -19,6 +26,10 @@ class TratarCompraController {
 
             // Se a ação é de comprar, cria a preferência de pagamento
             if ($acao === 'comprar') {
+                // Enviando mensagem para o vendedor antes de criar a preferência de pagamento
+                $conteudo = "<b>Metache informa</b>: O link de pagamento foi utilizado. Obrigado por escolher nossa plataforma 😉";
+                $this->tratarCompraModel->enviarMensagemParaVendedor($conteudo, $vendedorID, $chatID);
+
                 // Criando a preferência de pagamento no Mercado Pago
                 $this->criarPreferenciaPagamento($linkCompraID, $produtoID, $chatID, $vendedorID, $valorBrutoCompra, $valorCompra, $valorFrete);
             }
@@ -28,7 +39,6 @@ class TratarCompraController {
     }
 
     private function criarPreferenciaPagamento($linkCompraID, $produtoID, $chatID, $vendedorID, $valorBrutoCompra, $valorCompra, $valorFrete) {
-
         $_SESSION['linkCompraID'] = $linkCompraID;
         $_SESSION['produtoID'] = $produtoID;
         $_SESSION['chatID'] = $chatID;
@@ -50,13 +60,13 @@ class TratarCompraController {
                 [
                     "title" => "Produto ID: " . htmlspecialchars($produtoID),
                     "quantity" => 1,
-                    "unit_price" => floatval($valorCompra),  // valor da compra
+                    "unit_price" => floatval($valorCompra),
                     "description" => "Descrição do produto",
                     "category_id" => "retail"
                 ]
             ],
             "payer" => [
-                "email" => "test_user_12398378192@testuser.com",  // Exemplo, mude para o e-mail do comprador
+                "email" => "test_user_12398378192@testuser.com",
                 "name" => "Juan",
                 "surname" => "Lopez",
                 "phone" => [
@@ -85,7 +95,6 @@ class TratarCompraController {
             "expiration_date_to" => "2024-12-31T12:00:00.000-04:00"
         ];
 
-        // Inicializando cURL
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://api.mercadopago.com/checkout/preferences',
@@ -98,23 +107,17 @@ class TratarCompraController {
             ),
         ));
 
-        // Executando a requisição
         $response = curl_exec($curl);
         curl_close($curl);
 
-        // Decodificando a resposta
         $data = json_decode($response, true);
 
-        // Verificando se a URL do checkout está presente
         if (isset($data['init_point'])) {
-            // Redireciona o usuário para a URL do checkout
             header("Location: " . $data['init_point']);
             exit();
         } else {
-            // Se houver erro, você pode exibir uma mensagem ou logar o erro
             echo "Erro ao criar a preferência de pagamento: " . $response;
         }
     }
 }
-
 ?>

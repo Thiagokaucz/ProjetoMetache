@@ -91,5 +91,17 @@ class AquisicoesModel {
         // Retorna false se não encontrou o produtoID
         return false;
     }
+
+        // Verificar se o produto está em aquisição
+        public function verificarProdutoEmAquisicao($produtoID) {
+            $sql = "SELECT statusAquisicao, statusPagamentoVendedor
+                    FROM aquisicoes 
+                    WHERE produtoID = :produtoID 
+                    LIMIT 1";  // Limite para garantir apenas um resultado
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':produtoID', $produtoID, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC); // Retorna o status da aquisição e pagamento
+        }
     
 }

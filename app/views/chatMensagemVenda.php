@@ -19,7 +19,7 @@
             align-self: flex-end;
         }
         .chat-container {
-            height: 500px; /* Aumentando a altura do chat para mostrar mais mensagens */
+            height: 500px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -39,49 +39,58 @@
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        // Função para buscar as mensagens via AJAX
-        function fetchMessages() {
-            $.ajax({
-                url: "/getMessagesAjax?id=<?= $chatId ?>", // Verifique se o caminho está correto
-                type: "GET",
-                dataType: "json",
-                success: function(data) {
-                    var messagesHtml = '';
-                    if (data.length > 0) {
-                        data.forEach(function(message) {
-                            messagesHtml += `
-                                <div class="chat-bubble${(message.userID === <?= json_encode($_SESSION['user_id']) ?>) ? ' sender' : ''}">
-                                    <p>${message.conteudo}</p>
-                                    <small class="text-muted">${message.dataHora}</small>
-                                </div>`;
-                        });
-                    } else {
-                        messagesHtml = '<p>Nenhuma mensagem encontrada para este chat.</p>';
-                    }
-                    $('#chat-box').html(messagesHtml); // Atualiza o HTML com as mensagens
-                    
-                    // Rolar para o fundo do chat
-                    scrollToBottom();
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.log("Erro na requisição AJAX: " + textStatus + ", " + errorThrown);
+    let initialLoad = true; // Controle para carregar o scroll no início
+
+    // Função para buscar as mensagens via AJAX
+    function fetchMessages() {
+        // Salva a posição do scroll antes da atualização
+        const chatBox = document.getElementById('chat-box');
+        const isScrolledToBottom = chatBox.scrollTop + chatBox.clientHeight >= chatBox.scrollHeight - 10;
+
+        $.ajax({
+            url: "/getMessagesAjax?id=<?= $chatId ?>", 
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+                var messagesHtml = '';
+                if (data.length > 0) {
+                    data.forEach(function(message) {
+                        messagesHtml += `
+                            <div class="chat-bubble${(message.userID === <?= json_encode($_SESSION['user_id']) ?>) ? ' sender' : ''}">
+                                <p>${message.conteudo}</p>
+                                <small class="text-muted">${message.dataHora}</small>
+                            </div>`;
+                    });
+                } else {
+                    messagesHtml = '<p>Nenhuma mensagem encontrada para este chat.</p>';
                 }
-            });
-        }
+                $('#chat-box').html(messagesHtml);
 
-        // Função para rolar até o final do chat
-        function scrollToBottom() {
-            const chatBox = document.getElementById('chat-box');
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
-
-        // Chama a função de busca a cada 5 segundos
-        setInterval(fetchMessages, 1000);
-
-        // Carrega as mensagens assim que a página é carregada
-        $(document).ready(function() {
-            fetchMessages();
+                // Rola para o fundo apenas na carga inicial
+                if (initialLoad || isScrolledToBottom) {
+                    scrollToBottom();
+                    initialLoad = false; // Desativa a rolagem automática após o primeiro carregamento
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log("Erro na requisição AJAX: " + textStatus + ", " + errorThrown);
+            }
         });
+    }
+
+    // Função para rolar até o final do chat
+    function scrollToBottom() {
+        const chatBox = document.getElementById('chat-box');
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Chama a função de busca a cada 5 segundos
+    setInterval(fetchMessages, 1000);
+
+    // Carrega as mensagens assim que a página é carregada
+    $(document).ready(function() {
+        fetchMessages();
+    });
     </script>
 </head>
 <body class="bg-light">
@@ -104,7 +113,8 @@
                                 <small class="text-muted"><?= htmlspecialchars($message['dataHora']) ?></small>
                             </div>
                         <?php endforeach; ?>
-                    <?php else: ?>                                                                           <p>Nenhuma mensagem encontrada para este chat.</p>
+                    <?php else: ?>
+                        <p>Nenhuma mensagem encontrada para este chat.</p>
                     <?php endif; ?>
                 </div>
                 <div class="card-footer input-section">
@@ -175,7 +185,7 @@
     </div>
 </div>
 
-<!-- Bootstrap JS (necessário para componentes interativos) -->
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

@@ -93,7 +93,7 @@
                                 $aquisicao = $this->meusAnunciosModel->obterAquisicaoPorProduto($anuncio['produtoID']);
                                 $valorProduto = number_format($aquisicao['valorProduto'], 2, ',', '.');
                                 $valorFrete = number_format($aquisicao['valorFrete'], 2, ',', '.');
-                                $total = $aquisicao['valorProduto'] + $aquisicao['valorFrete'];
+                                $total = $aquisicao['valorProduto'];
                             ?>
                             <p><strong>Valor de venda:</strong> R$ <?= number_format($total, 2, ',', '.') ?></p>
                         <?php endif; ?>

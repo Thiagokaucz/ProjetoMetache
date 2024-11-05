@@ -14,25 +14,50 @@
 
                     <!-- Imagem do Produto -->
                     <div class="col-md-3 text-center">
-                        <img src="<?= htmlspecialchars($aquisicao['produto']['locImagem']) ?>" 
-                             alt="Imagem do produto" 
-                             class="img-fluid rounded shadow-sm" 
-                             style="max-width: 150px; height: auto; object-fit: cover;">
+                        <?php if (!empty($aquisicao['produto']['locImagem'])): ?>
+                            <img src="<?= htmlspecialchars($aquisicao['produto']['locImagem']) ?>" 
+                                 alt="Imagem do produto" 
+                                 class="img-fluid rounded shadow-sm" 
+                                 style="max-width: 150px; height: auto; object-fit: cover;">
+                        <?php else: ?>
+                            <p>Imagem não disponível</p>
+                        <?php endif; ?>
                     </div>
+
+                    <!-- Mensagem de Pagamento -->
 
                     <!-- Informações do Produto -->
                     <div class="col-md-6">
                         <h5 class="<?= 
-                            $aquisicao['statusAquisicao'] === 'pendente' ? 'text-warning' : 
-                            ($aquisicao['statusAquisicao'] === 'em transporte' ? 'text-danger' : 
-                            ($aquisicao['statusAquisicao'] === 'entregue' ? 'text-success' : 'text-muted')); ?>">
-                            <?= htmlspecialchars($aquisicao['statusAquisicao']) ?>
+                            !empty($aquisicao['statusAquisicao']) && $aquisicao['statusAquisicao'] === 'pendente' ? 'text-warning' : 
+                            (!empty($aquisicao['statusAquisicao']) && $aquisicao['statusAquisicao'] === 'em transporte' ? 'text-danger' : 
+                            (!empty($aquisicao['statusAquisicao']) && $aquisicao['statusAquisicao'] === 'entregue' ? 'text-success' : 'text-muted')); ?>">
+                            <?= htmlspecialchars($aquisicao['statusAquisicao'] ?? 'Status não disponível') ?>
                         </h5>
-                        <p class="mb-1"><strong>Título:</strong> <?= htmlspecialchars($aquisicao['produto']['titulo']) ?></p>
+                        <p class="mb-1"><strong>Título:</strong> <?= htmlspecialchars($aquisicao['produto']['titulo'] ?? 'Título não disponível') ?></p>
                         <?php 
-                            $valorTotalPago = htmlspecialchars($aquisicao['valorProduto']) + htmlspecialchars($aquisicao['valorFrete']);
+                            $valorTotalPago = !empty($aquisicao['valorProduto']) ? (float)$aquisicao['valorProduto'] : 0.00;
                         ?>
                         <p class="mb-0"><strong>Valor total pago:</strong> R$ <?= number_format($valorTotalPago, 2, ',', '.') ?></p>
+                        <?php
+                        // Verifica se o produto existe na aquisição
+                        $produtoAquisicao = $this->aquisicoesModel->verificarProdutoEmAquisicao($aquisicao['produtoID']);
+                        if ($produtoAquisicao) {
+                            $statusPagamento = $produtoAquisicao['statusPagamentoVendedor'];
+                            switch ($statusPagamento) {
+                                case 'pagamento_pendente':
+                                    echo "<p><strong>A plataforma ainda não fez o pagamento.</strong></p>";
+                                    break;
+                                case 'pagamento_realizado':
+                                    echo "<p><strong>A plataforma já fez o pagamento, aperte no link para ver o comprovante.</strong></p>";
+                                    echo "<p><a href='http://localhost/comprovante?id=" . htmlspecialchars($aquisicao['produtoID']) . "'>Ver Comprovante</a></p>";
+                                    break;
+                                case 'erro':
+                                    echo "<p><strong>A plataforma entrará em contato, ocorreu algum problema.</strong></p>";
+                                    break;
+                            }
+                        }
+                    ?>
                     </div>
 
                     <!-- Ações -->
@@ -41,20 +66,19 @@
                            class="btn btn-primary mb-2 w-100">Enviar mensagem</a>
                         <a href="detalheProduto?id=<?= htmlspecialchars($aquisicao['produto']['produtoID']) ?>" 
                            class="btn btn-warning mb-2 w-100">Ver detalhes</a>
-                        <?php if ($aquisicao['statusAquisicao'] === 'enviado'): ?>
+                        <?php if (!empty($aquisicao['statusAquisicao']) && $aquisicao['statusAquisicao'] === 'enviado'): ?>
                             <a href="receberProduto?aquisicaoID=<?= htmlspecialchars($aquisicao['aquisicaoID']) ?>" 
                                class="btn btn-success mb-2 w-100">Recebi o produto</a>
                         <?php endif; ?>
-                        <?php if ($aquisicao['statusAquisicao'] === 'produto entregue'): ?>
+                        <?php if (!empty($aquisicao['statusAquisicao']) && $aquisicao['statusAquisicao'] === 'produto entregue'): ?>
                             <a href="/denunciarProduto?aquisicaoID=<?= htmlspecialchars($aquisicao['aquisicaoID']) ?>"
-
                                class="btn btn-danger w-100">Denunciar</a>
                         <?php endif; ?>
                     </div>
                 </div>
 
                 <!-- Detalhes do Envio -->
-                <?php if (isset($aquisicao['envio'])): ?>
+                <?php if (!empty($aquisicao['envio'])): ?>
                     <div class="card-footer">
                         <h6><strong>Detalhes do Envio</strong></h6>
                         <div class="row">

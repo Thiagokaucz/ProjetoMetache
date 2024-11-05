@@ -32,7 +32,7 @@ class PagamentoVendedorController {
                 $preferenceData = [
                     "auto_return" => "approved",
                     "back_urls" => [
-                        "success" => "http://localhost/VerificarPagamentoController",
+                        "success" => "http://localhost/PosPagamento?id=" . $id,
                         "failure" => "http://httpbin.org/get?back_url=failure",
                         "pending" => "http://httpbin.org/get?back_url=pending"
                     ],
@@ -95,6 +95,17 @@ class PagamentoVendedorController {
             } else {
                 echo "Compra não encontrada.";
             }
+        } else {
+            echo "ID da compra não especificado.";
+        }
+    }
+
+    public function atualizarStatusAdmMetache() {
+        $id = isset($_GET['id']) ? intval($_GET['id']) : null;
+
+        if ($id) {
+            $this->model->atualizarStatusAdmMetache($id, 'finalizado');
+            echo "Status atualizado para finalizado.";
         } else {
             echo "ID da compra não especificado.";
         }

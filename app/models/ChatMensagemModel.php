@@ -11,9 +11,9 @@ class ChatMensagemModel {
 
     public function getMessagesByChatId($chatId) {
         $stmt = $this->conn->prepare("
-            SELECT m.*, lc.valorCompra, u.nome AS nomeUsuario
+            SELECT m.*, lc.valorCompra, lc.visualizacao, u.nome AS nomeUsuario
             FROM mensagem m
-            LEFT JOIN linkCompra lc ON m.chatID = lc.chatID
+            LEFT JOIN linkcompra lc ON m.linkcompra = lc.linkCompraID
             LEFT JOIN usuario u ON m.userID = u.userID
             WHERE m.chatID = :chatId
             ORDER BY m.dataHora ASC

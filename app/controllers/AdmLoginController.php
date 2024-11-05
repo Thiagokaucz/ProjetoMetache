@@ -15,8 +15,10 @@ class AdmLoginController {
             $admin = $admModel->login($usuario, $senha);
 
             if ($admin) {
+                // Armazenar informações do administrador na sessão
                 $_SESSION['admin_id'] = $admin['adminID'];
                 $_SESSION['admin_name'] = $admin['nome'];
+                $_SESSION['cargo'] = $admin['cargo'];  // Salva o cargo na sessão
                 header('Location: /homeadm'); // Redireciona para a dashboard do administrador
                 exit();
             } else {

@@ -69,7 +69,7 @@
                             <div class="mb-3 form-check">
                                 <input type="checkbox" class="form-check-input" id="aceitarTermos" required>
                                 <label class="form-check-label" for="aceitarTermos">
-                                    Aceito os <a href="/termosDeUso" target="_blank" class="text-decoration-none" style="color: #FF6B01;">termos de uso</a>.
+                                    Aceito os <a href="/TermosUso" target="_blank" class="text-decoration-none" style="color: #FF6B01;">termos de uso</a>.
                                 </label>
                                 <div class="invalid-feedback">
                                     Você deve aceitar os termos de uso.
