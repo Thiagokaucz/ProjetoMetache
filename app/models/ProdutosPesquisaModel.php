@@ -9,30 +9,47 @@ class ProdutosPesquisaModel {
         $this->conn = $database->obterConexao();
     }
     
-    // Método para buscar o categoriaID a partir do nome da categoria
     public function obterCategoriaID($nomeCategoria) {
         $sql = "SELECT categoriaID FROM categoria WHERE categoria = :categoria";
-    
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue(':categoria', $nomeCategoria);
         $stmt->execute();
-    
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result ? $result['categoriaID'] : null; // Retorna o ID ou null se não encontrar
+        return $result ? $result['categoriaID'] : null;
     }
     
-    public function buscarProdutos($categoriaNome, $localizacao, $termo) {
-        // Primeiro, busque o categoriaID usando o nome da categoria
+    public function buscarProdutos($categoriaNome, $localizacao, $termo, $offset, $limite) {
         $categoriaID = $this->obterCategoriaID($categoriaNome);
-        
-        // Prepare a base da consulta SQL para buscar apenas produtos disponíveis
+
         $sql = "SELECT * FROM produto WHERE disponibilidade = 'disponível' AND localizacao = :localizacao AND (titulo LIKE :termo OR descricao LIKE :termo)";
-        
-        // Se a categoria não for "Todos", adicione o filtro
+
         if ($categoriaNome !== 'Todos' && $categoriaID !== null) {
             $sql .= " AND categoriaID = :categoriaID";
         }
-    
+
+        $sql .= " LIMIT :limite OFFSET :offset";
+
+        $stmt = $this->conn->prepare($sql);
+        if ($categoriaNome !== 'Todos' && $categoriaID !== null) {
+            $stmt->bindValue(':categoriaID', $categoriaID);
+        }
+        $stmt->bindValue(':localizacao', $localizacao);
+        $stmt->bindValue(':termo', '%' . $termo . '%');
+        $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function contarProdutos($categoriaNome, $localizacao, $termo) {
+        $categoriaID = $this->obterCategoriaID($categoriaNome);
+        $sql = "SELECT COUNT(*) FROM produto WHERE disponibilidade = 'disponível' AND localizacao = :localizacao AND (titulo LIKE :termo OR descricao LIKE :termo)";
+        
+        if ($categoriaNome !== 'Todos' && $categoriaID !== null) {
+            $sql .= " AND categoriaID = :categoriaID";
+        }
+
         $stmt = $this->conn->prepare($sql);
         if ($categoriaNome !== 'Todos' && $categoriaID !== null) {
             $stmt->bindValue(':categoriaID', $categoriaID);
@@ -40,10 +57,10 @@ class ProdutosPesquisaModel {
         $stmt->bindValue(':localizacao', $localizacao);
         $stmt->bindValue(':termo', '%' . $termo . '%');
         $stmt->execute();
-    
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $stmt->fetchColumn();
     }
-    
+
     public function obterCategorias() {
         $sql = "SELECT categoria FROM categoria";
         $stmt = $this->conn->prepare($sql);
@@ -58,4 +75,3 @@ class ProdutosPesquisaModel {
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
 }
-?>

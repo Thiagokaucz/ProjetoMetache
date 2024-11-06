@@ -31,7 +31,7 @@
                             <div class="mb-3">
                                 <div class="mb-2 w-100">
                                     <label class="text-muted" for="senha">Senha</label>
-                                    <a href="/recuperarSenha" class="float-end text-decoration-none" style="color: #FF6B01;">
+                                    <a href="/recuperarSenha/email" class="float-end text-decoration-none" style="color: #FF6B01;">
                                         Esqueceu a senha?
                                     </a>
                                 </div>

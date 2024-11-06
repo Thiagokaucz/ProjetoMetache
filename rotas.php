@@ -61,6 +61,7 @@ $rotas = [
     '/ListPagamentosAdm' => 'AdmListaComprasController@exibirComprasPendentes',
 
     '/PagamentoAdm' => 'AdmPagamentoController@mostrarPagamento',
+    '/atualizarStatusDenuncia' => 'AdmPagamentoController@atualizarStatusDenuncia',
 
     '/pagar' => 'AdmPagamentoController@pagar',
 
@@ -80,11 +81,21 @@ $rotas = [
 
     '/pagamentoVendedor' => 'PagamentoVendedorController@realizarPagamento',
 
+    '/cancelarCompra' => 'AdmCancelarCompraController@cancelarCompra',
+
     '/PosPagamento' => 'PagamentoVendedorController@atualizarStatusAdmMetache',
 
     '/contarNaoVisualizadas' => 'HeaderController@contarNaoVisualizadas',
     '/marcarTodasComoVisualizadas' => 'HeaderController@marcarTodasComoVisualizadas',
 
-    '/TermosUso' => 'TermosController@mostrarTermos'
+    '/TermosUso' => 'TermosController@mostrarTermos',
+
+    '/sobre' => 'SobrePlataformaController@exibirInformacoes',
+
+'/recuperarSenha/email' => 'RecuperarSenhaController@solicitarEmail',       // Rota para inserir o e-mail
+'/recuperarSenha/perguntas' => 'RecuperarSenhaController@validarPerguntas', // Rota para verificar as perguntas de segurança
+'/recuperarSenha/novaSenha' => 'RecuperarSenhaController@redefinirSenha',   // Rota para redefinir a senha
+
+'/comprasFinalizadasCanceladas' => 'AdmListaComprasFinalizadasCanceladasController@exibirComprasFinalizadasCanceladas',
 
 ];

@@ -1,5 +1,5 @@
 <?php
-require_once 'config/Database.php'; // Inclua o caminho correto para o seu arquivo Database.php
+require_once 'config/Database.php';
 
 class CadastroModel {
     private $conn;
@@ -9,20 +9,18 @@ class CadastroModel {
         $this->conn = $database->obterConexao();
     }
 
-    // Função para verificar se o email já existe
     public function emailExists($email) {
-        $query = 'SELECT COUNT(*) FROM Usuario WHERE email = :email';
+        $query = 'SELECT COUNT(*) FROM usuario WHERE email = :email';
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':email', $email);
         $stmt->execute();
         
-        return $stmt->fetchColumn() > 0; // Retorna true se o e-mail já existir
+        return $stmt->fetchColumn() > 0;
     }
 
-    // Função para cadastrar usuário
-    public function cadastrar($nome, $sobrenome, $email, $senha, $cep) {
-        $query = 'INSERT INTO usuario (nome, sobrenome, email, senha, cep, dataHoraRegistro, statusConta) 
-                VALUES (:nome, :sobrenome, :email, :senha, :cep, NOW(), "ativa")';
+    public function cadastrar($nome, $sobrenome, $email, $senha, $cep, $pergunta1, $resposta1, $pergunta2, $resposta2) {
+        $query = 'INSERT INTO usuario (nome, sobrenome, email, senha, cep, dataHoraRegistro, statusConta, pergunta1, resposta1, pergunta2, resposta2) 
+                  VALUES (:nome, :sobrenome, :email, :senha, :cep, NOW(), "ativa", :pergunta1, :resposta1, :pergunta2, :resposta2)';
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':nome', $nome);
@@ -30,8 +28,12 @@ class CadastroModel {
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':senha', $senha);
         $stmt->bindParam(':cep', $cep);
+        $stmt->bindParam(':pergunta1', $pergunta1);
+        $stmt->bindParam(':resposta1', $resposta1);
+        $stmt->bindParam(':pergunta2', $pergunta2);
+        $stmt->bindParam(':resposta2', $resposta2);
 
-        return $stmt->execute(); // Retorna true se for bem-sucedido
+        return $stmt->execute();
     }
-
 }
+?>

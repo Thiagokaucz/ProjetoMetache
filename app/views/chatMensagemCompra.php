@@ -172,12 +172,18 @@
                         </div>
                         <div class="mb-3">
                             <div class="alert alert-warning mt-2 p-1">
+                                <small>⚠️ Aviso: Caso a compra nao seja realizada dentro de 2 meses nossa equipe entrara em contato para entender o motivo.</small>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="alert alert-warning mt-2 p-1">
                                 <small>⚠️ Após gerar o link de compra, ele será válido por 2 horas.</small>
                             </div>
                         </div>
                         <div class="alert alert-info p-2">
                             <small>💳 A plataforma utiliza integração com Mercado Pago.</small>
                         </div>
+                        Caso ouver duvida, acesse <a href="/sobre?section=compra">Como comprar com Metache</a>
                     </form>
                 </div>
             </div>

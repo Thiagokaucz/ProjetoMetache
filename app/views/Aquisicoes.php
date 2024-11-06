@@ -46,14 +46,14 @@
                             $statusPagamento = $produtoAquisicao['statusPagamentoVendedor'];
                             switch ($statusPagamento) {
                                 case 'pagamento_pendente':
-                                    echo "<p><strong>A plataforma ainda não fez o pagamento.</strong></p>";
+                                    //echo "<p><strong>A plataforma ainda não fez o pagamento.</strong></p>";
                                     break;
                                 case 'pagamento_realizado':
-                                    echo "<p><strong>A plataforma já fez o pagamento, aperte no link para ver o comprovante.</strong></p>";
-                                    echo "<p><a href='http://localhost/comprovante?id=" . htmlspecialchars($aquisicao['produtoID']) . "'>Ver Comprovante</a></p>";
+                                    echo "<p><strong>A plataforma já fez o pagamento para o vendedor.</strong></p>";
+                                    //echo "<p><a href='http://localhost/comprovante?id=" . htmlspecialchars($aquisicao['produtoID']) . "'>Ver Comprovante</a></p>";
                                     break;
                                 case 'erro':
-                                    echo "<p><strong>A plataforma entrará em contato, ocorreu algum problema.</strong></p>";
+                                    //echo "<p><strong>A plataforma entrará em contato, ocorreu algum problema.</strong></p>";
                                     break;
                             }
                         }

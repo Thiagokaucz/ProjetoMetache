@@ -103,7 +103,7 @@ class TratarCompraController {
             CURLOPT_POSTFIELDS => json_encode($preferenceData),
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json',
-                'Authorization: Bearer APP_USR-6871026775986460-102711-1b8ea71b2ccf41789390b2995d9bae18-1837410674' // Substitua pelo seu token
+                'Authorization: Bearer APP_USR-2443018850634328-110519-d3375444bdfd492d622f7b85def636b0-2080748602' // Token Metache
             ),
         ));
 

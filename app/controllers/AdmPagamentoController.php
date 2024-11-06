@@ -8,7 +8,7 @@ class AdmPagamentoController {
     private $model;
 
     public function __construct() {
-        $this->model = new PagamentoModel();
+        $this->model = new AdmPagamentoModel(); // Atualizando para usar o nome correto do model
     }
 
     public function mostrarPagamento() {
@@ -29,8 +29,7 @@ class AdmPagamentoController {
         if ($id) {
             $atualizado = $this->model->finalizarPagamento($id);
             if ($atualizado) {
-                // Redireciona ou mostra mensagem de sucesso
-                header('Location: /admPagamentos');
+                header('Location: /admPagamentos'); // Redireciona após finalizar o pagamento
             } else {
                 echo "Erro ao atualizar o pagamento.";
             }
@@ -38,4 +37,22 @@ class AdmPagamentoController {
             echo "ID do pagamento não fornecido.";
         }
     }
+    
+    public function atualizarStatusDenuncia() {
+        $aquisicaoID = $_POST['aquisicaoID'] ?? null;
+        $novoStatus = $_POST['novoStatus'] ?? null;
+        $pagamentoID = $_POST['pagamentoID'] ?? null;
+    
+        if ($aquisicaoID && $novoStatus && $pagamentoID) {
+            $this->model->atualizarStatusDenuncia($aquisicaoID, $novoStatus);
+            
+            // Redireciona de volta para a exibição do pagamento atualizado
+            header("Location: /PagamentoAdm?id=" . $pagamentoID);
+            exit;
+        } else {
+            echo "Dados insuficientes para atualizar o status da denúncia.";
+        }
+    }
+    
 }
+?>

@@ -21,7 +21,10 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/ListPagamentosAdm">Pagamentos vendas</a>
+                        <a class="nav-link" href="/ListPagamentosAdm">Pagamentos vendas pendntes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/comprasFinalizadasCanceladas">Vendas Finalizadas</a>
                     </li>
                     
                     <!-- Apenas para o gerente -->

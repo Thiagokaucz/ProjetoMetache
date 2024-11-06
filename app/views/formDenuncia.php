@@ -22,6 +22,8 @@
 <body>
     <div class="container">
         <h1 class="text-center mb-4">Denunciar Produto</h1>
+        Metache nao te deixa na mao, nossa equipe entrara em contato dentro de 24h para analisar sua denuncia, um atendedte humano!
+
 
         <form action="/enviarDenuncia" method="POST" class="border p-4 rounded shadow">
             <input type="hidden" name="aquisicaoID" value="<?= htmlspecialchars($_GET['aquisicaoID']) ?>">

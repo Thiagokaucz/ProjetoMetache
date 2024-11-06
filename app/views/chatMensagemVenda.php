@@ -146,14 +146,13 @@
 <div class="card mb-3">
     <div class="card-body">
         <h6 class="card-title">Enviar link de compra:</h6>
-        <form action="/enviarLinkCompra" method="POST">
+        <form id="linkCompraForm" action="/enviarLinkCompra" method="POST">
             <input type="hidden" name="chatId" value="<?= htmlspecialchars($chatId) ?>">
             <div class="mb-3">
-                <label for="valorProduto" class="form-label">Coloque o valor do produto:</label>
+                <label for="valorBrutoCompra" class="form-label">Coloque o valor do produto:</label>
                 <div class="input-group">
                     <span class="input-group-text">R$</span>
-                    <input type="text" class="form-control" id="valorBrutoCompra" name="valorBrutoCompra" 
-                           placeholder="0,00" required oninput="formatCurrency(this)">
+                    <input type="text" class="form-control" id="valorBrutoCompra" name="valorBrutoCompra" placeholder="0,00" required>
                 </div>
                 <div class="alert alert-warning mt-2 p-1">
                     <small>⚠️ Atenção: Lembre de combinar o frete com o comprador antes de continuar.</small>
@@ -163,8 +162,7 @@
                 <label for="valorFrete" class="form-label">Coloque o valor do frete:</label>
                 <div class="input-group">
                     <span class="input-group-text">R$</span>
-                    <input type="text" class="form-control" id="valorFrete" name="valorFrete" 
-                           placeholder="0,00" oninput="formatCurrency(this)">
+                    <input type="text" class="form-control" id="valorFrete" name="valorFrete" placeholder="0,00">
                 </div>
                 <div class="alert alert-warning mt-2 p-1">
                     <small>⚠️ Após gerar o link de compra, ele será válido por 2 horas.</small>
@@ -173,13 +171,70 @@
             <div class="alert alert-info p-2">
                 <small>💳 A plataforma utiliza integração com Mercado Pago.</small>
             </div>
-            <button type="submit" class="btn w-100" 
-                    style="background-color: #FF6B01; color: white; border: none;">
+            <button type="button" class="btn w-100" style="background-color: #FF6B01; color: white; border: none;"
+                    onclick="mostrarModalConfirmacao()">
                 Enviar link de venda
             </button>
         </form>
     </div>
 </div>
+
+<!-- Modal de Confirmação -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Confirmação de Taxa e Valor Recebido</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>A plataforma Metache cobrará 5% do valor total.</p>
+                <p><strong>Valor Total:</strong> R$ <span id="valorTotalModal">0,00</span></p>
+                <p><strong>Taxa da Plataforma (5%):</strong> R$ <span id="taxaPlataforma">0,00</span></p>
+                <p><strong>Valor que o Vendedor Receberá:</strong> R$ <span id="valorVendedorRecebera">0,00</span></p>
+                <hr>
+                <div class="alert alert-warning p-2">
+                    <small>⚠️ O pagamento ao vendedor só será realizado após a entrega do produto e a verificação do processo pela nossa equipe.</small><br>
+                    <small>⚠️ Caso não haja reclamações por parte do cliente em até 2 meses, o valor será liberado automaticamente ao vendedor.</small>
+                </div>
+                Caso ouver duvida, acesse <a href="/sobre?section=venda">Como vender com Metache</a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="confirmarEnvio()">Estou ciente, quero continuar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript para Cálculo e Exibição do Modal -->
+<script>
+function mostrarModalConfirmacao() {
+    // Obter valores de produto e frete
+    const valorProduto = parseFloat(document.getElementById('valorBrutoCompra').value.replace(',', '.')) || 0;
+    const valorFrete = parseFloat(document.getElementById('valorFrete').value.replace(',', '.')) || 0;
+    
+    // Calcular valor total e taxa de 5%
+    const valorTotal = valorProduto + valorFrete;
+    const taxa = valorTotal * 0.05;
+    const valorRecebidoVendedor = valorTotal - taxa;
+
+    // Exibir valores no modal
+    document.getElementById('valorTotalModal').textContent = valorTotal.toFixed(2).replace('.', ',');
+    document.getElementById('taxaPlataforma').textContent = taxa.toFixed(2).replace('.', ',');
+    document.getElementById('valorVendedorRecebera').textContent = valorRecebidoVendedor.toFixed(2).replace('.', ',');
+
+    // Mostrar modal
+    const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+    confirmModal.show();
+}
+
+function confirmarEnvio() {
+    // Submeter o formulário
+    document.getElementById('linkCompraForm').submit();
+}
+</script>
+
         </div>
 
     </div>

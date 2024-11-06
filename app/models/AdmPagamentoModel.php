@@ -1,7 +1,7 @@
 <?php
 require_once 'config/Database.php';
 
-class PagamentoModel {
+class AdmPagamentoModel {
     private $db;
 
     public function __construct() {
@@ -11,10 +11,11 @@ class PagamentoModel {
 
     public function getPagamentoDetails($id) {
         // Busca os dados na tabela compraspagamento pelo id
-        $sql = "SELECT cp.id, cp.payment_id, cp.status, cp.link_compra_id, cp.produto_id, 
-                       cp.chat_id, cp.vendedor_id, cp.valor_bruto_compra, cp.valor_compra, 
-                       cp.valor_frete, cp.created_at, cp.statusAdmMetache, cp.aquisicaoID
+        $sql = "SELECT cp.*, p.titulo AS titulo_produto, p.locImagem AS imagem_produto, 
+                       u.nome, u.sobrenome, u.email
                 FROM compraspagamento cp
+                LEFT JOIN produto p ON cp.produto_id = p.produtoID
+                LEFT JOIN usuario u ON cp.vendedor_id = u.userID
                 WHERE cp.id = :id";
         
         $stmt = $this->db->prepare($sql);
@@ -23,29 +24,39 @@ class PagamentoModel {
         $pagamento = $stmt->fetch(PDO::FETCH_ASSOC);
     
         if ($pagamento) {
-            // Busca o vendedor na tabela usuario
-            $sqlUsuario = "SELECT userID, nome, sobrenome, email, senha, cep, dataHoraRegistro, statusConta 
-                           FROM usuario 
-                           WHERE userID = :vendedorID";
+            // Buscar denúncia relacionada, se houver
+            $sqlDenuncia = "SELECT motivo, status, dataCriacao FROM denuncias WHERE aquisicaoID = :aquisicaoID";
+            $stmtDenuncia = $this->db->prepare($sqlDenuncia);
+            $stmtDenuncia->bindParam(':aquisicaoID', $pagamento['aquisicaoID']);
+            $stmtDenuncia->execute();
+            $denuncia = $stmtDenuncia->fetch(PDO::FETCH_ASSOC);
             
-            $stmtUsuario = $this->db->prepare($sqlUsuario);
-            $stmtUsuario->bindParam(':vendedorID', $pagamento['vendedor_id']);
-            $stmtUsuario->execute();
-            $vendedor = $stmtUsuario->fetch(PDO::FETCH_ASSOC);
-    
             return [
                 'pagamento' => $pagamento,
-                'vendedor' => $vendedor
+                'vendedor' => [
+                    'nome' => $pagamento['nome'] ?? 'N/A',
+                    'sobrenome' => $pagamento['sobrenome'] ?? 'N/A',
+                    'email' => $pagamento['email'] ?? 'N/A',
+                ],
+                'denuncia' => $denuncia
             ];
         }
         return null;
     }
 
     public function finalizarPagamento($id) {
-        // Atualiza o statusAdmMetache para 'finalizado'
         $sql = "UPDATE compraspagamento SET statusAdmMetache = 'finalizado' WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $id);
         return $stmt->execute();
     }
+
+    public function atualizarStatusDenuncia($aquisicaoID, $novoStatus) {
+        $sql = "UPDATE denuncias SET status = :status WHERE aquisicaoID = :aquisicaoID";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':status', $novoStatus);
+        $stmt->bindParam(':aquisicaoID', $aquisicaoID);
+        return $stmt->execute();
+    }
 }
+?>

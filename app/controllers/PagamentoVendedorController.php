@@ -102,13 +102,25 @@ class PagamentoVendedorController {
 
     public function atualizarStatusAdmMetache() {
         $id = isset($_GET['id']) ? intval($_GET['id']) : null;
-
+    
         if ($id) {
             $this->model->atualizarStatusAdmMetache($id, 'finalizado');
-            echo "Status atualizado para finalizado.";
+            
+            // Exibe mensagem e redireciona
+            echo "
+                <div style='text-align: center; font-family: Arial, sans-serif; margin-top: 20px;'>
+                    <p style='color: green;'>Status atualizado para finalizado. Redirecionando...</p>
+                </div>
+                <script>
+                    setTimeout(function() {
+                        window.location.href = '/homeadm';
+                    }, 3000);
+                </script>
+            ";
         } else {
             echo "ID da compra não especificado.";
         }
     }
+    
 }
 ?>

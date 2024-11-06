@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compras Pendentes</title>
+    <title>Compras Finalizadas e Canceladas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .table-container {
@@ -36,7 +36,7 @@
 </head>
 <body>
     <div class="container table-container">
-        <h2 class="mb-4">Compras Pendentes</h2>
+        <h2 class="mb-4">Compras Finalizadas e Canceladas</h2>
         <table class="table table-striped table-bordered">
             <thead>
                 <tr class="table-primary-custom">
@@ -45,7 +45,6 @@
                     <th>Data do pagamento</th>
                     <th>Status</th>
                     <th>Produto</th>
-                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,21 +54,22 @@
                             <td><?php echo $compra['payment_id']; ?></td>
                             <td><?php echo number_format($compra['valor_compra'], 2, ',', '.'); ?></td>
                             <td><?php echo date('d/m/Y H:i', strtotime($compra['created_at'])); ?></td>
-                            <td><?php echo htmlspecialchars($compra['statusAdmMetache']); ?></td>
+                            <td>
+                                <span class="<?= $compra['statusAdmMetache'] == 'finalizado' ? 'text-success' : 'text-danger' ?>">
+                                    <?php echo $compra['statusAdmMetache'] == 'finalizado' ? 'Finalizado' : 'Cancelado'; ?>
+                                </span>
+                            </td>
                             <td>
                                 <div class="d-flex align-items-center">
                                     <img src="<?php echo htmlspecialchars($compra['locImagem']); ?>" alt="Imagem do produto" class="product-image me-2">
                                     <span><?php echo htmlspecialchars($compra['titulo']); ?></span>
                                 </div>
                             </td>
-                            <td>
-                                <a href="PagamentoAdm?id=<?php echo $compra['id']; ?>" class="btn btn-custom">Finalizar venda</a>
-                            </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="6" class="text-center">Nenhuma compra pendente encontrada.</td>
+                        <td colspan="6" class="text-center">Nenhuma compra finalizada ou cancelada encontrada.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
