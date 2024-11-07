@@ -18,22 +18,17 @@ class CadastroModel {
         return $stmt->fetchColumn() > 0;
     }
 
-    public function cadastrar($nome, $sobrenome, $email, $senha, $cep, $pergunta1, $resposta1, $pergunta2, $resposta2) {
-        $query = 'INSERT INTO usuario (nome, sobrenome, email, senha, cep, dataHoraRegistro, statusConta, pergunta1, resposta1, pergunta2, resposta2) 
-                  VALUES (:nome, :sobrenome, :email, :senha, :cep, NOW(), "ativa", :pergunta1, :resposta1, :pergunta2, :resposta2)';
-
+    public function cadastrar($nome, $sobrenome, $email, $senha, $cep) {
+        $query = 'INSERT INTO usuario (nome, sobrenome, email, senha, cep, dataHoraRegistro, statusConta) 
+                  VALUES (:nome, :sobrenome, :email, :senha, :cep, NOW(), "ativa")';
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':nome', $nome);
         $stmt->bindParam(':sobrenome', $sobrenome);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':senha', $senha);
         $stmt->bindParam(':cep', $cep);
-        $stmt->bindParam(':pergunta1', $pergunta1);
-        $stmt->bindParam(':resposta1', $resposta1);
-        $stmt->bindParam(':pergunta2', $pergunta2);
-        $stmt->bindParam(':resposta2', $resposta2);
+        $stmt->execute();
 
-        return $stmt->execute();
+        return $this->conn->lastInsertId(); // Retorna o ID do usuário recém-cadastrado
     }
 }
-?>

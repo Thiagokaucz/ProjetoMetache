@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Tela de cadastro Metache">
     <title>Cadastro</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .eye-icon {
             cursor: pointer;
@@ -40,7 +40,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="mb-2 text-muted" for="email">E-Mail</label>
-                                <input id="email" type="email" class="form-control" name="email" required >
+                                <input id="email" type="email" class="form-control" name="email" required>
                                 <div class="invalid-feedback">
                                     Digite um e-mail válido, como exemplo@dominio.com.
                                 </div>
@@ -65,7 +65,6 @@
                                 </div>
                             </div>
 
-                            <!-- Checkbox para aceitar os termos de uso -->
                             <div class="mb-3 form-check">
                                 <input type="checkbox" class="form-check-input" id="aceitarTermos" required>
                                 <label class="form-check-label" for="aceitarTermos">
@@ -77,11 +76,10 @@
                             </div>
                             
                             <div class="d-grid gap-2 mx-auto">
-                                <button type="button" class="btn btn-primary" onclick="showSecurityQuestionsModal()" style="background-color: #FF6B01; border-color: #FF6B01;">Cadastrar</button>
+                                <button type="button" class="btn btn-primary" onclick="validarFormulario()" style="background-color: #FF6B01; border-color: #FF6B01;">Cadastrar</button>
                             </div>
                         </form>
 
-                        <!-- Mensagem de erro -->
                         <?php if (!empty($errorMessage)): ?>
                             <div class="alert alert-danger mt-3" role="alert">
                                 <?php echo $errorMessage; ?>
@@ -98,55 +96,18 @@
         </div>
     </section>
 
-    <!-- Modal para perguntas de segurança -->
-    <div class="modal fade" id="securityQuestionsModal" tabindex="-1" aria-labelledby="securityQuestionsModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="securityQuestionsModalLabel">Configurar Perguntas de Segurança</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>A plataforma Metache gostaria de configurar perguntas de segurança para ajudar na recuperação de senha, caso necessário. Deseja configurar agora?</p>
-                    <!-- Perguntas e respostas de recuperação de senha -->
-                    <div class="mb-3">
-                        <label class="mb-2 text-muted" for="pergunta1">Pergunta de Segurança 1</label>
-                        <select id="pergunta1" name="pergunta1" class="form-select" required>
-                            <option value="">Escolha uma pergunta...</option>
-                            <option value="Qual é o nome do seu primeiro animal de estimação?">Qual é o nome do seu primeiro animal de estimação?</option>
-                            <option value="Qual é o nome da sua escola primária?">Qual é o nome da sua escola primária?</option>
-                            <option value="Em que cidade você nasceu?">Em que cidade você nasceu?</option>
-                        </select>
-                        <input type="text" name="resposta1" class="form-control mt-2" placeholder="Resposta" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="mb-2 text-muted" for="pergunta2">Pergunta de Segurança 2</label>
-                        <select id="pergunta2" name="pergunta2" class="form-select" required>
-                            <option value="">Escolha uma pergunta...</option>
-                            <option value="Qual é o nome da sua mãe?">Qual é o nome da sua mãe?</option>
-                            <option value="Qual era o nome do seu melhor amigo de infância?">Qual era o nome do seu melhor amigo de infância?</option>
-                            <option value="Qual é o seu filme favorito?">Qual é o seu filme favorito?</option>
-                        </select>
-                        <input type="text" name="resposta2" class="form-control mt-2" placeholder="Resposta" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" form="cadastroForm" class="btn btn-primary" style="background-color: #FF6B01; border-color: #FF6B01;">Concluir Cadastro</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // Função para mostrar o modal
-        function showSecurityQuestionsModal() {
-            var myModal = new bootstrap.Modal(document.getElementById('securityQuestionsModal'), {});
-            myModal.show();
+        // Função para verificar se os termos foram aceitos antes de enviar o formulário
+        function validarFormulario() {
+            var aceitarTermos = document.getElementById('aceitarTermos');
+            if (!aceitarTermos.checked) {
+                alert('Você deve aceitar os termos de uso.');
+            } else {
+                document.getElementById('cadastroForm').submit();
+            }
         }
 
-        // Script para mostrar/ocultar senha
+        // Mostrar/ocultar senha
         const togglePassword = document.getElementById('togglePassword');
         const senhaInput = document.getElementById('senha');
 
@@ -156,7 +117,7 @@
             this.innerHTML = type === 'password' ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
         });
 
-        // Validação em tempo real
+        // Validações de formulário
         document.getElementById('cep').addEventListener('input', function () {
             this.value = this.value.replace(/[^0-9-]/g, '');
             validarCampo(this, /^\d{5}-?\d{3}$/);
@@ -187,22 +148,8 @@
                 campo.classList.remove('is-valid');
             }
         }
-
-        // Adicionando validação para o checkbox de termos
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.querySelector('form');
-            form.addEventListener('submit', function (event) {
-                const aceitarTermos = document.getElementById('aceitarTermos');
-                if (!aceitarTermos.checked) {
-                    event.preventDefault();
-                    alert('Você deve aceitar os termos de uso.');
-                }
-            });
-        });
-
     </script>
 
-    <!-- Adicionando Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -108,15 +108,15 @@ class PagamentoVendedorController {
             
             // Exibe mensagem e redireciona
             echo "
-                <div style='text-align: center; font-family: Arial, sans-serif; margin-top: 20px;'>
-                    <p style='color: green;'>Status atualizado para finalizado. Redirecionando...</p>
-                </div>
-                <script>
-                    setTimeout(function() {
-                        window.location.href = '/homeadm';
-                    }, 3000);
-                </script>
-            ";
+            <div style='text-align: center; font-family: Arial, sans-serif; margin-top: 20px;'>
+                <p style='color: green;'>Status atualizado para finalizado. Redirecionando...</p>
+            </div>
+            <script>
+                setTimeout(function() {
+                    window.location.href = '/uploadDocumentos?compraspagamento={$id}';
+                }, 3000);
+            </script>
+        ";
         } else {
             echo "ID da compra não especificado.";
         }

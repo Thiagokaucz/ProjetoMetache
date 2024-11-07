@@ -6,6 +6,7 @@ $rotas = [
     '/logout' => 'LoginController@logout',
 
     '/cadastroUsuario' => 'CadastroController@cadastrar',
+    '/cadastroPerguntas' => 'CadastroPerguntasController@configurarPerguntas',
 
     '/anunciar' => 'AnunciarProdutoController@index',
     '/criar-produto' => 'AnunciarProdutoController@criarProduto', 
@@ -98,4 +99,8 @@ $rotas = [
 
 '/comprasFinalizadasCanceladas' => 'AdmListaComprasFinalizadasCanceladasController@exibirComprasFinalizadasCanceladas',
 
+'/atualizarStatusAquisicoes' => 'AquisicoesController@atualizarStatusAquisicoes',
+
+'/uploadDocumentos' => 'DocumentoController@mostrarFormularioUpload',
+'/anexarDocumentos' => 'DocumentoController@anexarDocumentos',
 ];

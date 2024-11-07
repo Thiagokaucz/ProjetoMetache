@@ -63,5 +63,29 @@ class AquisicoesController {
             header('Location: /minhasCompras');
         }
     }
-
+    public function atualizarStatusAquisicoes() {
+        if (!isset($_SESSION['user_id'])) {
+            echo json_encode(['error' => 'Usuário não autenticado']);
+            exit();
+        }
+    
+        $userID = $_SESSION['user_id'];
+        $aquisicoes = $this->aquisicoesModel->buscarAquisicoesPorUsuario($userID);
+    
+        $aquisicoes = array_map(function($aquisicao) {
+            $produto = $this->aquisicoesModel->buscarProdutoPorID($aquisicao['produtoID']);
+            $aquisicao['produto'] = $produto;
+    
+            if ($aquisicao['statusAquisicao'] === 'enviado') {
+                $envio = $this->aquisicoesModel->buscarEnvioPorAquisicaoID($aquisicao['aquisicaoID']);
+                $aquisicao['envio'] = $envio;
+            }
+    
+            return $aquisicao;
+        }, $aquisicoes);
+    
+        echo json_encode($aquisicoes);
+        exit();
+    }
+    
 }

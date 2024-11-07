@@ -29,8 +29,13 @@
     <div id="venda" class="section <?= $section === 'venda' ? 'highlight' : '' ?>">
         <h2>Como Funciona a Venda na Metache</h2>
         <p>Para vender na Metache, os vendedores cadastrados podem anunciar seus produtos, definir preços, e aguardar que compradores interessados iniciem uma negociação. O processo de pagamento e entrega é monitorado pela plataforma, garantindo segurança para ambos os lados.</p>
-    </div>
+    </div>      
 
+    <!-- Seção sobre Venda -->
+    <div id="venda" class="section <?= $section === 'precificar' ? 'highlight' : '' ?>">
+        <h2>Como precificar a Venda na Metache</h2>
+        <p>Para vender na Metache, os vendedores cadastrados podem anunciar seus produtos, definir preços, e aguardar que compradores interessados iniciem uma negociação. O processo de pagamento e entrega é monitorado pela plataforma, garantindo segurança para ambos os lados.</p>
+    </div> 
     <!-- Seção sobre Compra -->
     <div id="compra" class="section <?= $section === 'compra' ? 'highlight' : '' ?>">
         <h2>Como Funciona a Compra na Metache</h2>

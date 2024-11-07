@@ -37,7 +37,7 @@ class MeusAnunciosController {
                 $anuncio['statusAquisicao'] = $aquisicao['statusAquisicao'];
                 $anuncio['chatID'] = $chatID; // Adiciona o chatID ao anúncio
             } else {
-                $anuncio['statusAquisicao'] = 'Não está na tabela aquisição';
+                $anuncio['statusAquisicao'] = 'Anunciado';
                 $anuncio['chatID'] = $chatID; // Pode ser null se não houver aquisição
             }
         }

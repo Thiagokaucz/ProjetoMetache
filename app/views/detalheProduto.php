@@ -43,14 +43,18 @@
         </div>
 
         <div class="col-md-4">
-          <div class="border p-3 mb-4">
-            <h4>Valor sugerido:</h4>
-            <h3 class="text-danger"><?php echo 'R$ ' . number_format($produto['valor'], 2, ',', '.'); ?></h3>
-            <button class="btn negociar-btn btn-block mt-2" 
-                onclick="window.location.href='/chat?Produto=<?php echo ($produto['produtoID']);?>&Origem=DetalhesAnuncio&Tipo=IniciarChat'">
-                💬 Negociar <?php echo ($produto['produtoID']);?>
-            </button>
-          </div>
+        <div class="border p-3 mb-4">
+          <h4>Valor sugerido:</h4>
+          <h3 class="text-danger"><?php echo 'R$ ' . number_format($produto['valor'], 2, ',', '.'); ?></h3>
+
+          <?php if (!$noChat): ?> <!-- Exibe o botão apenas se noChat NÃO estiver presente -->
+              <button class="btn negociar-btn btn-block mt-2" 
+                  onclick="window.location.href='/chat?Produto=<?php echo ($produto['produtoID']); ?>&Origem=DetalhesAnuncio&Tipo=IniciarChat'">
+                  💬 Negociar <?php echo ($produto['produtoID']); ?>
+              </button>
+          <?php endif; ?>
+      </div>
+
 
           <div class="border p-3 mb-4">
             <h5><?php echo htmlspecialchars($produto['nomeAnunciante']); ?></h5>

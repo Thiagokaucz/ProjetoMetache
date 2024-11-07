@@ -12,7 +12,8 @@ class DetalheProdutoController {
 
     public function mostrarDetalhes() {
         $id = isset($_GET['id']) ? $_GET['id'] : null;
-
+        $noChat = isset($_GET['noChat']); // Verifica se o parâmetro "noChat" está presente
+    
         if ($id) {
             $produto = $this->produtoModel->getProdutoById($id);
             if ($produto) {
@@ -20,7 +21,7 @@ class DetalheProdutoController {
                 $userAnuncio = $this->produtoModel->getUserIDByProductId($id);
                 $totalVendas = $this->produtoModel->contarVendasPorVendedor($userAnuncio);
                 $totalDenuncias = $this->produtoModel->contarDenunciasPorVendedor($userAnuncio);
-
+    
                 require_once 'app/views/header.php';
                 require_once 'app/views/detalheProduto.php';
                 require_once 'app/views/footer.php';
@@ -33,4 +34,5 @@ class DetalheProdutoController {
             echo "ID do produto não fornecido.";
         }
     }
+    
 }

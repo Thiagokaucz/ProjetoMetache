@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once 'app/models/CadastroModel.php';
 
 class CadastroController {
@@ -10,16 +9,9 @@ class CadastroController {
             // Obtém os dados do formulário
             $nome = ucwords(strtolower(trim($_POST['nome'])));
             $sobrenome = ucwords(strtolower(trim($_POST['sobrenome'])));
-            
             $email = trim($_POST['email']);
             $senha = $_POST['senha'];
             $cep = trim($_POST['cep']);
-
-            // Verifica se as perguntas e respostas foram fornecidas
-            $pergunta1 = isset($_POST['pergunta1']) ? $_POST['pergunta1'] : null;
-            $resposta1 = isset($_POST['resposta1']) ? strtolower(trim($_POST['resposta1'])) : null;
-            $pergunta2 = isset($_POST['pergunta2']) ? $_POST['pergunta2'] : null;
-            $resposta2 = isset($_POST['resposta2']) ? strtolower(trim($_POST['resposta2'])) : null;
 
             // Validação dos dados
             if (empty($nome) || empty($sobrenome) || empty($email) || empty($senha) || empty($cep)) {
@@ -31,9 +23,14 @@ class CadastroController {
                 if ($userModel->emailExists($email)) {
                     $errorMessage = 'Este e-mail já está registrado.';
                 } else {
+                    // Hash da senha
                     $senhaHash = password_hash($senha, PASSWORD_BCRYPT);
-                    $userModel->cadastrar($nome, $sobrenome, $email, $senhaHash, $cep, $pergunta1, $resposta1, $pergunta2, $resposta2);
-                    header('Location: /login');
+                    
+                    // Cadastro do usuário e obtenção do ID
+                    $userID = $userModel->cadastrar($nome, $sobrenome, $email, $senhaHash, $cep);
+                    
+                    // Redireciona para a tela de perguntas de segurança com o ID do usuário
+                    header("Location: /cadastroPerguntas?userID=$userID");
                     exit();
                 }
             }
@@ -42,4 +39,3 @@ class CadastroController {
         require 'app/views/cadastro.php';
     }
 }
-?>

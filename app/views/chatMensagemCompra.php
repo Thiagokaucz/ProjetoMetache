@@ -150,7 +150,7 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Negociando produto</h5>
-                    <a href="/detalheProduto?id=<?= htmlspecialchars($produtoDetalhes['produtoID']) ?>" class="d-flex align-items-center text-decoration-none text-dark">
+                    <a href="/detalheProduto?id=<?= htmlspecialchars($produtoDetalhes['produtoID']) ?>&noChat" class="d-flex align-items-center text-decoration-none text-dark">
                         <img src="<?= $produtoDetalhes['locImagem'] ?>" alt="Imagem do produto" class="produto-img" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
                         <div class="ms-3">
                             <h6 class="mb-0"><?= htmlspecialchars($produtoDetalhes['titulo']) ?></h6>

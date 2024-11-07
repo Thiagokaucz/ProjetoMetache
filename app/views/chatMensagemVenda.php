@@ -132,7 +132,7 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Negociando produto</h5>
-                    <a href="/detalheProduto?id=<?= htmlspecialchars($produtoDetalhes['produtoID']) ?>" class="d-flex align-items-center text-decoration-none text-dark">
+                    <a href="/detalheProduto?id=<?= htmlspecialchars($produtoDetalhes['produtoID']) ?>&noChat" class="d-flex align-items-center text-decoration-none text-dark">
                         <img src="<?= $produtoDetalhes['locImagem'] ?>" alt="Imagem do produto" class="produto-img" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
                         <div class="ms-3">
                             <h6 class="mb-0"><?= htmlspecialchars($produtoDetalhes['titulo']) ?></h6>
@@ -164,13 +164,17 @@
                     <span class="input-group-text">R$</span>
                     <input type="text" class="form-control" id="valorFrete" name="valorFrete" placeholder="0,00">
                 </div>
+                <a>Precisa de ajuda para precificar? <a href="/sobre?section=precificar">Precificar produto</a></small>
+
                 <div class="alert alert-warning mt-2 p-1">
                     <small>⚠️ Após gerar o link de compra, ele será válido por 2 horas.</small>
                 </div>
             </div>
             <div class="alert alert-info p-2">
                 <small>💳 A plataforma utiliza integração com Mercado Pago.</small>
-            </div>
+            </div>       
+                <a>Caso ouver duvida, acesse <a href="/sobre?section=venda">Como vender com Metache</a></small>
+
             <button type="button" class="btn w-100" style="background-color: #FF6B01; color: white; border: none;"
                     onclick="mostrarModalConfirmacao()">
                 Enviar link de venda
@@ -197,7 +201,6 @@
                     <small>⚠️ O pagamento ao vendedor só será realizado após a entrega do produto e a verificação do processo pela nossa equipe.</small><br>
                     <small>⚠️ Caso não haja reclamações por parte do cliente em até 2 meses, o valor será liberado automaticamente ao vendedor.</small>
                 </div>
-                Caso ouver duvida, acesse <a href="/sobre?section=venda">Como vender com Metache</a>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
