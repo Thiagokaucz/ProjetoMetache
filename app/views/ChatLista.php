@@ -113,9 +113,9 @@
                             <span>Comprador: <?= htmlspecialchars($chat['compradorNome']) ?></span>
                         </div>
                         <!-- Botão de excluir -->
-                        <button class="btn btn-danger btn-sm ms-auto" onclick="excluirChat(<?= $chat['chatID'] ?>, event)">
+                        <!--<button class="btn btn-danger btn-sm ms-auto" onclick="excluirChat(<?= $chat['chatID'] ?>, event)">
                             <i class="fas fa-trash-alt"></i> Excluir
-                        </button>
+                        </button> -->
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>

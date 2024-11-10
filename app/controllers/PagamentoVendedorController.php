@@ -32,7 +32,7 @@ class PagamentoVendedorController {
                 $preferenceData = [
                     "auto_return" => "approved",
                     "back_urls" => [
-                        "success" => "http://localhost/PosPagamento?id=" . $id,
+                        "success" => "https://abalonrpg.com/PosPagamento?id=" . $id,
                         "failure" => "http://httpbin.org/get?back_url=failure",
                         "pending" => "http://httpbin.org/get?back_url=pending"
                     ],

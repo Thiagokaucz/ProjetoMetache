@@ -10,7 +10,7 @@ class LoginModel {
     }
 
     public function login($email, $senha) {
-        $query = 'SELECT * FROM Usuario WHERE email = :email';
+        $query = 'SELECT * FROM usuario WHERE email = :email';
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':email', $email);
         $stmt->execute();

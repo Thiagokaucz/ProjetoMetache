@@ -18,7 +18,7 @@ class RecuperarSenhaModel {
     }
 
     public function atualizarSenha($email, $novaSenha) {
-        $query = "UPDATE Usuario SET senha = :senha WHERE email = :email";
+        $query = "UPDATE usuario SET senha = :senha WHERE email = :email";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':senha', $novaSenha);
         $stmt->bindParam(':email', $email);

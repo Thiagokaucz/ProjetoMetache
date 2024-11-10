@@ -27,7 +27,7 @@ class TratarCompraController {
             // Se a ação é de comprar, cria a preferência de pagamento
             if ($acao === 'comprar') {
                 // Enviando mensagem para o vendedor antes de criar a preferência de pagamento
-                $conteudo = "<b>Metache informa</b>: O link de pagamento foi utilizado. Obrigado por escolher nossa plataforma 😉";
+                $conteudo = "<b>Metache informa</b>: O link de pagamento foi utilizado. Obrigado por escolher nossa plataforma!";
                 $this->tratarCompraModel->enviarMensagemParaVendedor($conteudo, $vendedorID, $chatID);
 
                 // Criando a preferência de pagamento no Mercado Pago
@@ -51,7 +51,7 @@ class TratarCompraController {
         $preferenceData = [
             "auto_return" => "approved",
             "back_urls" => [
-                "success" => "http://localhost/VerificarCompraController",
+                "success" => "https://abalonrpg.com/VerificarCompraController",
                 "failure" => "http://httpbin.org/get?back_url=failure",
                 "pending" => "http://httpbin.org/get?back_url=pending"
             ],

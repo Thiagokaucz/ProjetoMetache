@@ -35,6 +35,9 @@
         <li class="nav-item">
             <a class="nav-link" href="/anunciar">Anunciar</a>
         </li>
+                <li class="nav-item">
+            <a class="nav-link" href="/sobre?section=">Como usar Metache</a>
+        </li>
     </ul>
     <span class="navbar-text">
         <img src="public/img/Metache.png" alt="Logo" height="25" width="auto">

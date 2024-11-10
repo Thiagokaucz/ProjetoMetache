@@ -11,7 +11,7 @@ class AvisosAdmModel {
 
     public function getAvisos($usuarioID) {
         $query = 'SELECT a.nome AS nome_criador, av.* 
-                  FROM avisosAdm av 
+                  FROM avisosadm av 
                   JOIN administrador a ON av.usuario_criador = a.adminID 
                   WHERE av.usuario_destino = :usuario_destino 
                   ORDER BY av.data_criacao DESC';
@@ -23,7 +23,7 @@ class AvisosAdmModel {
     }
     
     public function deleteAviso($avisoID) {
-        $query = 'DELETE FROM avisosAdm WHERE avisoID = :avisoID';
+        $query = 'DELETE FROM avisosadm WHERE avisoID = :avisoID';
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':avisoID', $avisoID);
         return $stmt->execute(); // Retorna true se a exclusão for bem-sucedida

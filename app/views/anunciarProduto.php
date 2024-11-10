@@ -95,6 +95,11 @@
       <label for="foto" class="form-label">Fotos do Produto*</label>
       <input type="file" class="form-control" id="foto" name="foto[]" accept="image/*" multiple required>
     </div>
+    
+    <div class="alert alert-info p-2">
+        <small>💳 A plataforma utiliza integração com Mercado Pago.</small>
+    </div>
+        Caso ouver duvida, acesse <a href="/sobre?section=precificacao ">Como comprar com Metache</a><p>    
 
     <button type="submit" class="btn btn-orange">Criar Anúncio</button>
   </form>

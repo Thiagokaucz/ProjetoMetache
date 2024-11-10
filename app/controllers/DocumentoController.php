@@ -16,6 +16,7 @@ class DocumentoController {
 
         if ($compraspagamento) {
             // Inclui o formulário de upload e passa o compraspagamento
+            include 'app/views/AdmHeader.php';
             include 'app/views/uploadDocumentos.php';
         } else {
             echo "ID de compra não fornecido.";

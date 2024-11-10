@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Respostas de Segurança - Metache</title>
+    <title>Respostas de Segurança</title>
 </head>
 <body>
 <div class="container">

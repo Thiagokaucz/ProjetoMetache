@@ -10,7 +10,7 @@ class AdmLogin {
     }
 
     public function login($usuario, $senha) {
-        $query = 'SELECT * FROM Administrador WHERE usuario = :usuario';
+        $query = 'SELECT * FROM administrador WHERE usuario = :usuario';
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':usuario', $usuario);
         $stmt->execute();

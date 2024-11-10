@@ -103,4 +103,10 @@ $rotas = [
 
 '/uploadDocumentos' => 'DocumentoController@mostrarFormularioUpload',
 '/anexarDocumentos' => 'DocumentoController@anexarDocumentos',
+
+'/linkOAoth' => 'RetornoOAuthController@exibirLinkAutorizacao',
+'/retornoOAuth' => 'RetornoOAuthController@retornoOAuth',
+
+'/comprovante' => 'VisualizarDocumentosController@exibirDocumentos',
+
 ];

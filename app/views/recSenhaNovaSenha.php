@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Redefinir Senha - Metache</title>
+    <title>Redefinir Senha</title>
 </head>
 <body>
 <div class="container">

@@ -1,5 +1,5 @@
 <?php
-require_once 'config/database.php'; // Inclua o arquivo de configuração do banco de dados
+require_once 'config/Database.php'; // Inclua o arquivo de configuração do banco de dados
 
 class VerificarCompraModel {
     private $pdo;

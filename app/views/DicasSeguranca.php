@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dicas de Segurança - Metache</title>
+    <title>Dicas de Segurança</title>
 </head>
 <!-- Estrutura sem a tag <body> -->
 <div class="container my-5">

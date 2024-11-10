@@ -42,7 +42,7 @@ class EditarProdutoController {
                     $this->editarProdutoModel->atualizarProduto($produtoID, $categoriaID, $titulo, $condicao, $descricao, $valor, $localizacao);
 
                     // Redireciona após a edição
-                    header('Location: /minhascompras');
+                    header('Location: /meusAnuncios');
                     exit;
                 }
 

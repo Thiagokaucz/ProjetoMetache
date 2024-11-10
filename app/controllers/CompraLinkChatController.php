@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 require_once 'app/models/CompraLinkChatModel.php';
 
@@ -27,7 +28,6 @@ class CompraLinkChatController {
                 $dados['vendedorID'] = $vendedorID;
                 require_once 'app/views/header.php';
                 require 'app/views/CompraLinkChatView.php';
-                require_once 'app/views/footer.php';
             } else {
                 echo "Nenhum dado encontrado para o ID especificado.";
             }

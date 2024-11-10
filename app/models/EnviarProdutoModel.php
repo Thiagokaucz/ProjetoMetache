@@ -10,7 +10,7 @@ class EnviarProdutoModel {
     }
 
     public function gravarEnvioProduto($aquisicaoID, $transportadora, $codigoRastreio, $comentario, $dataHora) {
-        $sql = "INSERT INTO envioProduto (aquisicaoID, transportadora, dataHora, codigoRastreio, comentario) 
+        $sql = "INSERT INTO envioproduto (aquisicaoID, transportadora, dataHora, codigoRastreio, comentario) 
                 VALUES (:aquisicaoID, :transportadora, :dataHora, :codigoRastreio, :comentario)";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':aquisicaoID', $aquisicaoID, PDO::PARAM_INT);

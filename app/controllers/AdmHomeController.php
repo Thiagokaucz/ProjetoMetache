@@ -1,5 +1,7 @@
 <?php
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
 
 require_once 'app/models/AvisosAdmModel.php';
@@ -30,13 +32,13 @@ class AdmHomeController {
         $conn = $database->obterConexao();
     
         // Contar o total de vendas, excluindo as com status 'compra_cancelada'
-        $queryTotalVendas = "SELECT COUNT(*) AS total FROM comprasPagamento WHERE statusAdmMetache != 'compra_cancelada'";
+        $queryTotalVendas = "SELECT COUNT(*) AS total FROM compraspagamento WHERE statusAdmMetache != 'compra_cancelada'";
         $stmtTotalVendas = $conn->prepare($queryTotalVendas);
         $stmtTotalVendas->execute();
         $totalVendas = $stmtTotalVendas->fetchColumn();
     
         // Somar o valor movimentado, excluindo as compras canceladas
-        $queryValorMovimentado = "SELECT SUM(valor_compra) AS totalValor FROM comprasPagamento WHERE statusAdmMetache != 'compra_cancelada'";
+        $queryValorMovimentado = "SELECT SUM(valor_compra) AS totalValor FROM compraspagamento WHERE statusAdmMetache != 'compra_cancelada'";
         $stmtValorMovimentado = $conn->prepare($queryValorMovimentado);
         $stmtValorMovimentado->execute();
         $valorMovimentado = $stmtValorMovimentado->fetchColumn();

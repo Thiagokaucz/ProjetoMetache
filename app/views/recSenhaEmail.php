@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Recuperar Senha - Metache</title>
+    <title>Recuperar Senha</title>
 </head>
 <body>
 <div class="container">

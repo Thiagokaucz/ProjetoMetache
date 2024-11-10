@@ -10,7 +10,7 @@ class AdmCadastrarUsuarioModel {
     }
 
     public function usuarioExiste($usuario) {
-        $query = 'SELECT * FROM Administrador WHERE usuario = :usuario';
+        $query = 'SELECT * FROM administrador WHERE usuario = :usuario';
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':usuario', $usuario);
         $stmt->execute();
@@ -21,7 +21,7 @@ class AdmCadastrarUsuarioModel {
         // Hash da senha antes de armazená-la no banco
         $hashedSenha = password_hash($senha, PASSWORD_DEFAULT);
 
-        $query = 'INSERT INTO Administrador (nome, usuario, senha) VALUES (:nome, :usuario, :senha)';
+        $query = 'INSERT INTO administrador (nome, usuario, senha) VALUES (:nome, :usuario, :senha)';
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':nome', $nome);
         $stmt->bindParam(':usuario', $usuario);

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minhas Aquisições</title>
+    <title>Minhas Compras</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -52,6 +52,7 @@
                         $produtoAquisicao = $this->aquisicoesModel->verificarProdutoEmAquisicao($aquisicao['produtoID']);
                         if ($produtoAquisicao && $produtoAquisicao['statusPagamentoVendedor'] === 'pagamento_realizado') {
                             echo "<p><strong>A plataforma já fez o pagamento para o vendedor.</strong></p>";
+                            echo "<p><a href='/comprovante?id=" . $aquisicao['produtoID'] . "'>Ver comprovantes</a></p>";
                         }
                         ?>
                     </div>

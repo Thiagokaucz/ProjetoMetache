@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre a Plataforma Metache</title>
+    <title>Metache</title>
     <style>
         .section {
             margin-bottom: 30px;

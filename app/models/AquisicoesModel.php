@@ -11,7 +11,7 @@ class AquisicoesModel {
 
     // Buscar aquisições de um usuário específico
     public function buscarAquisicoesPorUsuario($compradorID) {
-        $sql = "SELECT aquisicaoID, produtoID, chatID, compradorID, dataHora, vendedorID, statusAquisicao, valorProduto, valorFrete
+        $sql = "SELECT aquisicaoID, produtoID, chatID, compradorID, dataHora, vendedorID, statusAquisicao, valorproduto, valorFrete
                 FROM aquisicoes 
                 WHERE compradorID = :compradorID";
         $stmt = $this->conn->prepare($sql);
@@ -35,7 +35,7 @@ class AquisicoesModel {
 
     public function buscarEnvioPorAquisicaoID($aquisicaoID) {
         $sql = "SELECT transportadora, dataHora AS dataHoraEnvio, codigoRastreio, comentario 
-                FROM envioProduto 
+                FROM envioproduto 
                 WHERE aquisicaoID = :aquisicaoID";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':aquisicaoID', $aquisicaoID, PDO::PARAM_INT);

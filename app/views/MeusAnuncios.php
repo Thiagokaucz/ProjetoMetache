@@ -71,7 +71,7 @@
                                     break;
                                 case 'pagamento_realizado':
                                     echo "<p><strong>A plataforma já fez o pagamento.</strong></p>";
-                                    echo "<p><a href='http://localhost/comprovante?id=" . $anuncio['produtoID'] . "'>Ver comprovantes</a></p>";
+                                    echo "<p><a href='/comprovante?id=" . $anuncio['produtoID'] . "'>Ver comprovantes</a></p>";
                                     break;
                                 case 'erro':
                                     echo "<p><strong>A plataforma entrará em contato, ocorreu algum problema.</strong></p>";
@@ -90,16 +90,16 @@
                     class="btn btn-success mb-2 w-100">Enviar Produto</a>
                 <?php endif; ?>
                     
-                    <a href="http://localhost/detalheProduto?id=<?= $anuncio['produtoID'] ?>&noChat" 
+                    <a href="/detalheProduto?id=<?= $anuncio['produtoID'] ?>&noChat" 
                     class="btn btn-warning mb-2 w-100">Ver Detalhes do Produto</a>
 
                     <?php if ($anuncio['disponibilidade'] === 'disponível'): ?>
-                        <a href="http://localhost/editarProduto?id=<?= $anuncio['produtoID'] ?>" 
+                        <a href="/editarProduto?id=<?= $anuncio['produtoID'] ?>" 
                         class="btn btn-info mb-2 w-100">Editar Produto</a>
-                        <a href="http://localhost/alterarDisponibilidade?id=<?= $anuncio['produtoID'] ?>&acao=pausar" 
+                        <a href="/alterarDisponibilidade?id=<?= $anuncio['produtoID'] ?>&acao=pausar" 
                            class="btn btn-secondary mb-2 w-100">Pausar Produto</a>
                     <?php elseif ($anuncio['disponibilidade'] === 'pausado'): ?>
-                        <a href="http://localhost/alterarDisponibilidade?id=<?= $anuncio['produtoID'] ?>&acao=liberar" 
+                        <a href="/alterarDisponibilidade?id=<?= $anuncio['produtoID'] ?>&acao=liberar" 
                            class="btn btn-success mb-2 w-100">Liberar Produto</a>
                     <?php elseif ($anuncio['statusAquisicao'] !== 'Não está na tabela aquisição' && isset($anuncio['chatID'])): ?>
                         <a href="/chat?Produto=<?= htmlspecialchars($anuncio['produtoID']) ?>&Origem=ListaChat&Tipo=MinhasVendas&chatID=<?= htmlspecialchars($anuncio['chatID']) ?>" 
@@ -107,7 +107,7 @@
                     <?php endif; ?>
 
                     <?php if ($anuncio['disponibilidade'] === 'disponível' || $anuncio['disponibilidade'] === 'pausado'): ?>
-                        <a href="http://localhost/excluirAnuncio?id=<?= $anuncio['produtoID'] ?>" 
+                        <a href="/excluirAnuncio?id=<?= $anuncio['produtoID'] ?>" 
                            class="btn btn-danger mb-2 w-100" 
                            onclick="return confirm('Tem certeza de que deseja excluir este anúncio?')">Excluir Produto</a>
                     <?php endif; ?>

@@ -16,7 +16,7 @@ class PerfilUsuarioController {
             $usuario = $this->PerfilUsuarioModel->buscarUsuarioPorID($userID);
             if ($usuario) {
                 require_once 'app/views/header.php';
-                require 'app/views/PerfilUsuario.php'; // View para exibir os dados do usuário
+                require 'app/views/PerfilUsuario.php';
                 require_once 'app/views/footerConfig.php';
             } else {
                 echo "Usuário não encontrado.";
@@ -38,12 +38,13 @@ class PerfilUsuarioController {
 
                 $resultado = $this->PerfilUsuarioModel->atualizarUsuario($userID, $nome, $sobrenome, $email, $cep);
                 if ($resultado) {
-                    echo "Dados atualizados com sucesso.";
+                    header('Location: /perfilUsuario?status=success');
+                    exit;
                 } else {
-                    echo "Erro ao atualizar os dados.";
+                    header('Location: /perfilUsuario?status=error');
+                    exit;
                 }
             }
-            $this->exibirDados(); // Reexibe os dados após atualização
         } else {
             header('Location: /login');
         }
@@ -65,6 +66,5 @@ class PerfilUsuarioController {
             header('Location: /login');
         }
     }
-    
 }
 ?>

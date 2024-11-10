@@ -18,10 +18,10 @@
 
         <!-- Formulário para edição de produto -->
         <form method="POST" action="" class="border p-4 rounded shadow">
-            <div class="mb-3">
+            <!--<div class="mb-3">
                 <label for="categoriaID" class="form-label">Categoria:</label>
                 <input type="number" name="categoriaID" id="categoriaID" class="form-control" value="<?= htmlspecialchars($produto['categoriaID']) ?>" required>
-            </div>
+            </div>-->
 
             <div class="mb-3">
                 <label for="titulo" class="form-label">Título:</label>
