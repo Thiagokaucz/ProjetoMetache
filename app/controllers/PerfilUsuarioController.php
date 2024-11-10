@@ -26,7 +26,6 @@ class PerfilUsuarioController {
         }
     }
 
-    // Atualiza os dados do usuário logado
     public function atualizarDados() {
         if (isset($_SESSION['user_id'])) {
             $userID = $_SESSION['user_id'];
@@ -35,9 +34,12 @@ class PerfilUsuarioController {
                 $sobrenome = filter_input(INPUT_POST, 'sobrenome', FILTER_SANITIZE_STRING);
                 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
                 $cep = filter_input(INPUT_POST, 'cep', FILTER_SANITIZE_STRING);
-
+    
                 $resultado = $this->PerfilUsuarioModel->atualizarUsuario($userID, $nome, $sobrenome, $email, $cep);
                 if ($resultado) {
+                    // Atualiza a sessão com o novo nome
+                    $_SESSION['user_name'] = $nome;
+                    
                     header('Location: /perfilUsuario?status=success');
                     exit;
                 } else {
@@ -49,6 +51,7 @@ class PerfilUsuarioController {
             header('Location: /login');
         }
     }
+    
 
     // Desativa o usuário
     public function desativarUsuario() {

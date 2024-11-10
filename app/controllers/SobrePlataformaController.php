@@ -9,6 +9,6 @@ class SobrePlataformaController {
         // Redireciona para a view passando a seção solicitada
         require_once 'app/views/header.php';
         require 'app/views/SobrePlataforma.php';
-        require_once 'app/views/footer.php';
+        require_once 'app/views/footerConfig.php';
     }
 }

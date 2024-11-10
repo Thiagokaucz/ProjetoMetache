@@ -109,4 +109,8 @@ $rotas = [
 
 '/comprovante' => 'VisualizarDocumentosController@exibirDocumentos',
 
+'/ErroCompraProduto' => 'NaoPodeComprarProdutoController@index',
+
+'/politicasEmpresa' => 'PoliticasEmpresaController@index',
+
 ];

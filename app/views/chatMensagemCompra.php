@@ -105,7 +105,7 @@
     <div class="row">
         
         <!-- Chat Column -->
-        <div class="col-md-7">
+        <div class="col-md-7 mb-3">
             <div class="card">
                 <div class="card-header">
                     <strong><?= htmlspecialchars($compradorNome) ?></strong> <span class="text-success">&#9679;</span>
@@ -162,7 +162,7 @@
             <!-- Formulário de Link de Compra -->
             <div class="card mb-3">
                 <div class="card-body">
-                    <h6 class="card-title">Para realizar a compra, basta entrar no link de compra com o valor anunciado.</h6>
+                    <h6 class="card-title">Para realizar a compra, basta clicar no link de compra com o valor negociado.</h6>
                     <form action="/enviarLinkCompra" method="POST">
                         <div class="mb-3">
                             <div class="alert alert-warning mt-2 p-1">
@@ -179,10 +179,10 @@
                                 <small>⚠️ Após gerar o link de compra, ele será válido por 2 horas.</small>
                             </div>
                         </div>
-                        <div class="alert alert-info p-2">
-                            <small>💳 A plataforma utiliza integração com Mercado Pago.</small>
+                        <div class="alert alert-success p-2">
+                            <small>✅ A plataforma utiliza integração com Mercado Pago.</small>
                         </div>
-                        Caso ouver duvida, acesse <a href="/sobre?section=compra">Como comprar com Metache</a>
+                        <p class="mb-0">Caso houver dúvida, acesse <a href="/sobre?section=compra" class="text-dark fw-bold">Como comprar com Metache</a>.</p>
                     </form>
                 </div>
             </div>

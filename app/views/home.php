@@ -17,12 +17,9 @@
         <div class="col-md-10">
 
           <div class="input-group">
-            <!-- Componente de pesquisa centralizado e com largura maior -->
             <div class="d-flex justify-content-center" style="width: 100%; padding: 20px; background-color: #FF6B01;">
-                <!-- Campo de pesquisa -->
-                <input type="text" class="form-control" id="campoPesquisa" placeholder="Estou procurando por..." aria-label="Campo de pesquisa" style="border: none; padding: 15px; border-radius: 0; background-color: #FFF;">
+                <input type="text" class="form-control" id="campoPesquisa" placeholder="Estou procurando..." aria-label="Campo de pesquisa" style="border: none; padding: 15px; border-radius: 0; background-color: #FFF;">
                 
-                <!-- Dropdown Categoria -->
                 <div class="input-group-append">
                     <button class="btn btn-light dropdown-toggle" type="button" id="dropdownCategoria" data-bs-toggle="dropdown" aria-expanded="false" style="border: none; padding: 15px; border-radius: 0; background-color: #FFF;">
                         Todos
@@ -36,7 +33,6 @@
                     </ul>
                 </div>
 
-                <!-- Dropdown Região -->
                 <div class="input-group-append">
                     <button class="btn btn-light dropdown-toggle" type="button" id="dropdownRegiao" data-bs-toggle="dropdown" aria-expanded="false" style="border: none; padding: 15px; border-radius: 0; background-color: #FFF;">
                         PR
@@ -50,7 +46,6 @@
                     </ul>
                 </div>
 
-                <!-- Botão de pesquisa -->
                 <div class="input-group-append">
                     <button class="btn btn-light" type="button" onclick="pesquisar()" style="border: none; padding: 15px; border-radius: 0; background-color: #FFF;">
                         <i class="bi bi-search"></i>
@@ -60,32 +55,29 @@
           </div>
 
           <script>
-              // Variáveis para armazenar as seleções
-              let categoriaSelecionada = 'Todos';  // Valor pré-definido
-              let regiaoSelecionada = 'PR';        // Valor pré-definido
+              let categoriaSelecionada = 'Todos';
+              let regiaoSelecionada = 'PR';
               
-              // Funções para capturar as seleções de categoria e região
               function selecionarCategoria(categoria) {
                   categoriaSelecionada = categoria;
-                  document.getElementById('dropdownCategoria').innerText = categoria !== 'Todos' ? categoria : 'Todos'; // Atualiza o botão de categoria
+                  document.getElementById('dropdownCategoria').innerText = categoria !== 'Todos' ? categoria : 'Todos';
               }
 
               function selecionarRegiao(regiao) {
                   regiaoSelecionada = regiao;
-                  document.getElementById('dropdownRegiao').innerText = regiao; // Atualiza o botão de região
+                  document.getElementById('dropdownRegiao').innerText = regiao;
               }
 
-              // Função para montar o link e redirecionar
               function pesquisar() {
-                  const pesquisa = document.getElementById('campoPesquisa').value; // Captura o valor do campo de pesquisa
+                  const pesquisa = document.getElementById('campoPesquisa').value;
                   const url = `/PesquisarProdutosPor?Categoria=${categoriaSelecionada}&Regiao=${regiaoSelecionada}&Ordem=Data&Pesquisa=${pesquisa}`;
-                  window.location.href = url; // Redireciona para a URL montada
+                  window.location.href = url;
               }
           </script>
 
           <ul class="nav nav-pills mt-3">
           <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" style="color: white;" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Eletronicos Usados</a>
+              <a class="nav-link dropdown-toggle" style="color: white;" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Eletrônicos Usados</a>
               <ul class="dropdown-menu">
                   <?php foreach ($categorias as $categoria): ?>
                     <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=<?= htmlspecialchars($categoria['categoria'])?>&Regiao=PR&Ordem=Data&Pesquisa="><?= htmlspecialchars($categoria['categoria']) ?></a></li>
@@ -95,7 +87,7 @@
               </ul>
           </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" style="color: white;" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Eletronicos com defeito</a>
+              <a class="nav-link dropdown-toggle" style="color: white;" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Eletrônicos com defeito</a>
               <ul class="dropdown-menu">
                   <?php foreach ($categorias as $categoria): ?>
                     <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=<?= htmlspecialchars($categoria['categoria'])?>&Regiao=PR&Ordem=Data&Pesquisa="><?= htmlspecialchars($categoria['categoria']) ?></a></li>
@@ -105,7 +97,7 @@
               </ul>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" style="color: white;" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Eletronicos vintage</a>
+              <a class="nav-link dropdown-toggle" style="color: white;" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Eletrônicos vintage</a>
               <ul class="dropdown-menu">
                   <?php foreach ($categorias as $categoria): ?>
                     <li><a class="dropdown-item" href="/PesquisarProdutosPor?Categoria=<?= htmlspecialchars($categoria['categoria'])?>&Regiao=PR&Ordem=Data&Pesquisa="><?= htmlspecialchars($categoria['categoria']) ?></a></li>
@@ -134,9 +126,9 @@
         <?php foreach($anunciosRecentes as $anuncio): ?>
         <div class="col pb-3">
           <a href="detalheProduto?id=<?= $anuncio['produtoID'] ?>" class="text-decoration-none">
-            <div class="card h-100 bg-white text-dark"> <!-- h-100 aqui -->
+            <div class="card h-100 bg-white text-dark">
               <img src="<?= $anuncio['locImagem'] ?>" alt="Anúncio" class="card-img-top">
-              <div class="card-body d-flex flex-column"> <!-- Flexbox para card body -->
+              <div class="card-body d-flex flex-column">
                 <h4 class="card-title"><?= $anuncio['titulo'] ?></h4>
                 <h6 class="card-subtitle">R$ <?= number_format($anuncio['valor'], 2, ',', '.') ?></h6>
                 <div class="row mt-4">
@@ -177,9 +169,9 @@
         <?php foreach($maisPesquisados as $anuncio): ?>
         <div class="col pb-3">
           <a href="detalheProduto?id=<?= $anuncio['produtoID'] ?>" class="text-decoration-none">
-            <div class="card h-100 bg-white text-dark"> <!-- h-100 aqui -->
+            <div class="card h-100 bg-white text-dark">
               <img src="<?= $anuncio['locImagem'] ?>" alt="Anúncio" class="card-img-top">
-              <div class="card-body d-flex flex-column"> <!-- Flexbox para card body -->
+              <div class="card-body d-flex flex-column">
                 <h4 class="card-title"><?= $anuncio['titulo'] ?></h4>
                 <h6 class="card-subtitle">R$ <?= number_format($anuncio['valor'], 2, ',', '.') ?></h6>
                 <div class="row mt-4">

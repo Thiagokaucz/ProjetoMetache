@@ -4,27 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultado da Autorização</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 500px;
+            margin-top: 50px;
+            text-align: center;
+        }
+        .step {
+            display: none;
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: #FF6B01;
+        }
+        .logo {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        // Função para mostrar as etapas gradativamente
+        function mostrarEtapas() {
+            const etapas = document.querySelectorAll('.step');
+            let etapaAtual = 0;
+            
+            const mostrarProximaEtapa = () => {
+                if (etapaAtual < etapas.length) {
+                    etapas[etapaAtual].style.display = 'block';
+                    etapaAtual++;
+                    setTimeout(mostrarProximaEtapa, 1500);
+                } else {
+                    // Redireciona para a página de anúncio após a última etapa
+                    setTimeout(() => {
+                        window.location.href = '/anunciar';
+                    }, 2000);
+                }
+            };
+            
+            mostrarProximaEtapa();
+        }
+
+        document.addEventListener("DOMContentLoaded", mostrarEtapas);
+    </script>
 </head>
-<body>
-    <h1>Resultado da Autorização OAuth</h1>
+<body class="bg-light">
+
+<div class="container">
+    <img src="public/img/Metache.png" alt="Logo Metache" class="logo">
+    <h1>Autorização Concluída</h1>
     
     <?php if (isset($erro)): ?>
-        <p style="color: red;"><?= htmlspecialchars($erro) ?></p>
-    <?php elseif (isset($token_data['access_token'])): ?>
-        <h2>Token de Acesso:</h2>
-        <ul>
-            <li><strong>Access Token:</strong> <?= htmlspecialchars($token_data['access_token']) ?></li>
-            <li><strong>Token Type:</strong> <?= htmlspecialchars($token_data['token_type']) ?></li>
-            <li><strong>Expires In:</strong> <?= htmlspecialchars($token_data['expires_in']) ?> segundos</li>
-            <li><strong>Scope:</strong> <?= htmlspecialchars($token_data['scope']) ?></li>
-            <li><strong>User ID:</strong> <?= htmlspecialchars($token_data['user_id']) ?></li>
-            <li><strong>Refresh Token:</strong> <?= htmlspecialchars($token_data['refresh_token']) ?></li>
-            <li><strong>Public Key:</strong> <?= htmlspecialchars($token_data['public_key']) ?></li>
-            <li><strong>Live Mode:</strong> <?= $token_data['live_mode'] ? 'Sim' : 'Não' ?></li>
-        </ul>
-        <p>Token salvo com sucesso no banco de dados para o usuário com ID <?= htmlspecialchars($_SESSION['user_id']) ?>.</p>
+        <p class="text-danger"><?= htmlspecialchars($erro) ?></p>
+    <?php else: ?>
+        <p>Estamos vinculando sua conta. Por favor, aguarde...</p>
+        <div class="step">🔄 Vinculando sua conta ao Mercado Pago...</div>
+        <div class="step">⏳ Preparando os últimos detalhes...</div>
+        <div class="step">✅ Conta vinculada com sucesso!</div>
     <?php endif; ?>
     
-            <button onclick="window.location.href='/anunciar'">Voltar</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

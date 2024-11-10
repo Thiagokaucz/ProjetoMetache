@@ -5,10 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Produto</title>
     <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .btn-custom {
             background-color: #FF6B01;
             color: white;
+        }
+        .btn-custom:hover {
+            background-color: #e55b01;
         }
     </style>
 </head>
@@ -18,11 +22,6 @@
 
         <!-- Formulário para edição de produto -->
         <form method="POST" action="" class="border p-4 rounded shadow">
-            <!--<div class="mb-3">
-                <label for="categoriaID" class="form-label">Categoria:</label>
-                <input type="number" name="categoriaID" id="categoriaID" class="form-control" value="<?= htmlspecialchars($produto['categoriaID']) ?>" required>
-            </div>-->
-
             <div class="mb-3">
                 <label for="titulo" class="form-label">Título:</label>
                 <input type="text" name="titulo" id="titulo" class="form-control" value="<?= htmlspecialchars($produto['titulo']) ?>" required>
@@ -34,18 +33,36 @@
             </div>
 
             <div class="mb-3">
-                <label for="valor" class="form-label">Valor:</label>
-                <input type="text" name="valor" id="valor" class="form-control" value="<?= htmlspecialchars($produto['valor']) ?>" required>
-            </div>
+    <label for="valor" class="form-label">Valor:</label>
+    <div class="input-group">
+        <span class="input-group-text">R$</span>
+        <input type="text" name="valor_formatado" id="valor" class="form-control" value="<?= htmlspecialchars(number_format($produto['valor'], 2, ',', '.')) ?>" required>
+        <input type="hidden" name="valor" id="valor_oculto" value="<?= htmlspecialchars($produto['valor']) ?>">
+    </div>
+</div>
+
 
             <button type="submit" class="btn btn-custom">Salvar</button>
             <a href="/meusAnuncios" class="btn btn-secondary">Voltar</a>
         </form>
     </div>
 
-    <!-- Bootstrap JS (Opcional) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+    <!-- Bootstrap JS e jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Formatação do campo de valor para moeda
+        $(document).ready(function() {
+    $('#valor').on('input', function() {
+        let value = $(this).val().replace(/\D/g, ''); // Remove caracteres não numéricos
+        let formattedValue = (value / 100).toFixed(2).replace('.', ','); // Formata com vírgula
+        formattedValue = formattedValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Insere ponto a cada milhar
+        $(this).val(formattedValue); // Atualiza o campo visível
+        
+        $('#valor_oculto').val(value / 100); // Atualiza o campo oculto com o valor numérico sem formatação
+    });
+});
+
+    </script>
 </body>
 </html>

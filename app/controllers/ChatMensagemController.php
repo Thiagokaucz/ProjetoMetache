@@ -62,7 +62,7 @@ class ChatMensagemController {
                         $vendedorID = $this->ChatMensagemModel->buscarUserIDPorProdutoID($produtoID);
     
                         if ($userID == $vendedorID) {
-                            echo "Não pode comprar o seu próprio produto!";
+                            header('Location: /ErroCompraProduto');
                             exit();
                         } else {
                             //echo "Chat que vem dos detalhes do anúncio";

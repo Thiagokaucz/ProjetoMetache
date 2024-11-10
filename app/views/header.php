@@ -34,13 +34,14 @@
                         <a class="nav-link" href="/chatLista">Chat</a>
                     </li>
                     <li class="nav-item">
-                        <a id="notificacao-link" class="nav-link position-relative" href="/notificacao">
-                            Notificações
-                            <span id="notificacao-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display: none;">
-                                <span class="visually-hidden">novas notificações</span>
-                            </span>
-                        </a>
-                    </li>
+    <a id="notificacao-link" class="nav-link position-relative" href="/notificacao">
+        Notificações
+        <span id="notificacao-badge" class="position-absolute top-60 start-58 translate-middle-y badge rounded-pill bg-danger" style="display: none; transform: translate(-50%, -40%);">
+            <span class="visually-hidden">novas notificações</span>
+        </span>
+    </a>
+</li>
+
                 </ul>
 
                 <ul class="navbar-nav">

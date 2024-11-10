@@ -19,7 +19,7 @@
             align-self: flex-end;
         }
         .chat-container {
-            height: 500px;
+            height: 550px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -99,7 +99,7 @@
     <div class="row">
         
         <!-- Chat Column -->
-        <div class="col-md-7">
+        <div class="col-md-7 mb-3">
             <div class="card">
                 <div class="card-header">
                     <strong><?= htmlspecialchars($compradorNome)?></strong> <span class="text-success">&#9679;</span>
@@ -164,7 +164,8 @@
                     <span class="input-group-text">R$</span>
                     <input type="text" class="form-control" id="valorFrete" name="valorFrete" placeholder="0,00">
                 </div>
-                <a>Precisa de ajuda para precificar? <a href="/sobre?section=precificar">Precificar produto</a></small>
+                <p class="">Precisa de ajuda para precificar?<a href="/sobre?section=precificar" class="text-dark fw-bold">Precificar produto</a>.</p>
+
 
                 <div class="alert alert-warning mt-2 p-1">
                     <small>⚠️ Após gerar o link de compra, ele será válido por 2 horas.</small>
@@ -173,12 +174,13 @@
             <div class="alert alert-info p-2">
                 <small>💳 A plataforma utiliza integração com Mercado Pago.</small>
             </div>       
-                <a>Caso ouver duvida, acesse <a href="/sobre?section=venda">Como vender com Metache</a></small>
 
             <button type="button" class="btn w-100" style="background-color: #FF6B01; color: white; border: none;"
                     onclick="mostrarModalConfirmacao()">
                 Enviar link de venda
             </button>
+            <p class="mb-0">Caso houver dúvida, acesse <a href="/sobre?section=venda" class="text-dark fw-bold">Como vender com Metache</a>.</p>
+
         </form>
     </div>
 </div>
@@ -211,12 +213,23 @@
 </div>
 
 <!-- JavaScript para Cálculo e Exibição do Modal -->
+<!-- JavaScript para Cálculo e Exibição do Modal -->
 <script>
 function mostrarModalConfirmacao() {
     // Obter valores de produto e frete
     const valorProduto = parseFloat(document.getElementById('valorBrutoCompra').value.replace(',', '.')) || 0;
     const valorFrete = parseFloat(document.getElementById('valorFrete').value.replace(',', '.')) || 0;
-    
+
+    // Validar se os valores são maiores que zero
+    if (valorProduto <= 0) {
+        alert("Por favor, insira um valor maior que zero para o valor do produto.");
+        return;
+    }
+    if (valorFrete <= 0) {
+        alert("Por favor, insira um valor maior que zero para o valor do frete.");
+        return;
+    }
+
     // Calcular valor total e taxa de 5%
     const valorTotal = valorProduto + valorFrete;
     const taxa = valorTotal * 0.05;
@@ -237,6 +250,7 @@ function confirmarEnvio() {
     document.getElementById('linkCompraForm').submit();
 }
 </script>
+
 
         </div>
 

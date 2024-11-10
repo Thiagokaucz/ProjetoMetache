@@ -4,9 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Chats</title>
-    <!-- Bootstrap CSS versão 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* CSS personalizado */
+        /* Estilos personalizados */
+        .container-box {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
         .chat-item {
             display: flex;
             align-items: center;
@@ -36,91 +42,95 @@
         .tab-content {
             margin-top: 20px;
         }
-        .btn-danger {
-            background-color: #e74c3c;
-            border: none;
-        }
-        .btn-danger:hover {
-            background-color: #c0392b;
-        }
         .btn-group button {
             min-width: 150px;
         }
         .btn-laranja {
             background-color: #FF6B01;
             border: none;
-            color: white; /* Cor do texto para o botão laranja */
+            color: white;
         }
         .btn-laranja:hover {
             background-color: #e65b01;
-            color: white; /* Cor do texto para o botão laranja */
+            color: white;
         }
     </style>
 </head>
-<body>
+<body style="background-color: #F8F9FA;">
 
 <div class="container mt-5">
-    
-    <!-- Botões para selecionar o tipo de chat -->
-    <div class="btn-group mb-3" role="group" aria-label="Chat Type Selection">
-        <button id="btnVendedores" type="button" class="btn btn-laranja" onclick="showChats('vendedores')">
-            Minhas compras (<?= count($ChatsCompras) ?>)
-        </button>
-        <button id="btnCompradores" type="button" class="btn btn-secondary" onclick="showChats('compradores')">
-            Minhas vendas (<?= count($ChatsVendas) ?>)
-        </button>
-    </div>
-
-    <!-- Campo de pesquisa -->
-    <div class="row mb-4">
-        <div class="col-md-6">
-            <input type="text" id="pesquisaProduto" class="form-control" placeholder="Pesquisar pelo nome do produto" onkeyup="filtrarChats()">
-        </div>
-    </div>
-
-    <div class="tab-content">
-        <!-- Seção de chats de compras -->
-        <div id="vendedores" class="chat-list" style="display: none;">
-            <h4>Compras</h4>
-            <?php if (!empty($ChatsCompras)): ?>
-                <?php foreach ($ChatsCompras as $chat): ?>
-                    <div class="chat-item shadow-sm rounded" onclick="window.location.href='chat?Produto=<?= $chat['produtoID'] ?>&Origem=ListaChat&Tipo=MinhasCompras&chatID=<?= $chat['chatID'] ?>'">
-                        <img src="<?= htmlspecialchars($chat['locImagem']) ?>" alt="Imagem do Produto">
-                        <div class="chat-item-info">
-                            <strong><?= htmlspecialchars($chat['produtoTitulo']) ?></strong>
-                            <span>Vendedor: <?= htmlspecialchars($chat['vendedorNome']) ?></span>
-                        </div>
-                        <!-- Botão de excluir -->
-                        <button class="btn btn-danger btn-sm ms-auto" onclick="excluirChat(<?= $chat['chatID'] ?>, event)">
-                            <i class="fas fa-trash-alt"></i> Excluir
-                        </button>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p class="text-muted">Não há chats disponíveis.</p>
-            <?php endif; ?>
+    <!-- Opções de Pesquisa e Menu -->
+    <div class="container-box mb-4">
+    <h4 class="mt-2 mb-4">Meus chats</h4>
+        <!-- Botões para selecionar o tipo de chat -->
+        <div class="btn-group w-100 mb-3" role="group" aria-label="Seleção de Tipo de Chat">
+            <button id="btnVendedores" type="button" class="btn btn-laranja" onclick="showChats('vendedores')">
+                Minhas Compras (<?= count($ChatsCompras) ?>)
+            </button>
+            <button id="btnCompradores" type="button" class="btn btn-secondary" onclick="showChats('compradores')">
+                Minhas Vendas (<?= count($ChatsVendas) ?>)
+            </button>
         </div>
 
-        <!-- Seção de chats de vendas -->
-        <div id="compradores" class="chat-list" style="display: none;">
-            <h4>Vendas</h4>
-            <?php if (!empty($ChatsVendas)): ?>
-                <?php foreach ($ChatsVendas as $chat): ?>
-                    <div class="chat-item shadow-sm rounded" onclick="window.location.href='chat?Produto=<?= $chat['produtoID'] ?>&Origem=ListaChat&Tipo=MinhasVendas&chatID=<?= $chat['chatID'] ?>'">
-                        <img src="<?= htmlspecialchars($chat['locImagem']) ?>" alt="Imagem do Produto">
-                        <div class="chat-item-info">
-                            <strong><?= htmlspecialchars($chat['produtoTitulo']) ?></strong>
-                            <span>Comprador: <?= htmlspecialchars($chat['compradorNome']) ?></span>
+        <!-- Campo de pesquisa -->
+        <div class="row mb-4">
+    <div class="col-12">
+        <input type="text" id="pesquisaProduto" class="form-control" placeholder="Pesquisar pelo nome do produto" onkeyup="filtrarChats()">
+    </div>
+</div>
+
+    </div>
+
+    <!-- Resultados dos Chats -->
+    <div class="container-box">
+        <div class="tab-content">
+            <!-- Seção de chats de compras -->
+            <div id="vendedores" class="chat-list" style="display: none;">
+                <h4>Compras</h4>
+                <?php if (!empty($ChatsCompras)): ?>
+                    <?php foreach ($ChatsCompras as $chat): ?>
+                        <div class="chat-item shadow-sm rounded" onclick="window.location.href='chat?Produto=<?= $chat['produtoID'] ?>&Origem=ListaChat&Tipo=MinhasCompras&chatID=<?= $chat['chatID'] ?>'">
+                            <img src="<?= htmlspecialchars($chat['locImagem']) ?>" alt="Imagem do Produto">
+                            <div class="chat-item-info">
+                                <strong><?= htmlspecialchars($chat['produtoTitulo']) ?></strong>
+                                <span>Vendedor: <?= htmlspecialchars($chat['vendedorNome']) ?></span>
+                            </div>
+                            <!-- Botão de excluir (comentado) -->
+                            <!--
+                            <button class="btn btn-danger btn-sm ms-auto" onclick="excluirChat(<?= $chat['chatID'] ?>, event)">
+                                <i class="fas fa-trash-alt"></i> Excluir
+                            </button>
+                            -->
                         </div>
-                        <!-- Botão de excluir -->
-                        <!--<button class="btn btn-danger btn-sm ms-auto" onclick="excluirChat(<?= $chat['chatID'] ?>, event)">
-                            <i class="fas fa-trash-alt"></i> Excluir
-                        </button> -->
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p class="text-muted">Não há chats disponíveis.</p>
-            <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p class="text-muted">Não há chats disponíveis.</p>
+                <?php endif; ?>
+            </div>
+
+            <!-- Seção de chats de vendas -->
+            <div id="compradores" class="chat-list" style="display: none;">
+                <h4>Vendas</h4>
+                <?php if (!empty($ChatsVendas)): ?>
+                    <?php foreach ($ChatsVendas as $chat): ?>
+                        <div class="chat-item shadow-sm rounded" onclick="window.location.href='chat?Produto=<?= $chat['produtoID'] ?>&Origem=ListaChat&Tipo=MinhasVendas&chatID=<?= $chat['chatID'] ?>'">
+                            <img src="<?= htmlspecialchars($chat['locImagem']) ?>" alt="Imagem do Produto">
+                            <div class="chat-item-info">
+                                <strong><?= htmlspecialchars($chat['produtoTitulo']) ?></strong>
+                                <span>Comprador: <?= htmlspecialchars($chat['compradorNome']) ?></span>
+                            </div>
+                            <!-- Botão de excluir (comentado) -->
+                            <!--
+                            <button class="btn btn-danger btn-sm ms-auto" onclick="excluirChat(<?= $chat['chatID'] ?>, event)">
+                                <i class="fas fa-trash-alt"></i> Excluir
+                            </button>
+                            -->
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p class="text-muted">Não há chats disponíveis.</p>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 </div>
@@ -168,15 +178,10 @@
 
         chats.forEach(chat => {
             const tituloProduto = chat.querySelector('strong').textContent.toLowerCase();
-            
-            if (tituloProduto.includes(termoPesquisa)) {
-                chat.style.display = 'flex';
-            } else {
-                chat.style.display = 'none';
-            }
+            chat.style.display = tituloProduto.includes(termoPesquisa) ? 'flex' : 'none';
         });
     }
 </script>
 
 </body>
-</html> 
+</html>

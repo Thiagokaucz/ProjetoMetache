@@ -16,14 +16,15 @@ public function index() {
         $userID = $_SESSION['user_id'];
         $produtoModel = new AnunciarProdutoModel();
 
-            // Verifica se o usuário está cadastrado como vendedor
-            if (!$produtoModel->verificarVendedor($userID)) {
-                // Exibe mensagem e opções "Voltar" e "Vincular conta Mercado Pago"
-                echo "<p>Você precisa estar cadastrado como vendedor para anunciar produtos.</p>";
-                echo "<button onclick=\"window.location.href='/'\">Voltar</button>";
-                echo "<button onclick=\"window.location.href='/linkOAoth'\">Vincular conta Mercado Pago</button>";
-                return; // Para evitar que o formulário seja carregado
-            }
+        // Verifica se o usuário está cadastrado como vendedor
+        if (!$produtoModel->verificarVendedor($userID)) {
+            // Redireciona para a página de verificação de vendedor
+            require_once 'app/views/header.php';
+            require_once 'app/views/PedidoVincularContaMercadoPago.php';
+            require_once 'app/views/footerConfig.php';
+
+            return; // Para evitar que o formulário seja carregado
+        }
 
         // Criação da instância do modelo de produtos
         $categorias = $produtoModel->getCategorias();  // Aqui você busca as categorias diretamente do modelo de produtos
@@ -31,10 +32,13 @@ public function index() {
         // Passando as categorias para a view
         require_once 'app/views/header.php';
         require_once 'app/views/anunciarProduto.php';  
+        require_once 'app/views/footerConfig.php';
+
     } else {
         header("Location: /login");
     }
 }
+
 
     
    // Cria o anúncio do produto

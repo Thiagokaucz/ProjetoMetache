@@ -6,27 +6,31 @@ require_once 'app/models/LoginModel.php';
 class LoginController {
     public function login() {
         $erroMensagem = '';
-
+    
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $email = $_POST['email'];
             $senha = $_POST['senha'];
-
+    
             $userModel = new LoginModel();
             $user = $userModel->login($email, $senha);
-
-            if ($user) {
+    
+            if ($user === 'desativada') {
+                // Exibe mensagem de erro para conta desativada
+                $erroMensagem = 'Sua conta foi desativada. Entre em contato com o suporte para mais informações.';
+            } elseif ($user) {
                 $_SESSION['user_id'] = $user['userID'];
                 $_SESSION['user_name'] = $user['nome']; // Armazena o nome na sessão
                 header('Location: /'); // Redireciona após login
                 exit(); // Adiciona exit após redirecionamento
             } else {
-                $erroMensagem = 'Usuário ou senha inválidos.'; // Armazena mensagem de erro
+                $erroMensagem = 'Usuário ou senha inválidos.'; // Mensagem de erro padrão
             }
         }
-
+    
         // Passa a mensagem de erro para a view
         require 'app/views/login.php'; // Carrega a view de login com a mensagem
     }
+    
 
     public function logout() {
         session_start(); // Inicia a sessão

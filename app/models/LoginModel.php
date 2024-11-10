@@ -15,12 +15,19 @@ class LoginModel {
         $stmt->bindParam(':email', $email);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($user && password_verify($senha, $user['senha'])) {
-            return $user; // Retorna o usuário logado
+    
+        if ($user) {
+            if ($user['statusConta'] === 'desativada') {
+                // Retorna uma mensagem informando que a conta foi desativada
+                return 'desativada';
+            } elseif (password_verify($senha, $user['senha'])) {
+                // Se a senha estiver correta e a conta ativa, retorna os dados do usuário
+                return $user;
+            }
         }
-
+    
         return false; // Se falhar, retorna falso
     }
+    
 
 }
