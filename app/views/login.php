@@ -5,7 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Tela de login Metache">
     <title>Login</title>
+<<<<<<< HEAD
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+=======
+        <link rel="shortcut icon" href="public/img/metacheIc.ico" /> 
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+>>>>>>> develop
 </head>
 
 <body class="vh-100 d-flex align-items-center justify-content-center">
@@ -30,11 +37,24 @@
                             <div class="mb-3">
                                 <div class="mb-2 w-100">
                                     <label class="text-muted" for="senha">Senha</label>
+<<<<<<< HEAD
                                     <a href="forgot.html" class="float-end text-decoration-none" style="color: #FF6B01;">
                                         Esqueceu a senha?
                                     </a>
                                 </div>
                                 <input id="senha" type="password" class="form-control" name="senha" required>
+=======
+                                    <a href="/recuperarSenha/email" class="float-end text-decoration-none" style="color: #FF6B01;">
+                                        Esqueceu a senha?
+                                    </a>
+                                </div>
+                                <div class="input-group">
+                                    <input id="senha" type="password" class="form-control" name="senha" required>
+                                    <span class="input-group-text eye-icon" id="togglePassword">
+                                        <i class="bi bi-eye-slash"></i>
+                                    </span>
+                                </div>
+>>>>>>> develop
                                 <div class="invalid-feedback">
                                     Senha inválida
                                 </div>
@@ -45,10 +65,16 @@
                             </div>
                         </form>
 
+<<<<<<< HEAD
                         <!-- Mensagem de erro -->
                         <?php if (!empty($errorMessage)): ?>
                             <div class="alert alert-danger mt-3" role="alert">
                                 <?php echo $errorMessage; ?>
+=======
+                        <?php if (!empty($erroMensagem)): ?>
+                            <div class="alert alert-danger mt-3" role="alert">
+                                <?php echo $erroMensagem; ?>
+>>>>>>> develop
                             </div>
                         <?php endif; ?>
                     </div>
@@ -61,5 +87,22 @@
             </div>
         </div>
     </section>
+<<<<<<< HEAD
+=======
+
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const senhaInput = document.getElementById('senha');
+
+        togglePassword.addEventListener('click', function () {
+            
+            const type = senhaInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            senhaInput.setAttribute('type', type);
+
+            this.innerHTML = type === 'password' ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
+        });
+
+    </script>
+>>>>>>> develop
 </body>
 </html>
