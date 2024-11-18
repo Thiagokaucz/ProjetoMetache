@@ -1,7 +1,11 @@
 <?php
 <<<<<<< HEAD
 session_start();
+<<<<<<< HEAD
 require_once 'app/models/UserModel.php';
+=======
+require_once 'app/models/CadastroModel.php';
+>>>>>>> 8dd99ddb18599ff97171806917c64fa4cb65d2ec
 
 class CadastroController {
     public function cadastrar() {
@@ -38,7 +42,11 @@ class CadastroController {
             } else {
 <<<<<<< HEAD
                 // Verifica se o e-mail já está registrado
+<<<<<<< HEAD
                 $userModel = new UserModel();
+=======
+                $userModel = new CadastroModel();
+>>>>>>> 8dd99ddb18599ff97171806917c64fa4cb65d2ec
                 if ($userModel->emailExists($email)) {
                     $errorMessage = 'Este e-mail já está registrado.';
                 } else {

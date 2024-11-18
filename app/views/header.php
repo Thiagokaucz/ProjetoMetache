@@ -17,10 +17,14 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
 <<<<<<< HEAD
+<<<<<<< HEAD
             <a class="navbar-brand" href="#">
 =======
             <a class="navbar-brand" href="/">
 >>>>>>> develop
+=======
+            <a class="navbar-brand" href="/">
+>>>>>>> 8dd99ddb18599ff97171806917c64fa4cb65d2ec
                 <img src="public/img/Metache.png" alt="Logo" height="25" width="auto">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +36,7 @@
                         <a class="nav-link" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item">
+<<<<<<< HEAD
 <<<<<<< HEAD
                         <a class="nav-link" href="/sobre">Sobre</a>
                     </li>
@@ -60,6 +65,8 @@
                         <a class="nav-link" href="/notificacoes">Notificações</a>
                     </li>
 =======
+=======
+>>>>>>> 8dd99ddb18599ff97171806917c64fa4cb65d2ec
                         <a class="nav-link" href="/minhasCompras">Minhas compras</a>
                     </li>
                     <li class="nav-item">
@@ -69,6 +76,7 @@
                         <a class="nav-link" href="/chatLista">Chat</a>
                     </li>
                     <li class="nav-item">
+<<<<<<< HEAD
     <a id="notificacao-link" class="nav-link position-relative" href="/notificacao">
         Notificações
         <span id="notificacao-badge" class="position-absolute top-60 start-58 translate-middle-y badge rounded-pill bg-danger" style="display: none; transform: translate(-50%, -40%);">
@@ -78,22 +86,32 @@
 </li>
 
 >>>>>>> develop
+=======
+                        <a class="nav-link" href="/notificacao">Notificações</a>
+                    </li>
+>>>>>>> 8dd99ddb18599ff97171806917c64fa4cb65d2ec
                 </ul>
 
                 <ul class="navbar-nav">
                     <?php if (isset($_SESSION['user_name'])): ?>
                         <li class="nav-item">
 <<<<<<< HEAD
+<<<<<<< HEAD
                             <a class="nav-link" href="/usuario"><span class="bi bi-person"></span> <?php echo htmlspecialchars($_SESSION['user_name']); ?></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/login" style="color: orange;">Anunciar</a>
 =======
+=======
+>>>>>>> 8dd99ddb18599ff97171806917c64fa4cb65d2ec
                             <a class="nav-link" href="/perfilUsuario"><span class="bi bi-person"></span> <?php echo htmlspecialchars($_SESSION['user_name']); ?></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/anunciar" style="color: orange;">Anunciar</a>
+<<<<<<< HEAD
 >>>>>>> develop
+=======
+>>>>>>> 8dd99ddb18599ff97171806917c64fa4cb65d2ec
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/logout" style="color: red;"><span class="bi bi-box-arrow-right"></span> Sair</a>

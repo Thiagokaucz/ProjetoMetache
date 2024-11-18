@@ -38,7 +38,11 @@
                                 <div class="mb-2 w-100">
                                     <label class="text-muted" for="senha">Senha</label>
 <<<<<<< HEAD
+<<<<<<< HEAD
                                     <a href="forgot.html" class="float-end text-decoration-none" style="color: #FF6B01;">
+=======
+                                    <a href="/recuperarSenha" class="float-end text-decoration-none" style="color: #FF6B01;">
+>>>>>>> 8dd99ddb18599ff97171806917c64fa4cb65d2ec
                                         Esqueceu a senha?
                                     </a>
                                 </div>
@@ -67,6 +71,7 @@
 
 <<<<<<< HEAD
                         <!-- Mensagem de erro -->
+<<<<<<< HEAD
                         <?php if (!empty($errorMessage)): ?>
                             <div class="alert alert-danger mt-3" role="alert">
                                 <?php echo $errorMessage; ?>
@@ -75,6 +80,11 @@
                             <div class="alert alert-danger mt-3" role="alert">
                                 <?php echo $erroMensagem; ?>
 >>>>>>> develop
+=======
+                        <?php if (!empty($erroMensagem)): ?>
+                            <div class="alert alert-danger mt-3" role="alert">
+                                <?php echo $erroMensagem; ?>
+>>>>>>> 8dd99ddb18599ff97171806917c64fa4cb65d2ec
                             </div>
                         <?php endif; ?>
                     </div>

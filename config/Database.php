@@ -1,6 +1,7 @@
 <?php
 class Database {
 <<<<<<< HEAD
+<<<<<<< HEAD
     private $host = 'localhost';
     private $db_name = 'metache'; // Substitua pelo nome do seu banco
     private $username = 'root'; // Usuário padrão
@@ -19,6 +20,8 @@ class Database {
 
         return $this->conn;
 =======
+=======
+>>>>>>> 8dd99ddb18599ff97171806917c64fa4cb65d2ec
     
     private $host = 'localhost'; 
     private $nomeDoBanco = 'metache';
@@ -38,7 +41,10 @@ class Database {
             echo "Erro na conexão: " . $excecao->getMessage();
         }
         return $this->conexao;
+<<<<<<< HEAD
 >>>>>>> develop
+=======
+>>>>>>> 8dd99ddb18599ff97171806917c64fa4cb65d2ec
     }
 }
 ?>

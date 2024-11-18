@@ -3,12 +3,18 @@
         <h1>Está esperando o quê?</h1>
 <<<<<<< HEAD
         <p>Aqui você pode anunciar gratuitamente de forma rápida e eficiente.</p>
+<<<<<<< HEAD
         <button type="button" class="btn btn-success" style="background-color: #FF6B01; border-color: #FF6B01;">Anuncie Agora!</button>
     </div>
+=======
+        <button type="button" class="btn btn-success" onclick="window.location.href='/anunciar';" style="background-color: #FF6B01; border-color: #FF6B01; color: white;">Anuncie Agora!</button>
+        </div>
+>>>>>>> 8dd99ddb18599ff97171806917c64fa4cb65d2ec
 
     <div class="container mt-5">
         <div class="row">
             <div class="col-sm-4">
+<<<<<<< HEAD
                 <h3>Escolher o Produto</h3>
                 <p>Navegue e selecione o item desejado.</p>
             </div>
@@ -27,6 +33,9 @@
         <div class="row text-center">
             <div class="col-sm-4">
                 <h3>1º Escolher o Produto</h3>
+=======
+                <h3>1° Escolher o Produto</h3>
+>>>>>>> 8dd99ddb18599ff97171806917c64fa4cb65d2ec
                 <p>Navegue e selecione o item desejado.</p>
             </div>
             <div class="col-sm-4">
@@ -34,8 +43,12 @@
                 <p>Confira as especificações e avaliações do produto.</p>
             </div>
             <div class="col-sm-4">
+<<<<<<< HEAD
                 <h3>3º Negociar</h3>
 >>>>>>> develop
+=======
+                <h3>3° Negociar</h3>
+>>>>>>> 8dd99ddb18599ff97171806917c64fa4cb65d2ec
                 <p>Converse com o vendedor sobre preço e condições.</p>
             </div>
         </div>
@@ -47,6 +60,7 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
+<<<<<<< HEAD
             <a class="nav-link active" aria-current="page" href="#">Ajuda e contato</a>
         </li>
         <li class="nav-item">
@@ -54,6 +68,15 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">Anunciar</a>
+=======
+            <a class="nav-link active" aria-current="page" href="ajudaContato">Ajuda e contato</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="dicasSeguranca">Dicas de segurança</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/anunciar">Anunciar</a>
+>>>>>>> 8dd99ddb18599ff97171806917c64fa4cb65d2ec
         </li>
     </ul>
     <span class="navbar-text">

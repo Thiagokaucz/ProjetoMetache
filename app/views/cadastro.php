@@ -132,10 +132,14 @@
                     <div class="card-footer py-3 border-0">
                         <div class="text-center">
 <<<<<<< HEAD
+<<<<<<< HEAD
                             Já tem uma conta? <a href="login.php" class="text-dark">Fazer login</a>
 =======
                             Já tem uma conta? <a href="/login" class="text-dark">Fazer login</a>
 >>>>>>> develop
+=======
+                            Já tem uma conta? <a href="/login" class="text-dark">Fazer login</a>
+>>>>>>> 8dd99ddb18599ff97171806917c64fa4cb65d2ec
                         </div>
                     </div>
                 </div>

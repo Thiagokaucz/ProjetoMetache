@@ -1,12 +1,15 @@
 <?php
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Obtém a URL atual
 $url = isset($_SERVER['REQUEST_URI']) ? parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) : '/';
 =======
 >>>>>>> develop
 
 
+=======
+>>>>>>> 8dd99ddb18599ff97171806917c64fa4cb65d2ec
 require_once('rotas.php');
 
 $url = isset($_SERVER['REQUEST_URI']) ? parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) : '/';
@@ -27,8 +30,12 @@ if (array_key_exists($url, $rotas)) {
     require_once 'app/views/header.php';
     require_once('app/views/error.php');
 <<<<<<< HEAD
+<<<<<<< HEAD
     require_once('app/views/footer.php');
 }
 =======
 }
 >>>>>>> develop
+=======
+}
+>>>>>>> 8dd99ddb18599ff97171806917c64fa4cb65d2ec
