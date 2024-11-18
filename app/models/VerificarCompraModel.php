@@ -1,5 +1,5 @@
 <?php
-require_once 'config/Database.php'; // Inclua o arquivo de configuração do banco de dados
+require_once 'config/Database.php'; 
 
 class VerificarCompraModel {
     private $pdo;
@@ -15,7 +15,6 @@ class VerificarCompraModel {
 
         $stmt = $this->pdo->prepare($query);
         
-        // Bind dos parâmetros
         $stmt->bindParam(':payment_id', $payment_id);
         $stmt->bindParam(':status', $status);
         $stmt->bindParam(':link_compra_id', $linkCompraID);
@@ -26,7 +25,6 @@ class VerificarCompraModel {
         $stmt->bindParam(':valor_compra', $valorCompra);
         $stmt->bindParam(':valor_frete', $valorFrete);
         
-        // Executa a query
         if ($stmt->execute()) {
             return true;
         }

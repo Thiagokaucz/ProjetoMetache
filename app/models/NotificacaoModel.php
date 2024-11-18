@@ -1,5 +1,5 @@
 <?php
-require_once 'config/Database.php'; // Inclua o caminho correto para o seu arquivo Database.php
+require_once 'config/Database.php'; 
 
 class NotificacaoModel {
     private $conn;
@@ -9,7 +9,6 @@ class NotificacaoModel {
         $this->conn = $database->obterConexao();
     }
 
-    // Função para obter todas as notificações de um usuário
     public function getNotificacoesByUserID($destinatarioID) {
         $query = '
             SELECT n.*, c.produtoID, p.locImagem, p.titulo AS produtoTitulo, u.nome AS usuarioNome
@@ -25,20 +24,15 @@ class NotificacaoModel {
         $stmt->execute();
     
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-    
-    
-    
+    }   
 
-    // Função para excluir uma notificação
     public function deleteNotificacao($notificacaoID) {
         $query = 'DELETE FROM notificacao WHERE notificacaoID = :notificacaoID';
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':notificacaoID', $notificacaoID);
-        return $stmt->execute(); // Retorna true se a exclusão for bem-sucedida
+        return $stmt->execute(); 
     }
 
-    // Função para obter o produtoID usando o chatID
     public function getProdutoIDByChatID($chatID) {
         $query = 'SELECT produtoID FROM chat WHERE chatID = :chatID';
         $stmt = $this->conn->prepare($query);

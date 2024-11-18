@@ -23,7 +23,6 @@ class AdmCadastrarUsuarioController {
             $resultado = $admModel->cadastrarUsuario($nome, $usuario, $senha);
 
             if ($resultado) {
-                // Redireciona para a página de login ou outra página de sucesso
                 header('Location: /admlogin');
                 exit();
             } else {
@@ -31,6 +30,6 @@ class AdmCadastrarUsuarioController {
             }
         }
 
-        require 'app/views/AdmCadastrarUsuario.php'; // View para o formulário de cadastro do administrador
+        require 'app/views/AdmCadastrarUsuario.php'; 
     }
 }

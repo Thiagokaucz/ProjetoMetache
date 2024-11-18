@@ -74,10 +74,15 @@
     <div class="col-lg-8">
       <div class="bordered-box">
         <?php if (isset($produto)): ?>
-          <img src="<?php echo $produto['locImagem']; ?>" alt="Imagem do Produto" class="img-fluid product-image mb-4">
+          <img src="<?php echo $produto['locImagem']; ?>" alt="Imagem do Produto" class="img-fluid product-image mb-4 d-block mx-auto">
           <h2 class="fw-bold"><?php echo htmlspecialchars($produto['titulo']); ?></h2>
           <p class="text-muted">Publicado em <?php echo date('d/m/Y H:i', strtotime($produto['dataHoraPub'])); ?></p>
-          <p class="product-info"><?php echo htmlspecialchars($produto['descricao']); ?></p>
+          <div class="product-description">
+            <h5>Descrição:</h5>
+
+  <p class="product-info" style="text-align: justify;"><?php echo htmlspecialchars($produto['descricao']); ?></p>
+</div>
+
 
           <div class="row text-center">
             <div class="col">
@@ -132,10 +137,9 @@
     </div>
   </div>
 
-  <!-- Link "Ver mais anúncios relacionados" no final da página -->
   <div class="text-center mt-4">
     <p>
-    <a href="http://localhost/PesquisarProdutosPor?Categoria=<?php echo urlencode($produto['nomeCategoria']); ?>&Regiao=<?php echo urlencode($produto['localizacao']); ?>&Ordem=Data&Pesquisa=" 
+    <a href="/PesquisarProdutosPor?Categoria=<?php echo urlencode($produto['nomeCategoria']); ?>&Regiao=<?php echo urlencode($produto['localizacao']); ?>&Ordem=Data&Pesquisa=" 
       class="text-decoration-none fw-bold text-dark">
       Ver anúncios relacionados
     </a>

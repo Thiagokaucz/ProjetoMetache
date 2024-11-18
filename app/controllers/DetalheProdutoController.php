@@ -12,7 +12,7 @@ class DetalheProdutoController {
 
     public function mostrarDetalhes() {
         $id = isset($_GET['id']) ? $_GET['id'] : null;
-        $noChat = isset($_GET['noChat']); // Verifica se o parâmetro "noChat" está presente
+        $noChat = isset($_GET['noChat']); 
     
         if ($id) {
             $produto = $this->produtoModel->getProdutoById($id);

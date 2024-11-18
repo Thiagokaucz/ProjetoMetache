@@ -2,11 +2,13 @@
 <html lang="pt-br">
 <head>
     <meta charset="utf-8">
+        <link rel="shortcut icon" href="public/img/metacheIc.ico" /> 
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Tela de Validação de Segurança Metache">
     <title>Validação de Segurança</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"> <!-- Adicionando Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 </head>
 
 <body class="vh-100 d-flex align-items-center justify-content-center">
@@ -33,7 +35,6 @@
                             </div>
                         </form>
 
-                        <!-- Mensagem de erro -->
                         <?php if (!empty($erroMensagem)): ?>
                             <div class="alert alert-danger mt-3" role="alert">
                                 <?php echo $erroMensagem; ?>
@@ -45,7 +46,6 @@
         </div>
     </section>
 
-    <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>

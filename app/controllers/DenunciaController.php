@@ -8,7 +8,6 @@ class DenunciaController {
         $this->denunciaModel = new DenunciaModel();
     }
 
-    // Exibe o formulário de denúncia
     public function mostrarFormulario() {
         $aquisicaoID = $_GET['aquisicaoID'] ?? null;
         require_once 'app/views/header.php';
@@ -16,7 +15,6 @@ class DenunciaController {
         require_once 'app/views/footerConfig.php';
     }
 
-    // Processa a criação da denúncia
     public function criarDenuncia() {
         $aquisicaoID = $_POST['aquisicaoID'] ?? null;
         $motivo = $_POST['motivo'] ?? '';

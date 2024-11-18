@@ -20,7 +20,6 @@
     <div class="container my-4">
         <h1 class="mb-4">Editar Produto</h1>
 
-        <!-- Formulário para edição de produto -->
         <form method="POST" action="" class="border p-4 rounded shadow">
             <div class="mb-3">
                 <label for="titulo" class="form-label">Título:</label>
@@ -47,19 +46,17 @@
         </form>
     </div>
 
-    <!-- Bootstrap JS e jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Formatação do campo de valor para moeda
         $(document).ready(function() {
     $('#valor').on('input', function() {
-        let value = $(this).val().replace(/\D/g, ''); // Remove caracteres não numéricos
-        let formattedValue = (value / 100).toFixed(2).replace('.', ','); // Formata com vírgula
-        formattedValue = formattedValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Insere ponto a cada milhar
-        $(this).val(formattedValue); // Atualiza o campo visível
+        let value = $(this).val().replace(/\D/g, ''); 
+        let formattedValue = (value / 100).toFixed(2).replace('.', ','); 
+        formattedValue = formattedValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); 
+        $(this).val(formattedValue); 
         
-        $('#valor_oculto').val(value / 100); // Atualiza o campo oculto com o valor numérico sem formatação
+        $('#valor_oculto').val(value / 100); 
     });
 });
 

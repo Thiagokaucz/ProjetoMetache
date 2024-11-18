@@ -1,5 +1,5 @@
 <?php
-require_once 'config/Database.php'; // Inclua o caminho correto para o seu arquivo Database.php
+require_once 'config/Database.php'; 
 
 class LoginModel {
     private $conn;
@@ -18,15 +18,13 @@ class LoginModel {
     
         if ($user) {
             if ($user['statusConta'] === 'desativada') {
-                // Retorna uma mensagem informando que a conta foi desativada
                 return 'desativada';
             } elseif (password_verify($senha, $user['senha'])) {
-                // Se a senha estiver correta e a conta ativa, retorna os dados do usuário
                 return $user;
             }
         }
     
-        return false; // Se falhar, retorna falso
+        return false; 
     }
     
 

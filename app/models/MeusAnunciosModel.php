@@ -9,12 +9,11 @@ class MeusAnunciosModel {
         $this->conn = $database->obterConexao();
     }
 
-    // Buscar produtos de um usuário específico (usuário logado)
     public function buscarProdutosPorUsuario($userID) {
         $sql = "SELECT produtoID, userID, categoriaID, titulo, condicao, descricao, disponibilidade, valor, locImagem, dataHoraPub, localizacao, visualizacao 
                 FROM produto 
                 WHERE userID = :userID 
-                GROUP BY produtoID"; // Adiciona o GROUP BY para evitar duplicação por possíveis joins ou outras causas
+                GROUP BY produtoID"; 
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
         $stmt->execute();
@@ -22,20 +21,18 @@ class MeusAnunciosModel {
     }
     
 
-    // Verificar se o produto está em aquisição
     public function verificarProdutoEmAquisicao($produtoID) {
         $sql = "SELECT statusAquisicao, statusPagamentoVendedor
                 FROM aquisicoes 
                 WHERE produtoID = :produtoID 
-                LIMIT 1";  // Limite para garantir apenas um resultado
+                LIMIT 1";  
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':produtoID', $produtoID, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC); // Retorna o status da aquisição e pagamento
+        return $stmt->fetch(PDO::FETCH_ASSOC); 
     }
 
     public function obterAquisicaoPorProduto($produtoID) {
-        // Adicione valorProduto e valorFrete à consulta
         $sql = "SELECT aquisicaoID, chatID, statusAquisicao, statusPagamentoVendedor, valorProduto, valorFrete 
                 FROM aquisicoes 
                 WHERE produtoID = :produtoID 
@@ -45,62 +42,83 @@ class MeusAnunciosModel {
         $stmt->bindParam(':produtoID', $produtoID, PDO::PARAM_INT);
         $stmt->execute();
         
-        return $stmt->fetch(PDO::FETCH_ASSOC); // Retorna a primeira aquisição encontrada ou false se não houver
+        return $stmt->fetch(PDO::FETCH_ASSOC); 
     }
     
     
-    // Função para buscar o chatID baseado no produtoID
     public function buscarChatIDPorProdutoID($produtoID) {
         $sql = "SELECT chatID 
                 FROM aquisicoes 
                 WHERE produtoID = :produtoID 
-                LIMIT 1";  // Limite para garantir apenas um resultado
+                LIMIT 1";  
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':produtoID', $produtoID, PDO::PARAM_INT);
         $stmt->execute();
         
-        $resultado = $stmt->fetch(PDO::FETCH_ASSOC); // Retorna o resultado como um array associativo
-        return $resultado ? $resultado['chatID'] : null; // Retorna o chatID ou null se não encontrado
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC); 
+        return $resultado ? $resultado['chatID'] : null; 
     }
 
-    // Função para obter um anúncio pelo ID
     public function obterAnuncioPorID($produtoID) {
-        // Prepara a query para evitar injeção de SQL
+
         $sql = "SELECT * FROM produto WHERE produtoID = :produtoID";
         $stmt = $this->conn->prepare($sql);
 
-        // Associa o parâmetro :produtoID ao valor
         $stmt->bindParam(':produtoID', $produtoID, PDO::PARAM_INT);
 
-        // Executa a query
         $stmt->execute();
 
-        // Retorna o resultado
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Função para atualizar a disponibilidade do anúncio
     public function atualizarDisponibilidade($produtoID, $novaDisponibilidade) {
         $sql = "UPDATE produto SET disponibilidade = :disponibilidade WHERE produtoID = :produtoID";
         $stmt = $this->conn->prepare($sql);
 
-        // Associa os parâmetros
         $stmt->bindParam(':disponibilidade', $novaDisponibilidade, PDO::PARAM_STR);
         $stmt->bindParam(':produtoID', $produtoID, PDO::PARAM_INT);
 
-        // Executa a query
         return $stmt->execute();
     }
 
-    public function excluirAnuncioPorID($produtoID) {
-        $sql = "DELETE FROM produto WHERE produtoID = :produtoID";
+public function excluirAnuncioPorID($produtoID) {
+
+    $sql = "SELECT chatID FROM chat WHERE produtoID = :produtoID LIMIT 1";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bindParam(':produtoID', $produtoID, PDO::PARAM_INT);
+    $stmt->execute();
+    $chat = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($chat) {
+
+        $chatID = $chat['chatID'];
+
+        $sql = "DELETE FROM linkcompra WHERE chatID = :chatID";
         $stmt = $this->conn->prepare($sql);
-        
-        // Associa o parâmetro :produtoID ao valor
-        $stmt->bindParam(':produtoID', $produtoID, PDO::PARAM_INT);
-    
-        // Executa a query de exclusão
-        return $stmt->execute();
+        $stmt->bindParam(':chatID', $chatID, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $sql = "DELETE FROM notificacao WHERE chatID = :chatID";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':chatID', $chatID, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $sql = "DELETE FROM mensagem WHERE chatID = :chatID";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':chatID', $chatID, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $sql = "DELETE FROM chat WHERE chatID = :chatID";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':chatID', $chatID, PDO::PARAM_INT);
+        $stmt->execute();
     }
+
+    $sql = "DELETE FROM produto WHERE produtoID = :produtoID";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bindParam(':produtoID', $produtoID, PDO::PARAM_INT);
+    return $stmt->execute();
+}
+
     
 }

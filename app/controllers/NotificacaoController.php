@@ -5,20 +5,14 @@ require_once 'app/models/NotificacaoModel.php';
 class NotificacaoController {
     private $notificacaoModel;
 
-    // Construtor correto
     public function __construct() {
         $this->notificacaoModel = new NotificacaoModel();
     }
 
-    // Função para exibir todas as notificações de um usuário
     public function mostrarNotificacoes() {
         if (isset($_SESSION['user_id'])) {
             $userID = $_SESSION['user_id'];
-            
-            // Obtém todas as notificações do usuário com produtoID, locImagem, produtoTitulo e usuarioNome
             $notificacoes = $this->notificacaoModel->getNotificacoesByUserID($userID);
-    
-            // Exibe a view de notificações
             require_once 'app/views/header.php';
             require_once 'app/views/notificacao.php';
             require_once 'app/views/footerConfig.php';
@@ -27,19 +21,12 @@ class NotificacaoController {
             exit();
         }
     }
-    
-    
-    
 
     public function excluirNotificacao() {
-        // Verifica se o ID da notificação foi passado na URL
         if (isset($_GET['id'])) {
-            $notificacaoID = $_GET['id']; // Obtém o ID da notificação
-    
-            // Chama o método do modelo para excluir a notificação
+            $notificacaoID = $_GET['id'];
             if ($this->notificacaoModel->deleteNotificacao($notificacaoID)) {
-                // Redireciona para a lista de notificações após excluir
-                header('Location: /notificacao'); // Ajuste o caminho se necessário
+                header('Location: /notificacao');
                 exit();
             } else {
                 echo "Erro ao excluir notificação.";
@@ -48,6 +35,5 @@ class NotificacaoController {
             echo "ID da notificação não fornecido.";
         }
     }
-    
 }
 ?>

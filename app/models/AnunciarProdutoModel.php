@@ -22,7 +22,7 @@ class AnunciarProdutoModel {
         $valor = $postData['valor'];
         $localizacao = $postData['localizacao'];
         $dataHoraPub = date('Y-m-d H:i:s');
-        $uploadedFotos = $this->uploadFotos($files['foto'], $userID); // Chame o upload de fotos
+        $uploadedFotos = $this->uploadFotos($files['foto'], $userID); 
 
         $query = "INSERT INTO produto 
                   (userID, categoriaID, titulo, condicao, descricao, valor, locImagem, dataHoraPub, localizacao) 
@@ -80,10 +80,10 @@ class AnunciarProdutoModel {
     }
 
     public function getCategorias() {
-        $query = "SELECT categoriaID, categoria FROM categoria";  // Certifique-se de que a tabela 'categoria' existe no banco de dados
+        $query = "SELECT categoriaID, categoria FROM categoria";  
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);  // Retorna um array de categorias
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);  
     }
 
     public function verificarVendedor($userID) {
@@ -92,8 +92,7 @@ class AnunciarProdutoModel {
         $stmt->bindParam(':userID', $userID);
         $stmt->execute();
         
-        // Verifica se o usuário é vendedor
-        return $stmt->fetchColumn() === 'sim'; // Retorna true se for vendedor, false caso contrário
+        return $stmt->fetchColumn() === 'sim'; 
     }
     
 }

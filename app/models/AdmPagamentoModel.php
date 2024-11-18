@@ -10,7 +10,6 @@ class AdmPagamentoModel {
     }
 
     public function getPagamentoDetails($id) {
-        // Busca os dados na tabela compraspagamento pelo id
         $sql = "SELECT cp.*, p.titulo AS titulo_produto, p.locImagem AS imagem_produto, 
                        u.nome, u.sobrenome, u.email
                 FROM compraspagamento cp
@@ -24,7 +23,6 @@ class AdmPagamentoModel {
         $pagamento = $stmt->fetch(PDO::FETCH_ASSOC);
     
         if ($pagamento) {
-            // Buscar denúncia relacionada, se houver
             $sqlDenuncia = "SELECT motivo, status, dataCriacao FROM denuncias WHERE aquisicaoID = :aquisicaoID";
             $stmtDenuncia = $this->db->prepare($sqlDenuncia);
             $stmtDenuncia->bindParam(':aquisicaoID', $pagamento['aquisicaoID']);

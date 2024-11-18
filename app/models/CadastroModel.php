@@ -29,6 +29,6 @@ class CadastroModel {
         $stmt->bindParam(':cep', $cep);
         $stmt->execute();
 
-        return $this->conn->lastInsertId(); // Retorna o ID do usuário recém-cadastrado
+        return $this->conn->lastInsertId(); 
     }
 }

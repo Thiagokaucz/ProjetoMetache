@@ -2,7 +2,7 @@
 
 require_once 'app/models/RetornoOAuthModel.php';
 
-session_start(); // Inicia a sessão para obter o user_id
+session_start(); 
 
 class RetornoOAuthController
 {
@@ -16,11 +16,10 @@ class RetornoOAuthController
         $this->usuarioModel = new UsuarioModel();
     }
 
-    // Redireciona automaticamente para o Mercado Pago para autorização
     public function exibirLinkAutorizacao()
     {
         $link = "https://auth.mercadopago.com/authorization?client_id={$this->client_id}&response_type=code&redirect_uri={$this->redirect_uri}";
-        header("Location: $link"); // Redireciona para a URL de autorização
+        header("Location: $link"); 
         exit();
     }
 
@@ -74,7 +73,6 @@ class RetornoOAuthController
             $erro = "Parâmetro 'code' não encontrado na URL.";
         }
 
-        // Carrega a visualização e passa os dados
         include 'app/views/retornoOAuthView.php';
     }
 }

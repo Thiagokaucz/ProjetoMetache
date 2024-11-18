@@ -9,7 +9,6 @@ class PerfilUsuarioModel {
         $this->conn = $database->obterConexao();
     }
 
-    // Buscar usuário por ID (usuário em sessão)
     public function buscarUsuarioPorID($userID) {
         $sql = "SELECT * FROM usuario WHERE userID = :userID";
         $stmt = $this->conn->prepare($sql);
@@ -18,7 +17,6 @@ class PerfilUsuarioModel {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Atualizar dados do usuário
     public function atualizarUsuario($userID, $nome, $sobrenome, $email, $cep) {
         $sql = "UPDATE usuario SET nome = :nome, sobrenome = :sobrenome, email = :email, cep = :cep WHERE userID = :userID";
         $stmt = $this->conn->prepare($sql);
@@ -30,7 +28,6 @@ class PerfilUsuarioModel {
         return $stmt->execute();
     }
 
-    // Desativa o usuário logado
     public function desativarUsuario($userID) {
         $sql = "UPDATE usuario SET statusConta = 'desativada' WHERE userID = :userID";
         $stmt = $this->conn->prepare($sql);

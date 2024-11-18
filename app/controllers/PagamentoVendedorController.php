@@ -10,25 +10,20 @@ class PagamentoVendedorController {
     }
 
     public function realizarPagamento() {
-        // Verifica se o ID da compra foi passado na URL
         $id = isset($_GET['id']) ? intval($_GET['id']) : null;
 
         if ($id) {
-            // Busca os detalhes da compra pelo ID
             $compra = $this->model->buscarCompraPorId($id);
 
             if ($compra) {
-                // Busca o token do vendedor
                 $vendedorToken = $this->model->obterTokenVendedor($compra['vendedor_id']);
                 if (!$vendedorToken) {
                     echo "Token do vendedor não encontrado.";
                     return;
                 }
 
-                // Calcula o valor a ser transferido para o vendedor (5% do valor da compra)
                 $valorPagamento = $this->model->calcularValorPagamento($compra['valor_compra']);
                 
-                // Configurando a preferência de pagamento para o Mercado Pago
                 $preferenceData = [
                     "auto_return" => "approved",
                     "back_urls" => [
@@ -40,11 +35,11 @@ class PagamentoVendedorController {
                         [
                             "title" => "Pagamento ao vendedor",
                             "quantity" => 1,
-                            "unit_price" => floatval($valorPagamento)  // Valor a ser transferido para o vendedor
+                            "unit_price" => floatval($valorPagamento)
                         ]
                     ],
                     "payer" => [
-                        "email" => "test_user_12398378192@testuser.com"  // E-mail do destinatário, pode ser alterado para o e-mail real
+                        "email" => "test_user_12398378192@testuser.com"
                     ],
                     "payment_methods" => [
                         "excluded_payment_types" => [
@@ -55,12 +50,11 @@ class PagamentoVendedorController {
                             ["id" => "atm"]
                         ],
                         "default_payment_method_id" => "account_money",
-                        "installments" => 1  // Número de parcelas permitidas
+                        "installments" => 1
                     ],
-                    "notification_url" => "https://www.your-site.com/webhook"  // URL para notificações
+                    "notification_url" => "https://www.your-site.com/webhook"
                 ];
 
-                // Inicializando cURL para o Mercado Pago
                 $curl = curl_init();
                 curl_setopt_array($curl, array(
                     CURLOPT_URL => 'https://api.mercadopago.com/checkout/preferences',
@@ -73,24 +67,18 @@ class PagamentoVendedorController {
                     ),
                 ));
 
-                // Executando a requisição
                 $response = curl_exec($curl);
                 curl_close($curl);
 
-                // Decodificando a resposta
                 $data = json_decode($response, true);
 
-                // Verificando se a URL do checkout está presente
                 if (isset($data['init_point'])) {
-                    // Redireciona o usuário para a URL do checkout
                     header("Location: " . $data['init_point']);
                     exit();
                 } else {
-                    // Em caso de erro, exibe a mensagem ou loga o erro
                     echo "Erro ao criar a preferência de pagamento: " . $response;
                 }
 
-                // Atualiza o status do pagamento para "realizado"
                 $this->model->atualizarStatusPagamento($id, 'realizado');
             } else {
                 echo "Compra não encontrada.";
@@ -100,27 +88,43 @@ class PagamentoVendedorController {
         }
     }
 
-    public function atualizarStatusAdmMetache() {
-        $id = isset($_GET['id']) ? intval($_GET['id']) : null;
-    
-        if ($id) {
-            $this->model->atualizarStatusAdmMetache($id, 'finalizado');
-            
-            // Exibe mensagem e redireciona
-            echo "
-            <div style='text-align: center; font-family: Arial, sans-serif; margin-top: 20px;'>
-                <p style='color: green;'>Status atualizado para finalizado. Redirecionando...</p>
+public function atualizarStatusAdmMetache() {
+    $id = isset($_GET['id']) ? intval($_GET['id']) : null;
+
+    if ($id) {
+        $this->model->atualizarStatusAdmMetache($id, 'finalizado');
+        
+        echo "
+        <!DOCTYPE html>
+        <html lang='pt-BR'>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <title>Status Atualizado</title>
+            <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' rel='stylesheet'>
+        </head>
+        <body class='d-flex justify-content-center align-items-center bg-light' style='height: 100vh;'>
+            <div class='container text-center'>
+                <div class='alert alert-success' role='alert'>
+                    <h4 class='alert-heading'>✅ Pagamento aprovado!</h4>
+                    <p>O vendedor recebeu o pagamento.</p>
+                    <p class='mb-0'>Redirecionando para a página de upload de documentos...</p>
+                </div>
             </div>
+            <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js'></script>
             <script>
                 setTimeout(function() {
                     window.location.href = '/uploadDocumentos?compraspagamento={$id}';
                 }, 3000);
             </script>
+        </body>
+        </html>
         ";
-        } else {
-            echo "ID da compra não especificado.";
-        }
+    } else {
+        echo "ID da compra não especificado.";
     }
+}
+
     
 }
 ?>

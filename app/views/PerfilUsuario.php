@@ -49,17 +49,16 @@
 </div>
 
 <script>
-// Função para atualizar o status para "Desativada" e enviar o formulário de desativação
+
 function desativarConta() {
-    document.getElementById('statusConta').value = 'Desativada'; // Define o status como Desativada
-    var form = document.createElement('form'); // Cria o formulário
+    document.getElementById('statusConta').value = 'Desativada'; 
+    var form = document.createElement('form'); 
     form.method = 'POST';
     form.action = '/perfilUsuario/desativar';
     document.body.appendChild(form);
-    form.submit(); // Envia o formulário
+    form.submit(); 
 }
 
-// Esconde a notificação após 3 segundos
 setTimeout(function() {
     var notification = document.getElementById('notification');
     if (notification) {
@@ -69,7 +68,6 @@ setTimeout(function() {
 </script>
 
 <style>
-/* Estilo para notificações */
 #notification {
     position: fixed;
     top: 20px;

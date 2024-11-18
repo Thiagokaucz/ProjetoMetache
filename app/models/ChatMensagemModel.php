@@ -34,10 +34,8 @@ class ChatMensagemModel {
 
         $stmt->execute();
         
-        // Obtém o resultado
         $chat = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Se encontrar um chat, retorna o chatID, caso contrário, retorna null
         return $chat ? $chat['chatID'] : null;
     }
 
@@ -50,17 +48,13 @@ class ChatMensagemModel {
     
             $stmt->execute();
             
-            // Obtém o resultado
             $chat = $stmt->fetch(PDO::FETCH_ASSOC);
     
-            // Se encontrar um chat, retorna o chatID, caso contrário, retorna null
             return $chat ? $chat['chatID'] : null;
         }
 
 
-        // Verifica se um chat existe para o produto e usuário fornecidos
         public function verificarOuCriarChat($produtoID, $compradorID, $vendedorID) {
-            // Verifica se já existe um chat com o produtoID, compradorID e vendedorID
             $query = "SELECT chatID FROM chat WHERE produtoID = :produtoID AND compradorID = :compradorID AND vendedorID = :vendedorID LIMIT 1";
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':produtoID', $produtoID);
@@ -72,10 +66,8 @@ class ChatMensagemModel {
             $chat = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($chat) {
-                // Se o chat já existe, retorna o chatID
                 return $chat['chatID'];
             } else {
-                // Se não existe, cria um novo chat
                 $query = "INSERT INTO chat (produtoID, compradorID, vendedorID, DataInicioChat) VALUES (:produtoID, :compradorID, :vendedorID, NOW())";
                 $stmt = $this->conn->prepare($query);
                 $stmt->bindParam(':produtoID', $produtoID);
@@ -83,7 +75,6 @@ class ChatMensagemModel {
                 $stmt->bindParam(':vendedorID', $vendedorID);
                 $stmt->execute();
 
-                // Retorna o ID do novo chat
                 return $this->conn->lastInsertId();
 
                 $conteudoNotificacao = "Usuário " . $userID . " iniciou uma negociação no chat " . $chatId;
@@ -92,13 +83,11 @@ class ChatMensagemModel {
         }
    
         public function verificarExistenciaChat($chatID) {
-            // Prepara a consulta para verificar se o chat existe
             $sql = "SELECT COUNT(*) FROM notificacao WHERE chatID = :chatID";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':chatID', $chatID, PDO::PARAM_INT); // Certifica-se de usar o tipo correto
+            $stmt->bindParam(':chatID', $chatID, PDO::PARAM_INT); 
             $stmt->execute();
         
-            // Verifica o resultado e retorna true se o chat existir, false caso contrário
             return $stmt->fetchColumn() > 0;
         }
         
@@ -115,24 +104,19 @@ class ChatMensagemModel {
             return $stmt->execute();
         }
 
-        // Busca o userID a partir do produtoID na tabela produto
         public function buscarUserIDPorProdutoID($produtoID) {
-            // Consulta para buscar o userID com base no produtoID
             $query = "SELECT userID FROM produto WHERE produtoID = :produtoID LIMIT 1";
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':produtoID', $produtoID);
 
             $stmt->execute();
             
-            // Obtém o resultado
             $produto = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            // Se encontrar o produto, retorna o userID, caso contrário, retorna null
             return $produto ? $produto['userID'] : null;
         }   
 
         public function salvarLinkCompra($chatId, $valorBrutoCompra, $valorCompra, $statusLinkCompra, $valorFrete, $produtoId) {
-            // Inserir o link de compra na tabela 'linkcompra'
             $query = "INSERT INTO linkcompra (chatID, valorBrutoCompra, valorCompra, statusLinkCompra, valorFrete, produtoID) 
                       VALUES (:chatID, :valorBrutoCompra, :valorCompra, :statusLinkCompra, :valorFrete, :produtoID)";
             $stmt = $this->conn->prepare($query);
@@ -141,16 +125,15 @@ class ChatMensagemModel {
             $stmt->bindParam(':valorCompra', $valorCompra);
             $stmt->bindParam(':statusLinkCompra', $statusLinkCompra);
             $stmt->bindParam(':valorFrete', $valorFrete);
-            $stmt->bindParam(':produtoID', $produtoId); // Adiciona o produtoID
+            $stmt->bindParam(':produtoID', $produtoId); 
             $stmt->execute();
         
-            // Retornar o ID do link de compra recém-criado
             return $this->conn->lastInsertId();
         }
         
         
         public function salvarMensagemComLinkCompra($chatId, $conteudo, $userId, $linkCompraID) {
-            // Inserir a mensagem na tabela 'mensagem' com o ID do link de compra
+
             $query = "INSERT INTO mensagem (conteudo, dataHora, chatID, userID, linkcompra) 
                       VALUES (:conteudo, NOW(), :chatID, :userID, :linkcompra)";
             $stmt = $this->conn->prepare($query);
@@ -166,7 +149,7 @@ class ChatMensagemModel {
             $stmt->bindParam(':chatID', $chatId);
             $stmt->execute();
             
-            return $stmt->fetch(PDO::FETCH_ASSOC); // Retorna os dados do link se existir
+            return $stmt->fetch(PDO::FETCH_ASSOC); 
         }
         
         
@@ -174,7 +157,7 @@ class ChatMensagemModel {
             $query = "UPDATE linkcompra SET statusLinkCompra = 'cancelado' WHERE linkCompraID = :linkCompraID";
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':linkCompraID', $linkCompraID);
-            return $stmt->execute(); // Executa e retorna se deu certo
+            return $stmt->execute(); 
         }
         public function atualizarStatusLink($linkCompraID, $status) {
             $sql = "UPDATE linkcompra SET statusLinkCompra = :status WHERE linkCompraID = :linkCompraID";
@@ -185,79 +168,81 @@ class ChatMensagemModel {
         }
         
         public function buscarProdutoPorID($produtoID) {
-            // Modificar a query para buscar também o campo 'produtoID' e 'valor'
+
             $sql = "SELECT produtoID, titulo, locImagem, valor FROM produto WHERE produtoID = :produtoID";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':produtoID', $produtoID, PDO::PARAM_INT);
             $stmt->execute();
         
-            // Retorna os dados do produto, incluindo produtoID, título, imagem e valor
             return $stmt->fetch(PDO::FETCH_ASSOC);
         }
         
         
         public function excluirMensagemELinkCompra($linkCompraID) {
-            // Inicia a transação
             $this->conn->beginTransaction();
     
             try {
-                // 1. Excluir as mensagens na tabela mensagem que referenciam o linkCompraID
                 $stmt = $this->conn->prepare("DELETE FROM mensagem WHERE linkCompra = :linkCompraID");
                 $stmt->bindParam(':linkCompraID', $linkCompraID);
                 $stmt->execute();
     
-                // 2. Excluir o link na tabela linkcompra
                 $stmt = $this->conn->prepare("DELETE FROM linkcompra WHERE linkCompraID = :linkCompraID");
                 $stmt->bindParam(':linkCompraID', $linkCompraID);
                 $stmt->execute();
     
-                // Se tudo estiver correto, realiza o commit
                 $this->conn->commit();
             } catch (Exception $e) {
-                // Em caso de erro, realiza o rollback
                 $this->conn->rollBack();
-                // Loga o erro ou lança uma exceção
                 throw new Exception("Erro ao excluir link de compra e mensagens: " . $e->getMessage());
             }
         }
 
-    // Função para obter o nome do vendedor
     public function getVendedorNomePorChatID($chatID) {
         $sql = "SELECT u.nome AS nomeVendedor
                 FROM chat c
                 JOIN usuario u ON c.vendedorID = u.userID
-                WHERE c.chatID = :chatID"; // Usando chatID
+                WHERE c.chatID = :chatID"; 
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':chatID', $chatID, PDO::PARAM_INT); // Liga o parâmetro
-        $stmt->execute(); // Executa a consulta
+        $stmt->bindParam(':chatID', $chatID, PDO::PARAM_INT); 
+        $stmt->execute(); 
 
-        $result = $stmt->fetch(PDO::FETCH_ASSOC); // Busca o resultado
+        $result = $stmt->fetch(PDO::FETCH_ASSOC); 
 
         if ($result) {
             return $result['nomeVendedor'];
         } else {
-            return null; // Retornar null se não encontrar
+            return null;
         }
     }
 
-    // Função para obter o nome do comprador
     public function getCompradorNomePorChatID($chatID) {
         $sql = "SELECT u.nome AS nomeComprador
                 FROM chat c
                 JOIN usuario u ON c.compradorID = u.userID
-                WHERE c.chatID = :chatID"; // Usando chatID
+                WHERE c.chatID = :chatID"; 
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':chatID', $chatID, PDO::PARAM_INT); // Liga o parâmetro
-        $stmt->execute(); // Executa a consulta
+        $stmt->bindParam(':chatID', $chatID, PDO::PARAM_INT); 
+        $stmt->execute(); 
 
-        $result = $stmt->fetch(PDO::FETCH_ASSOC); // Busca o resultado
+        $result = $stmt->fetch(PDO::FETCH_ASSOC); 
 
         if ($result) {
             return $result['nomeComprador'];
         } else {
-            return null; // Retornar null se não encontrar
+            return null; 
         }
     }
+    
+    public function verificarDisponibilidadeProduto($produtoID) {
+    $query = "SELECT disponibilidade FROM produto WHERE produtoID = :produtoID LIMIT 1";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':produtoID', $produtoID, PDO::PARAM_INT);
+    $stmt->execute();
+
+    $produto = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $produto ? $produto['disponibilidade'] : null;
+}
+
 }

@@ -68,7 +68,6 @@
         </div>
     </nav>
 
-    <!-- jQuery e JavaScript para o contador de notificações -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -78,7 +77,7 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function(response) {
-                        console.log("Resposta recebida:", response); // Exibe a resposta no console
+                        console.log("Resposta recebida:", response); 
                         if (response.nao_visualizadas > 0) {
                             $('#notificacao-badge').text(response.nao_visualizadas).show();
                         } else {
@@ -86,25 +85,24 @@
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
-                        console.log("Erro na requisição:", textStatus, errorThrown); // Exibe erros no console
+                        console.log("Erro na requisição:", textStatus, errorThrown); 
                     }
                 });
             }
 
-            // Chama a função inicialmente e depois a cada 30 segundos
-            buscarNaoVisualizadas();
-            setInterval(buscarNaoVisualizadas, 500); // Atualiza a cada 30 segundos
 
-            // Marcar todas como visualizadas ao clicar no link "Notificações"
+            buscarNaoVisualizadas();
+            setInterval(buscarNaoVisualizadas, 500); 
+
             $('#notificacao-link').on('click', function(e) {
                 e.preventDefault();
                 $.ajax({
                     url: '/marcarTodasComoVisualizadas',
                     method: 'POST',
                     success: function(response) {
-                        console.log("Notificações marcadas como visualizadas:", response); // Log de sucesso
-                        $('#notificacao-badge').hide(); // Esconde o badge
-                        window.location.href = '/notificacao'; // Redireciona para a página de notificações
+                        console.log("Notificações marcadas como visualizadas:", response); 
+                        $('#notificacao-badge').hide(); 
+                        window.location.href = '/notificacao'; 
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.log("Erro ao marcar notificações:", textStatus, errorThrown);
@@ -114,7 +112,6 @@
         });
     </script>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 

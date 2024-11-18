@@ -11,28 +11,27 @@
 <div class="container my-4 pb-3" id="meusanuncios-container">
 
 <?php if (!empty($anuncios)):
-    // Verifique se existem duplicatas
-    $anunciosUnicos = array_map("unserialize", array_unique(array_map("serialize", $anuncios))); ?>
+
+$anunciosUnicos = array_map("unserialize", array_unique(array_map("serialize", $anuncios))); ?>
 
 
 
-    <?php // Exibir os anúncios únicos
+    <?php
     foreach ($anunciosUnicos as $anuncio): ?>
         <div class="card mb-4 shadow-sm aquisicao-card">
             <div class="card-body row align-items-center">
                 <div class="col-12 mb-3">
                     <?php
-                        // Definindo a localidade para português do Brasil
-                        setlocale(LC_TIME, 'pt_BR.utf8', 'pt_BR.UTF-8', 'portuguese');
+
+                    setlocale(LC_TIME, 'pt_BR.utf8', 'pt_BR.UTF-8', 'portuguese');
                         
-                        // Converte a string de data para timestamp e formata a data
-                        $dataTimestamp = strtotime($anuncio['dataHoraPub']);
-                        $dataFormatada = strftime("%e de %B", $dataTimestamp);
+                    $dataTimestamp = strtotime($anuncio['dataHoraPub']);
+                    $dataFormatada = strftime("%e de %B", $dataTimestamp);
+
                     ?>
                     <p class="text-muted mb-0 h5"><strong><?= htmlspecialchars($dataFormatada) ?></strong></p>
                 </div>
 
-                <!-- Imagem do Produto -->
                 <div class="col-md-3 text-center">
                     <img src="<?= htmlspecialchars($anuncio['locImagem']) ?>" 
                          alt="Imagem do produto" 
@@ -40,17 +39,20 @@
                          style="max-width: 150px; height: auto; object-fit: cover;">
                 </div>
 
-                <!-- Informações do Produto -->
                 <div class="col-md-6">
-                    <h5 class="statusAquisicao <?= $statusClass ?>" data-status="<?= htmlspecialchars($anuncio['statusAquisicao']) ?>">
-                        <?= htmlspecialchars($anuncio['statusAquisicao']) ?>
-                    </h5>
+<?php
+$statusFormatado = ucwords(str_replace('_', ' ', $anuncio['statusAquisicao']));
+?>
+
+<h5 class="statusAquisicao <?= $statusClass ?>" data-status="<?= htmlspecialchars($anuncio['statusAquisicao']) ?>">
+    <?= htmlspecialchars($statusFormatado) ?>
+</h5>
+
 
                     <p><strong>Título:</strong> <?= htmlspecialchars($anuncio['titulo']) ?></p>
                     <p><strong>Valor do anuncio:</strong> R$ <?= number_format($anuncio['valor'], 2, ',', '.') ?></p>
 
                     
-                    <!-- Mensagem de Pagamento -->
                     
                     <?php if ($anuncio['statusAquisicao'] !== 'Anunciado'): ?>
                         <?php 
@@ -71,7 +73,7 @@
                                     break;
                                 case 'pagamento_realizado':
                                     echo "<p><strong>A plataforma já fez o pagamento.</strong></p>";
-                                    echo "<p><a href='/comprovante?id=" . $anuncio['produtoID'] . "'>Ver comprovantes</a></p>";
+echo "<p><a href='/comprovante?id=" . htmlspecialchars($anuncio['produtoID']) . "' class='btn btn-outline-info d-inline-flex align-items-center'><i class='bi bi-file-earmark-text me-2'></i> Ver comprovantes</a></p>";
                                     break;
                                 case 'erro':
                                     echo "<p><strong>A plataforma entrará em contato, ocorreu algum problema.</strong></p>";
@@ -83,7 +85,6 @@
                     
                 </div>                    
 
-                <!-- Ações -->
                 <div class="col-md-3 text-end acoes-container">
                 <?php if (isset($aquisicao) && is_array($aquisicao) && isset($aquisicao['statusAquisicao']) && $aquisicao['statusAquisicao'] === 'esperando envio' && $anuncio['disponibilidade'] !== 'disponível' && $anuncio['disponibilidade'] !== 'pausado'): ?>
                     <a href="/enviarProduto?produtoID=<?= $anuncio['produtoID'] ?>&chatID=<?= $aquisicao['chatID'] ?>&aquisicaoID=<?= $aquisicao['aquisicaoID'] ?>" 

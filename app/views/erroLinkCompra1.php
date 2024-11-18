@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verificação de Vendedor</title>
+    <title>Não Pode gerar um link de compra</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .container {
@@ -40,11 +40,10 @@
 
 <div class="container py-5">
     <div class="bordered-box text-center">
-        <h3 class="fw-bold mb-3">Metache informa</h3>
-        <p class="mb-4">Você precisa estar cadastrado como vendedor para anunciar produtos.</p>
+        <h3 class="fw-bold mb-3 text-highlight">Metache informa</h3>
+        <p class="mb-4">Você ja criou um link de compra recente, para gerar um novo link de compra espere 1 hora</p>
         <div class="d-grid gap-2 mt-4 button-container">
-            <button class="btn btn-secondary mb-2" onclick="window.location.href='/'">Voltar</button>
-            <button class="btn btn-primary" onclick="window.location.href='/linkOAoth'">Vincular conta Mercado Pago</button>
+            <button class="btn btn-secondary" onclick="window.location.href='/chatLista'">Voltar</button>
         </div>
     </div>
 </div>

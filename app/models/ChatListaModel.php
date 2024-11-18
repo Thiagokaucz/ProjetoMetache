@@ -45,7 +45,6 @@ class ChatListaModel {
     }
 
 
-    // Método para verificar se o usuário está na coluna userID
     public function userExistsInUserID($compradorID) {
         $query = 'SELECT COUNT(*) FROM chat WHERE compradorID = :compradorID';
         $stmt = $this->conn->prepare($query);
@@ -54,7 +53,6 @@ class ChatListaModel {
         return $stmt->fetchColumn() > 0;
     }
 
-    // Método para verificar se o usuário está na coluna compradorID
     public function userExistsInCompradorID($compradorID) {
         $query = 'SELECT COUNT(*) FROM chat WHERE vendedorID = :compradorID';
         $stmt = $this->conn->prepare($query);

@@ -9,9 +9,8 @@ class HeaderController {
         $this->headerModel = new HeaderModel();
     }
 
-    // Método para contar notificações não visualizadas
     public function contarNaoVisualizadas() {
-        header('Content-Type: application/json'); // Define o tipo de conteúdo JSON
+        header('Content-Type: application/json'); 
         if (isset($_SESSION['user_id'])) {
             $userID = $_SESSION['user_id'];
             $quantidade = $this->headerModel->contarNaoVisualizadas($userID);
@@ -21,9 +20,8 @@ class HeaderController {
         }
     }
 
-    // Método para marcar todas as notificações como visualizadas
     public function marcarTodasComoVisualizadas() {
-        header('Content-Type: application/json'); // Define o tipo de conteúdo JSON
+        header('Content-Type: application/json'); 
         if (isset($_SESSION['user_id'])) {
             $userID = $_SESSION['user_id'];
             $this->headerModel->marcarTodasComoVisualizadas($userID);

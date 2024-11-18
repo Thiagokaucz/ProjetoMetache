@@ -10,11 +10,9 @@ class AquisicoesController {
         $this->aquisicoesModel = new AquisicoesModel();
     }
 
-// AquisicoesController.php
 
     public function mostrarAquisicoes() { 
 
-        // Redireciona para a página de login se o usuário não estiver logado
         if (!isset($_SESSION['user_id'])) {
             header('Location: /login');
             exit();
@@ -45,7 +43,6 @@ class AquisicoesController {
 
 
     public function receberProduto() {
-        // Redireciona para a página de login se o usuário não estiver logado
         if (!isset($_SESSION['user_id'])) {
             header('Location: /login');
             exit();

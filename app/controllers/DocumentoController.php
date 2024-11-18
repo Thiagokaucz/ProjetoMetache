@@ -9,13 +9,10 @@ class DocumentoController {
         $this->model = new DocumentoModel();
     }
 
-    // Função para exibir o formulário de upload
     public function mostrarFormularioUpload() {
-        // Obtém o compraspagamento da URL
         $compraspagamento = $_GET['compraspagamento'] ?? null;
 
         if ($compraspagamento) {
-            // Inclui o formulário de upload e passa o compraspagamento
             include 'app/views/AdmHeader.php';
             include 'app/views/uploadDocumentos.php';
         } else {
@@ -23,17 +20,13 @@ class DocumentoController {
         }
     }
 
-    // Função para processar o upload dos documentos
     public function anexarDocumentos() {
-        // Obtém o compraspagamentoID enviado pelo formulário
         $compraspagamento = $_POST['compraspagamento'] ?? null;
 
         if ($compraspagamento && isset($_FILES['notaFiscal']) && isset($_FILES['compPagamento'])) {
-            // Define os caminhos para salvar os arquivos
             $caminhoNotaFiscal = 'uploads/NotaFiscal/' . $compraspagamento . '_notaFiscal.pdf';
             $caminhoCompPagamento = 'uploads/compPagamento/' . $compraspagamento . '_compPagamento.pdf';
 
-            // Cria as pastas caso não existam
             if (!is_dir('uploads/NotaFiscal')) {
                 mkdir('uploads/NotaFiscal', 0777, true);
             }
@@ -41,21 +34,36 @@ class DocumentoController {
                 mkdir('uploads/compPagamento', 0777, true);
             }
 
-            // Move os arquivos para os diretórios designados
             $notaFiscalSalva = move_uploaded_file($_FILES['notaFiscal']['tmp_name'], $caminhoNotaFiscal);
             $compPagamentoSalva = move_uploaded_file($_FILES['compPagamento']['tmp_name'], $caminhoCompPagamento);
 
             if ($notaFiscalSalva && $compPagamentoSalva) {
-                // Salva os caminhos no banco de dados
                 $this->model->salvarDocumentos($compraspagamento, $caminhoNotaFiscal, $caminhoCompPagamento);
                 
-                // Exibe a mensagem de sucesso e redireciona após 5 segundos
-                echo "Documentos anexados com sucesso!";
-                echo "<script>
+                echo '
+                <!DOCTYPE html>
+                <html lang="pt-BR">
+                <head>
+                    <meta charset="utf-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Sucesso</title>
+                    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+                </head>
+                <body class="d-flex justify-content-center align-items-center bg-light" style="height: 100vh;">
+                    <div class="container text-center">
+                        <div class="alert alert-success" role="alert">
+                            <h4 class="alert-heading">✅ Documentos anexados com sucesso!</h4>
+                            <p class="mb-0">Você será redirecionado em breve.</p>
+                        </div>
+                    </div>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                    <script>
                         setTimeout(function() {
-                            window.location.href = '/homeadm';
+                            window.location.href = "/homeadm";
                         }, 5000);
-                      </script>";
+                    </script>
+                </body>
+                </html>';
             } else {
                 echo "Erro ao salvar os arquivos. Tente novamente.";
             }

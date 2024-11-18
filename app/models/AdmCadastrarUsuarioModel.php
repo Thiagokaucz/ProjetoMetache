@@ -18,7 +18,6 @@ class AdmCadastrarUsuarioModel {
     }
 
     public function cadastrarUsuario($nome, $usuario, $senha) {
-        // Hash da senha antes de armazená-la no banco
         $hashedSenha = password_hash($senha, PASSWORD_DEFAULT);
 
         $query = 'INSERT INTO administrador (nome, usuario, senha) VALUES (:nome, :usuario, :senha)';
@@ -26,6 +25,6 @@ class AdmCadastrarUsuarioModel {
         $stmt->bindParam(':nome', $nome);
         $stmt->bindParam(':usuario', $usuario);
         $stmt->bindParam(':senha', $hashedSenha);
-        return $stmt->execute(); // Retorna true em caso de sucesso
+        return $stmt->execute(); 
     }
 }

@@ -23,7 +23,6 @@
         }
     </style>
     <script>
-        // Função para mostrar as etapas gradativamente
         function mostrarEtapas() {
             const etapas = document.querySelectorAll('.step');
             let etapaAtual = 0;
@@ -34,7 +33,7 @@
                     etapaAtual++;
                     setTimeout(mostrarProximaEtapa, 1500);
                 } else {
-                    // Redireciona para a página de anúncio após a última etapa
+
                     setTimeout(() => {
                         window.location.href = '/anunciar';
                     }, 2000);

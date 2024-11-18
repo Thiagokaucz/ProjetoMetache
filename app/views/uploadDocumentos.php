@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload de Documentos</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Estilo personalizado para o botão */
         .btn-custom {
             background-color: #FF6B01;
             color: white;
@@ -31,8 +29,8 @@
                         <h2 class="mb-0">Anexar Documentos de Pagamento</h2>
                     </div>
                     <div class="card-body">
-                        <!-- Formulário de upload -->
-                        <form action="/anexarDocumentos" method="post" enctype="multipart/form-data">
+
+                    <form action="/anexarDocumentos" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="compraspagamento" value="<?php echo htmlspecialchars($_GET['compraspagamento']); ?>">
 
                             <div class="mb-3">
@@ -55,7 +53,6 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>

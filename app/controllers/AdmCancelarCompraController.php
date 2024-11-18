@@ -15,7 +15,6 @@ class AdmCancelarCompraController {
         $aquisicaoID = $_GET['id'] ?? null;
 
         if ($aquisicaoID) {
-            // Executa a operação de cancelamento e obtém os dados do comprador
             $comprador = $this->model->cancelarCompra($aquisicaoID);
 
             if ($comprador) {

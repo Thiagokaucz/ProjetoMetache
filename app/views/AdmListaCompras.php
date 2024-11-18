@@ -55,7 +55,7 @@
                             <td><?php echo $compra['payment_id']; ?></td>
                             <td><?php echo number_format($compra['valor_compra'], 2, ',', '.'); ?></td>
                             <td><?php echo date('d/m/Y H:i', strtotime($compra['created_at'])); ?></td>
-                            <td><?php echo htmlspecialchars($compra['statusAdmMetache']); ?></td>
+                            <td><?php echo ucwords(str_replace('_', ' ', htmlspecialchars($compra['statusAdmMetache']))); ?></td>
                             <td>
                                 <div class="d-flex align-items-center">
                                     <img src="<?php echo htmlspecialchars($compra['locImagem']); ?>" alt="Imagem do produto" class="product-image me-2">

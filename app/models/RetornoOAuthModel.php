@@ -12,7 +12,6 @@ class UsuarioModel
         $this->conn = $database->obterConexao();
     }
 
-    // Atualiza o token e o status de vendedor do usuário com base no user_id
     public function atualizarToken($user_id, $token)
     {
         $sql = "UPDATE usuario SET token = :token, is_vendedor = 'sim' WHERE userID = :user_id";

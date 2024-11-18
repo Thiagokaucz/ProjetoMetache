@@ -25,7 +25,6 @@
 </head>
 <body class="bg-light">
     <div class="container mt-5">
-        <!-- Logo -->
         <div class="text-center mb-4">
             <img src="public/img/Metache.png" alt="Logo Metache" style="width: 150px;">
         </div>
@@ -35,12 +34,10 @@
         <div class="card shadow-sm mb-4">
             <div class="card-body justify-text">
 
-                <!-- Introdução -->
                 <div class="text-center mb-4">
                     <p class="text-muted">Bem-vindo à Metache! Ao utilizar nossa plataforma, você concorda com os termos abaixo para garantir uma experiência segura e justa para todos os usuários.</p>
                 </div>
 
-                <!-- Termos de Uso Completo -->
                 <h3 class="section-title"><span class="icon">📄</span>1. Aceitação dos Termos</h3>
                 <p>
                     Ao acessar e utilizar o site Metache, você concorda em seguir e estar vinculado aos seguintes Termos de Uso. Caso não concorde com algum dos termos, solicitamos que não continue a utilizar o site e seus serviços.
@@ -107,7 +104,6 @@
             </div>
         </div>
         
-        <!-- Botão Voltar -->
         <div class="text-center mt-4">
             <a href="/login" class="btn btn-lg mb-4 w-100" style="background-color: #FF6B01; color: white; max-width: 400px;">
                 Voltar

@@ -38,9 +38,8 @@
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-    let initialLoad = true; // Variável para controlar se é o carregamento inicial
+    let initialLoad = true; 
 
-    // Função para buscar as mensagens via AJAX
     function fetchMessages() {
         const chatBox = document.getElementById('chat-box');
 
@@ -55,13 +54,21 @@
                         messagesHtml += `
                             <div class="chat-bubble${(message.userID === <?= json_encode($_SESSION['user_id']) ?>) ? ' sender' : ''}">
                                 <p>${message.conteudo}</p>
-                                <small class="text-muted">${message.dataHora}</small>
+<small class="text-muted">${
+     
+    new Date(message.dataHora).toLocaleDateString('pt-BR', { day: 'numeric' }) +
+    ' de ' +
+    new Date(message.dataHora).toLocaleDateString('pt-BR', { month: 'long' }) +
+    ' às ' +
+    new Date(message.dataHora).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) +
+    'h'
+}</small>
                                 ${message.linkcompra ? 
                                     (message.visualizacao === 'nao_vizualizado' ? 
                                         `<br><strong>Para aceitar, aperte no</strong> 
-                                         <a href="CompraLinkChat?id=${message.linkcompra}&produtoID=<?= htmlspecialchars($_SESSION['produtoID']) ?>" target="_blank">
-                                            Link de compra
-                                         </a>` : 
+         <a href="CompraLinkChat?id=${message.linkcompra}&produtoID=<?= htmlspecialchars($_SESSION['produtoID']) ?>" target="_blank" style="color: green;">
+            Link de compra
+         </a>` : 
                                          `<br><strong>Link já foi aberto</strong>`
                                     ) : ''}
                             </div>`;
@@ -71,10 +78,9 @@
                 }
                 $('#chat-box').html(messagesHtml);
 
-                // Rola para o fundo do chat apenas no carregamento inicial
                 if (initialLoad) {
                     scrollToBottom();
-                    initialLoad = false; // Após o primeiro carregamento, desativa o rolamento automático
+                    initialLoad = false; 
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -83,18 +89,15 @@
         });
     }
 
-    // Função para rolar até o final do chat
     function scrollToBottom() {
         const chatBox = document.getElementById('chat-box');
         chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    // Chama a função de busca a cada 5 segundos
     setInterval(fetchMessages, 500);
 
-    // Carrega as mensagens assim que a página é carregada
     $(document).ready(function() {
-        fetchMessages(); // Carrega as mensagens inicialmente
+        fetchMessages(); 
     });
 </script>
 
@@ -104,15 +107,14 @@
 <div class="container my-5">
     <div class="row">
         
-        <!-- Chat Column -->
         <div class="col-md-7 mb-3">
             <div class="card">
                 <div class="card-header">
                     <strong><?= htmlspecialchars($compradorNome) ?></strong> <span class="text-success">&#9679;</span>
                 </div>
                 <div class="card-body chat-container" id="chat-box">
-                    <!-- Exibe as mensagens iniciais -->
-                    <?php if (!empty($messages)): ?>
+
+                <?php if (!empty($messages)): ?>
                         <?php foreach ($messages as $message): ?>
                             <div class="chat-bubble<?= ($message['userID'] === $_SESSION['user_id']) ? ' sender' : '' ?>">
                                 <p><?= htmlspecialchars($message['conteudo']) ?></p>
@@ -144,7 +146,6 @@
             </div>
         </div>
 
-        <!-- Product and Purchase Link Column -->
         <div class="col-md-5">
             <div class="card mb-3">
                 <div class="card-body">
@@ -159,7 +160,6 @@
                 </div>
             </div>
 
-            <!-- Formulário de Link de Compra -->
             <div class="card mb-3">
                 <div class="card-body">
                     <h6 class="card-title">Para realizar a compra, basta clicar no link de compra com o valor negociado.</h6>
@@ -191,7 +191,6 @@
     </div>
 </div>
 
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

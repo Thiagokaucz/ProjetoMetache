@@ -10,7 +10,6 @@ class DocumentoModel {
         $this->db = $database->obterConexao();
     }
 
-    // Método para salvar os caminhos dos documentos na tabela `documentos`
     public function salvarDocumentos($compraspagamentoID, $caminhoNotaFiscal, $caminhoCompPagamento) {
         $sql = "INSERT INTO documentos (compraspagamentoID, notaFiscal, compPagamento)
                 VALUES (:compraspagamentoID, :notaFiscal, :compPagamento)

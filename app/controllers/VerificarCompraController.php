@@ -1,23 +1,17 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 session_start();
-require_once 'app/models/VerificarCompraModel.php'; // Inclua o model de compra
+require_once 'app/models/VerificarCompraModel.php';
 
 class VerificarCompraController {
     private $VerificarCompraModel;
 
     public function __construct() {
-        $this->compraModel = new VerificarCompraModel(); // Inicializa o model
+        $this->compraModel = new VerificarCompraModel();
     }
 
     public function processarCompra() {
-        // Verifica se a requisição é do tipo GET
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            // Capturando os dados da URL
             $collection_id = isset($_GET['collection_id']) ? htmlspecialchars($_GET['collection_id']) : 'ID não fornecido';
             $collection_status = isset($_GET['collection_status']) ? htmlspecialchars($_GET['collection_status']) : 'Status não fornecido';
             $payment_id = isset($_GET['payment_id']) ? htmlspecialchars($_GET['payment_id']) : 'ID do pagamento não fornecido';
@@ -30,7 +24,6 @@ class VerificarCompraController {
             $processing_mode = isset($_GET['processing_mode']) ? htmlspecialchars($_GET['processing_mode']) : 'Modo de processamento não fornecido';
             $merchant_account_id = isset($_GET['merchant_account_id']) ? htmlspecialchars($_GET['merchant_account_id']) : 'ID da conta do comerciante não fornecido';
 
-            // Verifica se os dados da sessão estão disponíveis
             $linkCompraID = isset($_SESSION['linkCompraID']) ? $_SESSION['linkCompraID'] : 'Link de compra não definido';
             $produtoID = isset($_SESSION['produtoID']) ? $_SESSION['produtoID'] : 'Produto não definido';
             $chatID = isset($_SESSION['chatID']) ? $_SESSION['chatID'] : 'Chat não definido';
@@ -39,68 +32,91 @@ class VerificarCompraController {
             $valorCompra = isset($_SESSION['valorCompra']) ? $_SESSION['valorCompra'] : 0.0;
             $valorFrete = isset($_SESSION['valorFrete']) ? $_SESSION['valorFrete'] : 0.0;
 
-            // Inserindo os dados no banco de dados
             if ($this->compraModel->inserirCompra($payment_id, $status, $linkCompraID, $produtoID, $chatID, $vendedorID, $valorBrutoCompra, $valorCompra, $valorFrete)) {
-                echo "Compra registrada com sucesso!";
             } else {
                 echo "Erro ao registrar a compra.";
             }
 
-            // Exibindo os detalhes da transação
-            echo "<h2>Detalhes da Transação</h2>";
-            echo "<strong>Collection ID:</strong> $collection_id<br>";
-            echo "<strong>Collection Status:</strong> $collection_status<br>";
-            echo "<strong>Payment ID:</strong> $payment_id<br>";
-            echo "<strong>Status:</strong> $status<br>";
-            echo "<strong>External Reference:</strong> $external_reference<br>";
-            echo "<strong>Payment Type:</strong> $payment_type<br>";
-            echo "<strong>Merchant Order ID:</strong> $merchant_order_id<br>";
-            echo "<strong>Preference ID:</strong> $preference_id<br>";
-            echo "<strong>Site ID:</strong> $site_id<br>";
-            echo "<strong>Processing Mode:</strong> $processing_mode<br>";
-            echo "<strong>Merchant Account ID:</strong> $merchant_account_id<br>";
+            unset($_SESSION['linkCompraID'], $_SESSION['produtoID'], $_SESSION['chatID'], $_SESSION['vendedorID'], $_SESSION['valorBrutoCompra'], $_SESSION['valorCompra'], $_SESSION['valorFrete']);
 
-            // Exibindo informações adicionais da compra (opcional)
-            echo "<h3>Informações da Compra</h3>";
-            echo "<strong>Link de Compra ID:</strong> $linkCompraID<br>";
-            echo "<strong>Produto ID:</strong> $produtoID<br>";
-            echo "<strong>Chat ID:</strong> $chatID<br>";
-            echo "<strong>Vendedor ID:</strong> $vendedorID<br>";
-            echo "<strong>Valor Bruto da Compra:</strong> $valorBrutoCompra<br>";
-            echo "<strong>Valor da Compra:</strong> $valorCompra<br>";
-            echo "<strong>Valor do Frete:</strong> $valorFrete<br>";
+            echo '
+            <!DOCTYPE html>
+            <html lang="pt-br">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Processamento de Pagamento</title>
+                <!-- Bootstrap CSS -->
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+                <!-- Bootstrap Icons -->
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+                <style>
+                    .custom-progress-bar {
+                        background-color: #FF6B01;
+                    }
+                    .custom-card {
+                        background-color: #2E2E2E;
+                        color: white;
+                    }
+                    .custom-text {
+                        color: #FF6B01;
+                    }
+                    .spinner-border-custom {
+                        color: #FF6B01;
+                    }
+                </style>
+            </head>
+            <body class="bg-light">
+            <div class="container text-center mt-5">
+                <div class="card shadow-lg p-4 custom-card">
+                    <h3 class="custom-text mb-4"><i class="bi bi-credit-card"></i> Processando Pagamento...</h3>
+                    <div class="progress my-4" style="height: 30px;">
+                        <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated custom-progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div id="status-message" class="mt-3 fw-bold text-white"></div>
+                    <div class="spinner-border spinner-border-custom mt-3" role="status" aria-hidden="true"></div>
+                </div>
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <script>
+                const messages = [
+                    "<i class=\'bi bi-hourglass-split\'></i> Realizando pagamento...",
+                    "<i class=\'bi bi-clock-history\'></i> O produto já é quase seu...",
+                    "<i class=\'bi bi-check-circle\'></i> Pagamento concluído!"
+                ];
+                const progressBar = document.getElementById("progress-bar");
+                const statusMessage = document.getElementById("status-message");
+                let progress = 0;
+                let messageIndex = 0;
 
-            // Limpando as variáveis da sessão
-            unset($_SESSION['linkCompraID']);
-            unset($_SESSION['produtoID']);
-            unset($_SESSION['chatID']);
-            unset($_SESSION['vendedorID']);
-            unset($_SESSION['valorBrutoCompra']);
-            unset($_SESSION['valorCompra']);
-            unset($_SESSION['valorFrete']);
-        } else {
-            echo "Método de requisição inválido.";
-        }
-
-        // Processa a aprovação
-        if ($status == "approved") {
-                    echo "Compra aprovada! Processando a compra...";
-                // Redireciona para a tela de visualização após 5 segundos
-                echo '<script>
-                    setTimeout(function() {
+                function updateProgress() {
+                    if (progress < 100) {
+                        progress += 1;
+                        progressBar.style.width = progress + "%";
+                        progressBar.setAttribute("aria-valuenow", progress);
+                        if (progress % 33 === 0 && messageIndex < messages.length) {
+                            statusMessage.innerHTML = messages[messageIndex];
+                            messageIndex++;
+                        }
+                    } else {
+                        clearInterval(interval);
                         window.location.href = "/finalizarCompra?linkCompraID=' . urlencode($linkCompraID) . 
                                                       '&produtoID=' . urlencode($produtoID) . 
                                                       '&chatID=' . urlencode($chatID) . 
                                                       '&vendedorID=' . urlencode($vendedorID) . 
                                                       '&valorBrutoCompra=' . urlencode($valorBrutoCompra) . 
                                                       '&valorCompra=' . urlencode($valorCompra) . 
-                                                      '&valorFrete=' . urlencode($valorFrete) . '"; // Adicionando valores na URL
-                        }, 5000);
-                    </script>';
+                                                      '&valorFrete=' . urlencode($valorFrete) . '";
+                    }
+                }
+
+                const interval = setInterval(updateProgress, 100);
+            </script>
+            </body>
+            </html>';
         } else {
-            echo "Deu ruim na compra";
+            echo "Método de requisição inválido.";
         }
     }
-    
 }
 ?>

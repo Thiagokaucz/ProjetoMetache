@@ -15,10 +15,8 @@ class CompraLinkChatController {
         $produtoID = $_GET['produtoID'];
 
         if ($id) {
-            // Marca o link de compra como visualizado
             $this->compraLinkChatModel->marcarComoVisualizado($id);
 
-            // Busca os dados do link de compra e do produto
             $dados = $this->compraLinkChatModel->getDadosCompra($id, $produtoID);
 
             if ($dados) {

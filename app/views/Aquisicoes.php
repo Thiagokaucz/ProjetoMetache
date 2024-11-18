@@ -12,7 +12,6 @@
     <?php if (!empty($aquisicoes)): ?>
         <?php foreach ($aquisicoes as $aquisicao): ?>
             <?php
-                // Define a cor do status com base no status atual
                 $statusClass = '';
                 if ($aquisicao['statusAquisicao'] === 'pendente') $statusClass = 'text-warning';
                 elseif ($aquisicao['statusAquisicao'] === 'em transporte') $statusClass = 'text-danger';
@@ -29,7 +28,6 @@
                         <p class="text-muted mb-0 h5"><strong><?= htmlspecialchars($data) ?></strong></p>
                     </div>
 
-                    <!-- Imagem do Produto -->
                     <div class="col-md-3 text-center">
                         <?php if (!empty($aquisicao['produto']['locImagem'])): ?>
                             <img src="<?= htmlspecialchars($aquisicao['produto']['locImagem']) ?>" 
@@ -41,23 +39,27 @@
                         <?php endif; ?>
                     </div>
 
-                    <!-- Informações do Produto -->
                     <div class="col-md-6">
-                        <h5 class="statusAquisicao <?= $statusClass ?>" data-status="<?= htmlspecialchars($aquisicao['statusAquisicao']) ?>">
-                            <?= htmlspecialchars($aquisicao['statusAquisicao']) ?>
-                        </h5>
+<?php
+$statusAquisicaoFormatado = ucwords(str_replace('_', ' ', $aquisicao['statusAquisicao']));
+?>
+
+<h5 class="statusAquisicao <?= $statusClass ?>" data-status="<?= htmlspecialchars($aquisicao['statusAquisicao']) ?>">
+    <?= htmlspecialchars($statusAquisicaoFormatado) ?>
+</h5>
+
                         <p class="mb-1"><strong>Título:</strong> <?= htmlspecialchars($aquisicao['produto']['titulo'] ?? 'Título não disponível') ?></p>
-                        <p class="mb-0"><strong>Valor total pago:</strong> R$ <?= number_format((float)$aquisicao['valorProduto'], 2, ',', '.') ?></p>
+<p class="mb-0"><strong>Valor total pago:</strong> R$ <?= number_format((float) $aquisicao['valorProduto'], 2, ',', '.') ?></p>
                         <?php
                         $produtoAquisicao = $this->aquisicoesModel->verificarProdutoEmAquisicao($aquisicao['produtoID']);
                         if ($produtoAquisicao && $produtoAquisicao['statusPagamentoVendedor'] === 'pagamento_realizado') {
                             echo "<p><strong>A plataforma já fez o pagamento para o vendedor.</strong></p>";
-                            echo "<p><a href='/comprovante?id=" . $aquisicao['produtoID'] . "'>Ver comprovantes</a></p>";
+echo "<p><a href='/comprovante?id=" . htmlspecialchars($aquisicao['produtoID']) . "' class='btn btn-outline-info d-inline-flex align-items-center'><i class='bi bi-file-earmark-text me-2'></i> Ver comprovantes</a></p>";
+
                         }
                         ?>
                     </div>
 
-                    <!-- Ações -->
                     <div class="col-md-3 text-end acoes-container">
                         <?php if ($aquisicao['statusAquisicao'] === 'enviado'): ?>
                             <a href="receberProduto?aquisicaoID=<?= htmlspecialchars($aquisicao['aquisicaoID']) ?>" 
@@ -73,7 +75,6 @@
                     </div>
                 </div>
 
-                <!-- Detalhes do Envio -->
                 <?php if ($aquisicao['statusAquisicao'] === 'enviado' && !empty($aquisicao['envio'])): ?>
                     <div class="card-footer detalhes-envio">
                         <h6><strong>Detalhes do Envio</strong></h6>

@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes da Compra</title>
-    <!-- Bootstrap CSS -->
-    <style>
+
+<style>
         .btn-custom-buy {
             background-color: #28a745;
             color: white;
@@ -36,7 +36,7 @@
             font-size: 2.5rem;
             color: #FF6B01;
         }
-        /* Responsividade */
+
         @media (max-width: 768px) {
             .titulo-principal {
                 font-size: 1.8rem;
@@ -125,7 +125,6 @@
         <?php endif; ?>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
 
 </body>
 </html>

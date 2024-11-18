@@ -15,28 +15,26 @@ class LoginController {
             $user = $userModel->login($email, $senha);
     
             if ($user === 'desativada') {
-                // Exibe mensagem de erro para conta desativada
                 $erroMensagem = 'Sua conta foi desativada. Entre em contato com o suporte para mais informações.';
             } elseif ($user) {
                 $_SESSION['user_id'] = $user['userID'];
-                $_SESSION['user_name'] = $user['nome']; // Armazena o nome na sessão
-                header('Location: /'); // Redireciona após login
-                exit(); // Adiciona exit após redirecionamento
+                $_SESSION['user_name'] = $user['nome']; 
+                header('Location: /'); 
+                exit(); 
             } else {
-                $erroMensagem = 'Usuário ou senha inválidos.'; // Mensagem de erro padrão
+                $erroMensagem = 'Usuário ou senha inválidos.'; 
             }
         }
     
-        // Passa a mensagem de erro para a view
-        require 'app/views/login.php'; // Carrega a view de login com a mensagem
+        require 'app/views/login.php'; 
     }
     
 
     public function logout() {
-        session_start(); // Inicia a sessão
-        session_destroy(); // Destroi a sessão
-        header('Location: /'); // Redireciona para a página de login
-        exit(); // Adiciona exit após o redirecionamento
+        session_start(); 
+        session_destroy(); 
+        header('Location: /'); 
+        exit(); 
     }
 }
 ?>

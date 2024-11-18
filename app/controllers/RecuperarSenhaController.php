@@ -16,7 +16,7 @@ class RecuperarSenhaController {
             $usuario = $this->model->buscarUsuarioPorEmail($email);
 
             if ($usuario) {
-                $_SESSION['recuperacao_email'] = $email; // Salva o e-mail para recuperação
+                $_SESSION['recuperacao_email'] = $email; 
                 $_SESSION['pergunta1'] = $usuario['pergunta1'];
                 $_SESSION['pergunta2'] = $usuario['pergunta2'];
                 header('Location: /recuperarSenha/perguntas');

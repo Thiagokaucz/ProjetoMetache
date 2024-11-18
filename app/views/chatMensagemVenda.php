@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat</title>
     
-    <!-- Bootstrap CSS -->
     <style>
         .chat-bubble {
             background-color: #fbe7dc;
@@ -39,11 +38,9 @@
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-    let initialLoad = true; // Controle para carregar o scroll no início
+    let initialLoad = true;
 
-    // Função para buscar as mensagens via AJAX
     function fetchMessages() {
-        // Salva a posição do scroll antes da atualização
         const chatBox = document.getElementById('chat-box');
         const isScrolledToBottom = chatBox.scrollTop + chatBox.clientHeight >= chatBox.scrollHeight - 10;
 
@@ -52,13 +49,22 @@
             type: "GET",
             dataType: "json",
             success: function(data) {
-                var messagesHtml = '';
+                let messagesHtml = '';
                 if (data.length > 0) {
                     data.forEach(function(message) {
                         messagesHtml += `
                             <div class="chat-bubble${(message.userID === <?= json_encode($_SESSION['user_id']) ?>) ? ' sender' : ''}">
                                 <p>${message.conteudo}</p>
-                                <small class="text-muted">${message.dataHora}</small>
+<small class="text-muted">${
+     
+    new Date(message.dataHora).toLocaleDateString('pt-BR', { day: 'numeric' }) +
+    ' de ' +
+    new Date(message.dataHora).toLocaleDateString('pt-BR', { month: 'long' }) +
+    ' às ' +
+    new Date(message.dataHora).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) +
+    'h'
+}</small>
+
                             </div>`;
                     });
                 } else {
@@ -66,10 +72,9 @@
                 }
                 $('#chat-box').html(messagesHtml);
 
-                // Rola para o fundo apenas na carga inicial
                 if (initialLoad || isScrolledToBottom) {
                     scrollToBottom();
-                    initialLoad = false; // Desativa a rolagem automática após o primeiro carregamento
+                    initialLoad = false;
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -78,18 +83,27 @@
         });
     }
 
-    // Função para rolar até o final do chat
     function scrollToBottom() {
         const chatBox = document.getElementById('chat-box');
         chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    // Chama a função de busca a cada 5 segundos
     setInterval(fetchMessages, 1000);
 
-    // Carrega as mensagens assim que a página é carregada
     $(document).ready(function() {
         fetchMessages();
+
+        function formatCurrency(input) {
+            $(input).on('input', function() {
+                let value = $(this).val().replace(/\D/g, '');
+                let formattedValue = (value / 100).toFixed(2).replace('.', ',');
+                formattedValue = formattedValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                $(this).val(formattedValue);
+            });
+        }
+
+        formatCurrency('#valorBrutoCompra');
+        formatCurrency('#valorFrete');
     });
     </script>
 </head>
@@ -98,14 +112,12 @@
 <div class="container my-5">
     <div class="row">
         
-        <!-- Chat Column -->
         <div class="col-md-7 mb-3">
             <div class="card">
                 <div class="card-header">
                     <strong><?= htmlspecialchars($compradorNome)?></strong> <span class="text-success">&#9679;</span>
                 </div>
                 <div class="card-body chat-container" id="chat-box">
-                    <!-- Exibe as mensagens iniciais -->
                     <?php if (!empty($messages)): ?>
                         <?php foreach ($messages as $message): ?>
                             <div class="chat-bubble<?= ($message['userID'] === $_SESSION['user_id']) ? ' sender' : '' ?>">
@@ -127,7 +139,6 @@
             </div>
         </div>
 
-        <!-- Product and Purchase Link Column -->
         <div class="col-md-5">
             <div class="card mb-3">
                 <div class="card-body">
@@ -142,50 +153,43 @@
                 </div>
             </div>
 
-<!-- Formulário de Link de Compra -->
-<div class="card mb-3">
-    <div class="card-body">
-        <h6 class="card-title">Enviar link de compra:</h6>
-        <form id="linkCompraForm" action="/enviarLinkCompra" method="POST">
-            <input type="hidden" name="chatId" value="<?= htmlspecialchars($chatId) ?>">
-            <div class="mb-3">
-                <label for="valorBrutoCompra" class="form-label">Coloque o valor do produto:</label>
-                <div class="input-group">
-                    <span class="input-group-text">R$</span>
-                    <input type="text" class="form-control" id="valorBrutoCompra" name="valorBrutoCompra" placeholder="0,00" required>
-                </div>
-                <div class="alert alert-warning mt-2 p-1">
-                    <small>⚠️ Atenção: Lembre de combinar o frete com o comprador antes de continuar.</small>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h6 class="card-title">Enviar link de compra:</h6>
+                    <form id="linkCompraForm" action="/enviarLinkCompra" method="POST">
+                        <input type="hidden" name="chatId" value="<?= htmlspecialchars($chatId) ?>">
+                        <div class="mb-3">
+                            <label for="valorBrutoCompra" class="form-label">Coloque o valor do produto:</label>
+                            <div class="input-group">
+                                <span class="input-group-text">R$</span>
+                                <input type="text" class="form-control" id="valorBrutoCompra" name="valorBrutoCompra" placeholder="0,00" required>
+                            </div>
+                            <div class="alert alert-warning mt-2 p-1">
+                                <small>⚠️ Atenção: Lembre de combinar o frete com o comprador antes de continuar.</small>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="valorFrete" class="form-label">Coloque o valor do frete:</label>
+                            <div class="input-group">
+                                <span class="input-group-text">R$</span>
+                                <input type="text" class="form-control" id="valorFrete" name="valorFrete" placeholder="0,00">
+                            </div>
+                            <p>Precisa de ajuda para precificar?<a href="/sobre?section=precificar" class="text-dark fw-bold">Precificar produto</a>.</p>
+                            <div class="alert alert-warning mt-2 p-1">
+                                <small>⚠️ Após gerar o link de compra, ele será válido por 2 horas.</small>
+                            </div>
+                        </div>
+                        <div class="alert alert-info p-2">
+                            <small>💳 A plataforma utiliza integração com Mercado Pago.</small>
+                        </div>       
+                        <button type="button" class="btn w-100" style="background-color: #FF6B01; color: white; border: none;" onclick="mostrarModalConfirmacao()">
+                            Enviar link de venda
+                        </button>
+                        <p class="mb-0">Caso houver dúvida, acesse <a href="/sobre?section=venda" class="text-dark fw-bold">Como vender com Metache</a>.</p>
+                    </form>
                 </div>
             </div>
-            <div class="mb-3">
-                <label for="valorFrete" class="form-label">Coloque o valor do frete:</label>
-                <div class="input-group">
-                    <span class="input-group-text">R$</span>
-                    <input type="text" class="form-control" id="valorFrete" name="valorFrete" placeholder="0,00">
-                </div>
-                <p class="">Precisa de ajuda para precificar?<a href="/sobre?section=precificar" class="text-dark fw-bold">Precificar produto</a>.</p>
 
-
-                <div class="alert alert-warning mt-2 p-1">
-                    <small>⚠️ Após gerar o link de compra, ele será válido por 2 horas.</small>
-                </div>
-            </div>
-            <div class="alert alert-info p-2">
-                <small>💳 A plataforma utiliza integração com Mercado Pago.</small>
-            </div>       
-
-            <button type="button" class="btn w-100" style="background-color: #FF6B01; color: white; border: none;"
-                    onclick="mostrarModalConfirmacao()">
-                Enviar link de venda
-            </button>
-            <p class="mb-0">Caso houver dúvida, acesse <a href="/sobre?section=venda" class="text-dark fw-bold">Como vender com Metache</a>.</p>
-
-        </form>
-    </div>
-</div>
-
-<!-- Modal de Confirmação -->
 <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -212,53 +216,41 @@
     </div>
 </div>
 
-<!-- JavaScript para Cálculo e Exibição do Modal -->
-<!-- JavaScript para Cálculo e Exibição do Modal -->
 <script>
 function mostrarModalConfirmacao() {
-    // Obter valores de produto e frete
-    const valorProduto = parseFloat(document.getElementById('valorBrutoCompra').value.replace(',', '.')) || 0;
-    const valorFrete = parseFloat(document.getElementById('valorFrete').value.replace(',', '.')) || 0;
 
-    // Validar se os valores são maiores que zero
-    if (valorProduto <= 0) {
-        alert("Por favor, insira um valor maior que zero para o valor do produto.");
-        return;
-    }
-    if (valorFrete <= 0) {
-        alert("Por favor, insira um valor maior que zero para o valor do frete.");
+    const valorProdutoInput = document.getElementById('valorBrutoCompra').value;
+    const valorFreteInput = document.getElementById('valorFrete').value;
+
+    const valorProduto = parseFloat(valorProdutoInput.replace(/\./g, '').replace(',', '.')) || 0;
+    const valorFrete = parseFloat(valorFreteInput.replace(/\./g, '').replace(',', '.')) || 0;
+
+    if (valorProduto <= 0 || valorFrete < 0) {
+        alert("Por favor, insira valores válidos para o produto e o frete.");
         return;
     }
 
-    // Calcular valor total e taxa de 5%
     const valorTotal = valorProduto + valorFrete;
     const taxa = valorTotal * 0.05;
     const valorRecebidoVendedor = valorTotal - taxa;
 
-    // Exibir valores no modal
     document.getElementById('valorTotalModal').textContent = valorTotal.toFixed(2).replace('.', ',');
     document.getElementById('taxaPlataforma').textContent = taxa.toFixed(2).replace('.', ',');
     document.getElementById('valorVendedorRecebera').textContent = valorRecebidoVendedor.toFixed(2).replace('.', ',');
 
-    // Mostrar modal
     const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
     confirmModal.show();
 }
 
 function confirmarEnvio() {
-    // Submeter o formulário
     document.getElementById('linkCompraForm').submit();
 }
 </script>
 
-
         </div>
-
     </div>
 </div>
 
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>

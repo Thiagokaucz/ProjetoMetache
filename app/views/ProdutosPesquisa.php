@@ -6,7 +6,6 @@
     <title>Pesquisa de Produtos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Estilos personalizados para quadros brancos */
         .content-box {
             background-color: #FFFFFF;
             border-radius: 8px;
@@ -25,7 +24,6 @@
 <body style="background-color: #F8F9FA;">
     <div class="container my-5">
         
-        <!-- Seção de Pesquisa e Filtros -->
         <div class="search-box">
             <h2 class="pt-3 pb-3 text-center">Encontre o que você procura</h2>
             <form method="GET" action="" class="mb-4">
@@ -71,7 +69,6 @@
             </form>
         </div>
         
-        <!-- Seção de Resultados -->
         <div class="content-box">
             <h2 class="pt-3 pb-3 text-center">Resultados da Pesquisa</h2>
 

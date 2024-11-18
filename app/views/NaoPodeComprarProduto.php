@@ -31,8 +31,8 @@
             border-color: #6c757d;
         }
         .button-container {
-            max-width: 400px; /* Define a largura máxima dos botões */
-            margin: 0 auto; /* Centraliza o container dos botões */
+            max-width: 400px; 
+            margin: 0 auto; 
         }
     </style>
 </head>

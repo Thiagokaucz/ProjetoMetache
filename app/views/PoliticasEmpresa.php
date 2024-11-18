@@ -21,13 +21,11 @@
     <h1 class="text-center mb-4">Políticas da Plataforma - Metache</h1>
     <p class="text-muted text-center">Conheça as políticas da nossa plataforma para garantir uma experiência segura e transparente.</p>
 
-    <!-- Seção de Termos Gerais -->
     <h3 class="section-title mt-4">1. Termos Gerais</h3>
     <p>
         A plataforma Metache proporciona um ambiente para usuários comprarem, venderem e negociarem produtos de forma direta. Ao usar a Metache, você concorda com os nossos termos e se compromete a seguir as diretrizes aqui estabelecidas.
     </p>
 
-    <!-- Seção de Segurança e Privacidade -->
     <h3 class="section-title mt-4">2. Segurança e Privacidade</h3>
     <p>
         A Metache adota medidas rigorosas para proteger a privacidade e segurança de seus usuários. Recomendamos que nunca compartilhe informações confidenciais, como senhas, com terceiros. Para segurança adicional, todas as atividades suspeitas devem ser denunciadas imediatamente.
@@ -38,7 +36,6 @@
         <li class="list-group-item">🚨 <strong>Denúncia de atividades suspeitas:</strong> Utilize o botão "Denunciar" em casos de possíveis fraudes.</li>
     </ul>
 
-    <!-- Seção de Direitos e Responsabilidades dos Usuários -->
     <h3 class="section-title">3. Direitos e Responsabilidades dos Usuários</h3>
     <p>
         Todos os usuários da plataforma têm o direito de comprar e vender produtos de forma transparente. Contudo, é responsabilidade de cada usuário fornecer informações verdadeiras e precisas. A Metache não se responsabiliza por itens fora das políticas permitidas ou informações incorretas.
@@ -49,7 +46,6 @@
         <li class="list-group-item">📞 <strong>Responsabilidade de contato:</strong> As negociações são responsabilidade dos usuários, devendo ocorrer dentro da plataforma para maior segurança.</li>
     </ul>
 
-    <!-- Seção de Transações e Pagamentos -->
     <h3 class="section-title">4. Transações e Pagamentos</h3>
     <p>
         As transações financeiras realizadas na Metache podem ser facilitadas por parceiros de pagamento confiáveis. Recomendamos que todas as transações ocorram dentro do sistema de pagamento seguro para garantir a proteção dos envolvidos.
@@ -60,7 +56,6 @@
         <li class="list-group-item">📋 <strong>Registro de transações:</strong> Toda transação realizada dentro da Metache será documentada para eventuais consultas ou disputas.</li>
     </ul>
 
-    <!-- Seção de Direitos de Propriedade Intelectual -->
     <h3 class="section-title">5. Direitos de Propriedade Intelectual</h3>
     <p>
         A Metache respeita os direitos de propriedade intelectual e exige que todos os usuários façam o mesmo. Qualquer conteúdo ou item que viole direitos autorais será removido e o usuário responsável poderá sofrer penalidades.
@@ -70,7 +65,6 @@
         <li class="list-group-item">⚖️ <strong>Denúncias de violação:</strong> Utilize o botão "Denunciar" caso observe violação de propriedade intelectual.</li>
     </ul>
 
-    <!-- Seção de Modificações das Políticas -->
     <h3 class="section-title">6. Modificações das Políticas</h3>
     <p>
         A Metache reserva-se o direito de atualizar suas políticas a qualquer momento, visando a melhoria contínua da experiência e segurança dos usuários. Notificaremos mudanças importantes via e-mail ou notificações dentro da plataforma.

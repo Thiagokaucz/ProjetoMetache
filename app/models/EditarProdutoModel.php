@@ -9,7 +9,6 @@ class EditarProdutoModel {
         $this->conn = $database->obterConexao();
     }
 
-    // Buscar o produto pelo produtoID
     public function buscarProdutoPorID($produtoID) {
         $sql = "SELECT produtoID, userID, categoriaID, titulo, condicao, descricao, valor, localizacao 
                 FROM produto 
@@ -20,20 +19,17 @@ class EditarProdutoModel {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Atualizar os campos do produto
-    public function atualizarProduto($produtoID, $categoriaID, $titulo, $condicao, $descricao, $valor, $localizacao) {
+    public function atualizarProduto($produtoID, $titulo, $descricao, $valor) {
         $sql = "UPDATE produto 
-                SET categoriaID = :categoriaID, titulo = :titulo, condicao = :condicao, descricao = :descricao, valor = :valor, localizacao = :localizacao
+                SET titulo = :titulo, descricao = :descricao, valor = :valor
                 WHERE produtoID = :produtoID";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':categoriaID', $categoriaID, PDO::PARAM_INT);
         $stmt->bindParam(':titulo', $titulo, PDO::PARAM_STR);
-        $stmt->bindParam(':condicao', $condicao, PDO::PARAM_STR);
         $stmt->bindParam(':descricao', $descricao, PDO::PARAM_STR);
         $stmt->bindParam(':valor', $valor, PDO::PARAM_STR);
-        $stmt->bindParam(':localizacao', $localizacao, PDO::PARAM_STR);
         $stmt->bindParam(':produtoID', $produtoID, PDO::PARAM_INT);
         $stmt->execute();
     }
+
 }
 ?>

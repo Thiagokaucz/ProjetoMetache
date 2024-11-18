@@ -9,7 +9,6 @@ class PerfilUsuarioController {
         $this->PerfilUsuarioModel = new PerfilUsuarioModel();
     }    
 
-    // Exibe os dados do usuário logado
     public function exibirDados() {
         if (isset($_SESSION['user_id'])) {
             $userID = $_SESSION['user_id'];
@@ -37,7 +36,6 @@ class PerfilUsuarioController {
     
                 $resultado = $this->PerfilUsuarioModel->atualizarUsuario($userID, $nome, $sobrenome, $email, $cep);
                 if ($resultado) {
-                    // Atualiza a sessão com o novo nome
                     $_SESSION['user_name'] = $nome;
                     
                     header('Location: /perfilUsuario?status=success');
@@ -60,7 +58,7 @@ class PerfilUsuarioController {
             $resultado = $this->PerfilUsuarioModel->desativarUsuario($userID);
             
             if ($resultado) {
-                session_destroy(); // Encerra a sessão após desativar a conta
+                session_destroy(); 
                 header('Location: /login');
             } else {
                 echo "Erro ao desativar a conta.";

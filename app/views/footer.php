@@ -1,12 +1,10 @@
 <body>
-    <!-- Chamada para Ação -->
     <div class="container-fluid p-5 text-center" style="background-color: #2E2E2E; color: #FFFFFF;">
         <h1>Está esperando o quê?</h1>
         <p>Anuncie gratuitamente de forma rápida e eficiente.</p>
         <button type="button" class="btn btn-lg" onclick="window.location.href='/anunciar';" style="background-color: #FF6B01; border-color: #FF6B01; color: white;">Anuncie Agora!</button>
     </div>
 
-    <!-- Passo a Passo -->
     <div class="container mt-5">
         <div class="row text-center">
             <div class="col-sm-4">
@@ -24,12 +22,11 @@
         </div>
     </div>
 
-    <!-- Footer Principal -->
     <footer class="container-fluid bg-dark text-white mt-5 pt-4 pb-2">
         <div class="container">
             <div class="row text-center text-md-start align-items-center">
-                <!-- Links de Navegação -->
-                <div class="col-12 col-md-4 mb-3 mb-md-0">
+
+            <div class="col-12 col-md-4 mb-3 mb-md-0">
                     <ul class="list-unstyled">
                         <li><a href="ajudaContato" class="text-white text-decoration-none">Ajuda e Contato</a></li>
                         <li><a href="dicasSeguranca" class="text-white text-decoration-none">Dicas de Segurança</a></li>
@@ -38,14 +35,12 @@
                     </ul>
                 </div>
 
-                <!-- Logo (Centralizado em telas pequenas) -->
                 <div class="col-12 col-md-4 mb-3 mb-md-0 text-center">
                     <a href="/" class="d-block mb-3">
-                        <img src="public/img/Metache.png" alt="Logo Metache" height="30">
+                        
                     </a>
                 </div>
 
-                <!-- Formas de Pagamento (em fundo branco) -->
                 <div class="col-12 col-md-4 mb-3 mb-md-0 text-center" style="background-color: #FFFFFF; padding: 15px; border-radius: 8px;">
                     <h5 class="text-dark mb-2 center">Formas de Pagamento</h5>
                     <div class="d-flex justify-content-center align-items-center flex-wrap">
@@ -60,7 +55,6 @@
         </div>
     </footer>
 
-    <!-- Informações Legais -->
     <div class="container-fluid p-2 text-center" style="background-color: #FF6B01; color: #FFFFFF; font-size: 0.875rem;">
         <p class="mb-1 d-inline d-md-block">
             Metache é uma marca registrada. Todos os direitos reservados. <span class="d-none d-md-inline">Os preços anunciados neste site promocional podem ser alterados sem prévio aviso. O Metache não é responsável por erros descritivos. <a href="/politicasEmpresa" style="color: #2E2E2E; text-decoration: underline;">Clique aqui</a> para ver as políticas de nossa empresa.</span>

@@ -8,7 +8,7 @@ class AdmPagamentoController {
     private $model;
 
     public function __construct() {
-        $this->model = new AdmPagamentoModel(); // Atualizando para usar o nome correto do model
+        $this->model = new AdmPagamentoModel(); 
     }
 
     public function mostrarPagamento() {
@@ -16,7 +16,6 @@ class AdmPagamentoController {
         $detalhes = $this->model->getPagamentoDetails($id);
 
         if ($detalhes) {
-            // Passa os detalhes para a view
             include 'app/views/AdmHeader.php';
             require 'app/views/Admpagamento.php';
         } else {
@@ -29,7 +28,7 @@ class AdmPagamentoController {
         if ($id) {
             $atualizado = $this->model->finalizarPagamento($id);
             if ($atualizado) {
-                header('Location: /admPagamentos'); // Redireciona após finalizar o pagamento
+                header('Location: /admPagamentos'); 
             } else {
                 echo "Erro ao atualizar o pagamento.";
             }
@@ -46,7 +45,6 @@ class AdmPagamentoController {
         if ($aquisicaoID && $novoStatus && $pagamentoID) {
             $this->model->atualizarStatusDenuncia($aquisicaoID, $novoStatus);
             
-            // Redireciona de volta para a exibição do pagamento atualizado
             header("Location: /PagamentoAdm?id=" . $pagamentoID);
             exit;
         } else {

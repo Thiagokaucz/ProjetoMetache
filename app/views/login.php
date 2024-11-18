@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Tela de login Metache">
     <title>Login</title>
+        <link rel="shortcut icon" href="public/img/metacheIc.ico" /> 
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"> <!-- Adicionando Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 </head>
 
 <body class="vh-100 d-flex align-items-center justify-content-center">
@@ -51,7 +53,6 @@
                             </div>
                         </form>
 
-                        <!-- Mensagem de erro -->
                         <?php if (!empty($erroMensagem)): ?>
                             <div class="alert alert-danger mt-3" role="alert">
                                 <?php echo $erroMensagem; ?>
@@ -69,15 +70,14 @@
     </section>
 
     <script>
-        // Script para mostrar/ocultar senha
         const togglePassword = document.getElementById('togglePassword');
         const senhaInput = document.getElementById('senha');
 
         togglePassword.addEventListener('click', function () {
-            // Alternar o tipo de entrada
+            
             const type = senhaInput.getAttribute('type') === 'password' ? 'text' : 'password';
             senhaInput.setAttribute('type', type);
-            // Alterar o ícone
+
             this.innerHTML = type === 'password' ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
         });
 

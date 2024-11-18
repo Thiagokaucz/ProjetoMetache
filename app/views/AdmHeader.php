@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="PT-BR">
+<html lang="pt-br">
 
 <head>
     <meta charset="utf-8">
@@ -13,40 +13,39 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="/homeadm">
-                <img src="public/img/Metache.png" alt="Logo" height="25" width="auto">
+                <img src="public/img/Metache.png" alt="logo" height="25" width="auto">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/ListPagamentosAdm">Pagamentos vendas pendntes</a>
+                        <a class="nav-link" href="/ListPagamentosAdm">pagamentos vendas pendentes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/comprasFinalizadasCanceladas">Vendas Finalizadas</a>
+                        <a class="nav-link" href="/comprasFinalizadasCanceladas">vendas finalizadas</a>
                     </li>
-                    
-                    <!-- Apenas para o gerente -->
                     <?php if ($_SESSION['cargo'] === 'gerente'): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admcadastrarusuario">Cadastrar funcionários</a>
+                        <a class="nav-link" href="/admcadastrarusuario">cadastrar funcionários</a>
                     </li>
                     <?php endif; ?>
                 </ul>
-
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link"><span class="bi bi-person"></span> 
+                        <a class="nav-link">
+                            <span class="bi bi-person"></span>
                             <?php 
                                 echo htmlspecialchars($_SESSION['admin_name']); 
-                                echo " - Conta de " . ($_SESSION['cargo'] === 'gerente' ? 'Gerente' : 'Funcionário'); 
+                                echo " - conta de " . ($_SESSION['cargo'] === 'gerente' ? 'gerente' : 'funcionário'); 
                             ?>
                         </a>
                     </li>
-
                     <li class="nav-item">
-                        <a class="nav-link" href="/admlogout" style="color: red;"><span class="bi bi-box-arrow-right"></span> Sair</a>
+                        <a class="nav-link" href="/admlogout" style="color: red;">
+                            <span class="bi bi-box-arrow-right"></span> sair
+                        </a>
                     </li>
                 </ul>
             </div>

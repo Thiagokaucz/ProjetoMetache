@@ -9,7 +9,6 @@ class ProductModel {
     }
 
     public function getProdutoById($id) {
-        // Consulta para buscar detalhes do produto, incluindo o nome da categoria
         $query = "
             SELECT p.produtoID, p.titulo, p.condicao, p.descricao, p.valor, p.locImagem, p.dataHoraPub, p.localizacao, p.visualizacao, p.disponibilidade,  
                    u.nome AS nomeAnunciante, u.dataHoraRegistro AS dataEntradaAnunciante, 

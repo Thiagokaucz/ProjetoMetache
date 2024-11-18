@@ -26,7 +26,7 @@ class AvisosAdmModel {
         $query = 'DELETE FROM avisosadm WHERE avisoID = :avisoID';
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':avisoID', $avisoID);
-        return $stmt->execute(); // Retorna true se a exclusão for bem-sucedida
+        return $stmt->execute(); 
     }
     
 }

@@ -28,7 +28,7 @@ $rotas = [
 
     '/perfilUsuario' => 'PerfilUsuarioController@exibirDados',
     '/perfilUsuario/atualizar' => 'PerfilUsuarioController@atualizarDados',
-    '/perfilUsuario/desativar' => 'PerfilUsuarioController@desativarUsuario',  // Alterada de 'deletar' para 'desativar'
+    '/perfilUsuario/desativar' => 'PerfilUsuarioController@desativarUsuario', 
 
     '/ajudaContato' => 'AjudaContatoController@index',
     '/dicasSeguranca' => 'DicasSegurancaController@index',
@@ -56,8 +56,8 @@ $rotas = [
 
     '/VerificarCompraController' => 'VerificarCompraController@processarCompra',
 
-    '/denunciarProduto' => 'DenunciaController@mostrarFormulario',  // Rota para o formulário
-    '/enviarDenuncia' => 'DenunciaController@criarDenuncia',       // Rota para o envio do formulário
+    '/denunciarProduto' => 'DenunciaController@mostrarFormulario',  
+    '/enviarDenuncia' => 'DenunciaController@criarDenuncia',       
 
     '/ListPagamentosAdm' => 'AdmListaComprasController@exibirComprasPendentes',
 
@@ -69,9 +69,7 @@ $rotas = [
     '/admlogin' => 'AdmLoginController@login',
     '/admlogout' => 'AdmLoginController@logout',
 
-    // Rota para exibir o formulário de cadastro de administrador
     '/admcadastrarusuario' => 'AdmCadastrarUsuarioController@mostrarFormularioCadastro',
-    // Rota para processar o cadastro do administrador
     '/admcadastrar' => 'AdmCadastrarUsuarioController@cadastrar',
 
     '/homeadm' => 'AdmHomeController@index',
@@ -93,9 +91,9 @@ $rotas = [
 
     '/sobre' => 'SobrePlataformaController@exibirInformacoes',
 
-'/recuperarSenha/email' => 'RecuperarSenhaController@solicitarEmail',       // Rota para inserir o e-mail
-'/recuperarSenha/perguntas' => 'RecuperarSenhaController@validarPerguntas', // Rota para verificar as perguntas de segurança
-'/recuperarSenha/novaSenha' => 'RecuperarSenhaController@redefinirSenha',   // Rota para redefinir a senha
+'/recuperarSenha/email' => 'RecuperarSenhaController@solicitarEmail',       
+'/recuperarSenha/perguntas' => 'RecuperarSenhaController@validarPerguntas', 
+'/recuperarSenha/novaSenha' => 'RecuperarSenhaController@redefinirSenha',   
 
 '/comprasFinalizadasCanceladas' => 'AdmListaComprasFinalizadasCanceladasController@exibirComprasFinalizadasCanceladas',
 

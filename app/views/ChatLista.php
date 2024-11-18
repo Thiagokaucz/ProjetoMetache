@@ -59,11 +59,10 @@
 <body style="background-color: #F8F9FA;">
 
 <div class="container mt-5">
-    <!-- Opções de Pesquisa e Menu -->
     <div class="container-box mb-4">
     <h4 class="mt-2 mb-4">Meus chats</h4>
-        <!-- Botões para selecionar o tipo de chat -->
-        <div class="btn-group w-100 mb-3" role="group" aria-label="Seleção de Tipo de Chat">
+
+    <div class="btn-group w-100 mb-3" role="group" aria-label="Seleção de Tipo de Chat">
             <button id="btnVendedores" type="button" class="btn btn-laranja" onclick="showChats('vendedores')">
                 Minhas Compras (<?= count($ChatsCompras) ?>)
             </button>
@@ -72,7 +71,6 @@
             </button>
         </div>
 
-        <!-- Campo de pesquisa -->
         <div class="row mb-4">
     <div class="col-12">
         <input type="text" id="pesquisaProduto" class="form-control" placeholder="Pesquisar pelo nome do produto" onkeyup="filtrarChats()">
@@ -81,11 +79,10 @@
 
     </div>
 
-    <!-- Resultados dos Chats -->
     <div class="container-box">
         <div class="tab-content">
-            <!-- Seção de chats de compras -->
-            <div id="vendedores" class="chat-list" style="display: none;">
+
+        <div id="vendedores" class="chat-list" style="display: none;">
                 <h4>Compras</h4>
                 <?php if (!empty($ChatsCompras)): ?>
                     <?php foreach ($ChatsCompras as $chat): ?>
@@ -108,7 +105,6 @@
                 <?php endif; ?>
             </div>
 
-            <!-- Seção de chats de vendas -->
             <div id="compradores" class="chat-list" style="display: none;">
                 <h4>Vendas</h4>
                 <?php if (!empty($ChatsVendas)): ?>
@@ -135,11 +131,10 @@
     </div>
 </div>
 
-<!-- JavaScript do Bootstrap 5 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Função para exibir chats e alterar o botão ativo
-    function showChats(type) {
+
+function showChats(type) {
         document.getElementById('vendedores').style.display = 'none';
         document.getElementById('compradores').style.display = 'none';
 
@@ -160,10 +155,8 @@
         }
     }
 
-    // Exibir chats de vendedores por padrão ao carregar a página
     showChats('vendedores');
 
-    // Função para excluir o chat
     function excluirChat(chatID, event) {
         event.stopPropagation(); 
         if (confirm('Tem certeza que deseja excluir este chat?')) {
@@ -171,7 +164,6 @@
         }
     }
 
-    // Função para filtrar chats
     function filtrarChats() {
         const termoPesquisa = document.getElementById('pesquisaProduto').value.toLowerCase();
         const chats = document.querySelectorAll('.chat-item');

@@ -15,15 +15,12 @@ class VisualizarDocumentosController {
     }
 
     public function exibirDocumentos() {
-        // Verifica se o ID do produto foi passado na URL
         if (isset($_GET['id'])) {
             $produtoId = htmlspecialchars($_GET['id']);
             
-            // Busca os documentos pelo ID do produto
             $documentos = $this->documentosModel->buscarDocumentosPorProdutoId($produtoId);
 
             if ($documentos) {
-                // Exibe a view, passando os caminhos dos documentos
                     require_once 'app/views/header.php';
                     require 'app/views/visualizarDocumentosView.php';
 

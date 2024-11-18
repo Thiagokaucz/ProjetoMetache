@@ -2,6 +2,9 @@
 <html lang="pt-br">
 <head>
     <meta charset="utf-8">
+        <link rel="shortcut icon" href="public/img/metacheIc.ico" /> 
+    <link rel="shortcut icon" href="public/img/metacheIc.ico" /> 
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Tela de cadastro Metache">
     <title>Cadastro</title>
@@ -97,7 +100,6 @@
     </section>
 
     <script>
-        // Função para verificar se os termos foram aceitos antes de enviar o formulário
         function validarFormulario() {
             var aceitarTermos = document.getElementById('aceitarTermos');
             if (!aceitarTermos.checked) {
@@ -107,7 +109,6 @@
             }
         }
 
-        // Mostrar/ocultar senha
         const togglePassword = document.getElementById('togglePassword');
         const senhaInput = document.getElementById('senha');
 
@@ -117,7 +118,6 @@
             this.innerHTML = type === 'password' ? '<i class="bi bi-eye-slash"></i>' : '<i class="bi bi-eye"></i>';
         });
 
-        // Validações de formulário
         document.getElementById('cep').addEventListener('input', function () {
             this.value = this.value.replace(/[^0-9-]/g, '');
             validarCampo(this, /^\d{5}-?\d{3}$/);
@@ -127,13 +127,14 @@
             validarCampo(this, /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
         });
 
-        document.getElementById('nome').addEventListener('input', function () {
-            validarCampo(this, /^[a-zA-ZÀ-ÖØ-öø-ÿ]+$/);
-        });
+document.getElementById('nome').addEventListener('input', function () {
+    validarCampo(this, /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/); 
+});
 
-        document.getElementById('sobrenome').addEventListener('input', function () {
-            validarCampo(this, /^[a-zA-ZÀ-ÖØ-öø-ÿ]+$/);
-        });
+document.getElementById('sobrenome').addEventListener('input', function () {
+    validarCampo(this, /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/); 
+});
+
 
         document.getElementById('senha').addEventListener('input', function () {
             validarCampo(this, /.+/);

@@ -11,7 +11,6 @@ class TratarCompraController {
 
     public function processarCompra() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Capturando dados do formulário
             $linkCompraID = isset($_POST['linkCompraID']) ? htmlspecialchars($_POST['linkCompraID']) : null;
             $produtoID = isset($_POST['produtoID']) ? htmlspecialchars($_POST['produtoID']) : null;
             $chatID = isset($_POST['chatID']) ? htmlspecialchars($_POST['chatID']) : null;
@@ -20,17 +19,13 @@ class TratarCompraController {
             $valorCompra = isset($_POST['valorCompra']) ? htmlspecialchars($_POST['valorCompra']) : null;
             $valorFrete = isset($_POST['valorFrete']) ? htmlspecialchars($_POST['valorFrete']) : null;
 
-            // Verifica se o userID está definido na sessão
             $userID = isset($_SESSION['user_id']) ? htmlspecialchars($_SESSION['user_id']) : 'Usuário não logado';
             $acao = isset($_POST['acao']) ? htmlspecialchars($_POST['acao']) : null;
 
-            // Se a ação é de comprar, cria a preferência de pagamento
             if ($acao === 'comprar') {
-                // Enviando mensagem para o vendedor antes de criar a preferência de pagamento
                 $conteudo = "<b>Metache informa</b>: O link de pagamento foi utilizado. Obrigado por escolher nossa plataforma!";
                 $this->tratarCompraModel->enviarMensagemParaVendedor($conteudo, $vendedorID, $chatID);
 
-                // Criando a preferência de pagamento no Mercado Pago
                 $this->criarPreferenciaPagamento($linkCompraID, $produtoID, $chatID, $vendedorID, $valorBrutoCompra, $valorCompra, $valorFrete);
             }
         } else {
@@ -47,7 +42,6 @@ class TratarCompraController {
         $_SESSION['valorCompra'] = $valorCompra;
         $_SESSION['valorFrete'] = $valorFrete;
 
-        // Configurando a preferência de pagamento
         $preferenceData = [
             "auto_return" => "approved",
             "back_urls" => [
