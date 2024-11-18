@@ -24,6 +24,10 @@ Funcionalidades Principais
     Servidor MySQL 5.7 ou superior.
     Servidor Apache ou similar com suporte a PHP.
 
+## Acesse o Projeto
+
+O projeto está disponível online no endereço:
+[Acesse o projeto aqui](http://abalonrpg.com)
 
 ## Acesse o Projeto
 
